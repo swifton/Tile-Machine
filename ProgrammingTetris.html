@@ -1,0 +1,38 @@
+<html>  
+  <head>  
+    <title>Programming Tetris</title>  
+	<link rel="stylesheet" href="Tetris.css" />
+  <style>  
+  body {  
+    margin:0px;  
+    padding:0px;  
+    text-align:center;  
+  }  
+  
+  canvas{  
+    outline:0;  
+    border:1px solid #000;  
+    margin-left: auto;  
+    margin-right: auto;  
+  }  
+  </style>  
+  </head>  
+  <body>  
+	<div id="page-wrap" class="clearfix">  
+		<div class="content">
+			<canvas id='c'></canvas>
+		</div>
+		<div class="content">
+			<canvas id='cv'></canvas>
+			<span id="button-one">
+				<a href="#" onclick="saveSheet()" title="click me">Save</a>
+			</span>
+			<span id="button-one">
+				<a href="#" onclick="writeFile()" title="click me">Test</a>
+			</span>		
+		</div>
+	</div>
+	<script src="Tetris.js"></script>   
+    <script src="ProgrammingTetris.js"></script>   
+  </body>  
+</html>  
