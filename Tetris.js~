@@ -1,42 +1,47 @@
 var gLoop,
-	c = document.getElementById('c'),
-	cv = document.getElementById('cv'),	
-	ctx = c.getContext('2d');
-	ctxv = cv.getContext('2d');
-	
-	cv.width = 150;
-	cv.height = 190;
-	
+    c = document.getElementById('c'),
+    ctx = c.getContext('2d');
+
 var figure1 = [[3,0],[4,0],[5,0],[6,0]], 
-	figure2 = [[3,0],[4,0],[5,0],[4,1]], 
-	figure3 = [[5,0],[4,0],[4,1],[3,1]], 
-	figure4 = [[3,0],[4,0],[4,1],[5,1]], 
-	figure5 = [[3,0],[4,0],[3,1],[4,1]],
-	figure6 = [[3,0],[5,0],[4,0],[5,1]],
-	figure7 = [[5,0],[3,0],[4,0],[3,1]],
-	figures = [figure1, figure2, figure3, figure4, figure5, figure6, figure7];
+    figure2 = [[3,0],[4,0],[5,0],[4,1]], 
+    figure3 = [[5,0],[4,0],[4,1],[3,1]], 
+    figure4 = [[3,0],[4,0],[4,1],[5,1]], 
+    figure5 = [[3,0],[4,0],[3,1],[4,1]],
+    figure6 = [[3,0],[5,0],[4,0],[5,1]],
+    figure7 = [[5,0],[3,0],[4,0],[3,1]],
+    figures = [figure1, figure2, figure3, figure4, figure5, figure6, figure7];
 	
-var fieldH = 20, fieldW = 10, radius = 12.5;
+var fieldH = 20, fieldW = 10;
+var radius = 12.5;
 width = fieldW * 2 * radius;
 height = fieldH * 2 * radius;
-c.width = width;
-c.height = height;
 
-var clear = function(ctx){
-	ctx.fillStyle = '#d0e7f9';
-	ctx.clearRect(0, 0, width, height);
-	ctx.beginPath();
-	ctx.rect(0, 0, width, height);
-	ctx.closePath();
-	ctx.fill();
-}
+//Draw functions
 
-var drawTile = function(x, y, im, cc){
-	var img=new Image();
-	var str = "images/";
-	img.src= str.concat(im);
-	cc.drawImage(img, x - radius, y - radius); 
-}
+function draw(data, canvas, start){
+  rectangle(workplace, sheetW * radius * 2, sheetH * radius * 2);
+
+  var context = canvas.getContext('2d');
+  var wid = data.length;
+  var heit = data[0].length;
+
+  cwid = 2 * wid * radius;
+  cheit = 2 * heit * radius;
+  //canvas.width = cwid;
+  //canvas.height = cheit;
+
+  clear(c);
+
+  for (var i = 0; i < wid; i++){
+    for (var j = 0; j < heit; j++){
+      if (data[i][j] != 0){
+        drawTile(start[0] + i * 2 * radius + radius, start[1] + j * 2 * radius + radius, images[Math.abs(data[i][j]) - 1], context);
+      }
+    }
+  }
+};
+
+// Initialization functions
 
 var newFigure = function(){
 	nOfFigure = newNOfFigure;
@@ -48,19 +53,26 @@ var newFigure = function(){
 	figuresReceived += 1;
 }
 
-var resetField = function(){
-	for (var i = 0; i < fieldW + 1; i++){
-		field[i] = new Array(fieldH + 1);
-		for (var j = 0; j < fieldH; j++){
-			field[i][j] = 0;
+var reset = function(data){
+	var wid = data.length;
+	var hei = data[0].length;
+	for (var i = 0; i < wid; i++){
+		data[i] = new Array(hei);
+		for (var j = 0; j < hei; j++){
+			data[i][j] = 0;
 		}
 	}
-
-	for (var j = 0; j < fieldW; j++){
-			field[j][fieldH] = -1;
+	for (var j = 0; j < wid; j++){
+			data[j][hei-1] = -1;
 	}
 	linesDeleted = 0;
 	figuresReceived = 0;
+}
+
+function newGame(){
+	reset(field);
+	newFigure();
+	if (gamePaused == true){ pauseGame(); }
 }
 
 function pauseGame() {
@@ -74,74 +86,46 @@ console.log(gamePaused);
   }
 }
 
-function NewGame(){
-	resetField();
-	newFigure();
-	if (gamePaused == true){ pauseGame(); }
-}
-
 var figure = [[0,0],[0,0],[0,0],[0,0]];
 var linesDeleted, figuresReceived;
 var images = ["1.png","2.png","3.png","4.png","5.png","6.png","7.png"]
 var field = new Array(fieldW);
-resetField();
+field[0] = new Array(fieldH + 1);
 var nOfFigure;
 var newNOfFigure = Math.floor(Math.random()*7);
-newFigure();
 var gamePaused = false;
+//newGame();
 
+// Field processing functions
 
-var draw = function(){
-	
-	for (var i = 0; i < fieldW; i++){
-		for (var j = 0; j < fieldH; j++){
-			if (field[i][j] != 0){
-				drawTile(i * 2 * radius + radius, j * 2 * radius + radius, images[Math.abs(field[i][j]) - 1],ctx);
-			}
-		}
-	}
-};
-
-var paint = function(num){
+var updatePosition = function(num){
 	for (var i = 0; i < 4; i++){
 		field[figure[i][0]][figure[i][1]] = num;
 	}
 }
 
-var check = function(dir){
-	for (var i = 0; i < 4; i++){
-		if (figure[i][0] + dir[0] > fieldW - 1 || figure[i][0] + dir[0] < 0){
-			return true;
-		}
-		if (field[figure[i][0] + dir[0]][figure[i][1] + dir[1]] < 0){
-			return true;
-		}
+var updateField = function(){
+	if (checkMove([0,1])){
+		updatePosition(-nOfFigure - 1);
+		checkField();
+		newFigure();
+		checkEnd();
+		updatePosition(nOfFigure + 1);
+		return 1;
 	}
-	return false;
+	updatePosition(0);
+	for (var i = 0; i < 4; i++){figure[i][1]++;}	
+	updatePosition(nOfFigure + 1);
 }
+
+// Check functions
 
 var checkEnd = function(){
 	var b = 0;
 	for (var j = 0; j < fieldW; j++){
 		if (field[j][0] < 0) {b = 1}
 	}
-	if (b == 1) {resetField();}
-}
-
-var updateField = function(){
-	
-
-	if (check([0,1])){
-		paint(-nOfFigure - 1);
-		checkField();
-		checkEnd();
-		newFigure();
-		paint(nOfFigure + 1);
-		return 1;
-	}
-	paint(0);
-	for (var i = 0; i < 4; i++){figure[i][1]++;}	
-	paint(nOfFigure + 1);
+	if (b == 1) {newGame();}
 }
 
 var checkField = function(){
@@ -165,23 +149,33 @@ var checkField = function(){
 	}
 }
 
+var checkMove = function(dir){
+	var arr = Array(4);
+	for (var i = 0; i < 4; i++){
+		arr[i] = [figure[i][0] + dir[0], figure[i][1] + dir[1]];
+	}
+	return !(checkPosition(arr));
+}
+
+var checkPosition = function(arr){
+	for (var i = 0; i < 4; i++){
+		if (arr[i][1] < 0 || arr[i][0] > fieldW - 1 || arr[i][0] < 0){ return false; }
+		if (field[arr[i][0]][arr[i][1]] < 0){ return false; }
+	}
+	return true;
+}
+
+// Figure operation functions
+
 var moveFigure = function(dir){
-	if (check(dir)){ return 1; }
+	if (checkMove(dir)){ return 1; }
 	
-	paint(0);
+	updatePosition(0);
 	for (var i = 0; i < 4; i++){
 		figure[i][0] += dir[0];
 		figure[i][1] += dir[1];
 	}
-	paint(nOfFigure + 1);
-}
-
-var checkP = function(arr){
-	for (var i = 0; i < 4; i++){
-		if (arr[i][1] < 0) { return false; }
-		if (arr[i][0] > fieldW - 1 || arr[i][0] < 0 || field[arr[i][0]][arr[i][1]] < 0){ return false; }
-	}
-	return true;
+	updatePosition(nOfFigure + 1);
 }
 
 var rotateFigure = function(){
@@ -218,7 +212,7 @@ var rotateFigure = function(){
 		tmp[i][0] += figure[1][0];
 		tmp[i][1] += figure[1][1];
 	}
-	if (checkP(tmp)){
+	if (checkPosition(tmp)){
 		for (var i = 0; i < 4; i++){
 			figure[i] = tmp[i].slice(0);
 		}
@@ -247,7 +241,7 @@ function doKeyDown(e) {
 	if (gamePaused == true) {return;}
 	var i = e.keyCode;
 	//console.log(i);
-	paint(0);
+	updatePosition(0);
 	if (i == 37){
 		moveFigure([-1, 0]);
 	}
@@ -260,39 +254,21 @@ function doKeyDown(e) {
 	if (i == 40){
 		dropFigure();
 	}
-	paint(nOfFigure + 1);
-	clear(ctx);
-	Draw();
-}
-
-var update = function(){
-	ctxv.fillStyle = '#000000';
-	ctxv.font = 'bold 20px sans-serif';
-	ctxv.textBaseline = 'bottom';
-	a = 'Lines ';
-	b = 'Pieces ';
-	ctxv.fillText(a.concat(linesDeleted.toString()), 30, 40);
-	ctxv.fillText(b.concat(figuresReceived.toString()), 30, 80);
-}
-
-function drawNextFigure(){
-	for (i = 0; i < 4; i++){
-		drawTile(figures[newNOfFigure][i][0] * 2 * radius - 35, 120 + figures[newNOfFigure][i][1] * 2 * radius, images[newNOfFigure],ctxv);
-	}
+	updatePosition(nOfFigure + 1);
+	clear(c);
+	draw(field, c);
 }
 
 var GameLoop = function(){
-	clear(ctx);
+	clear(c);
 	updateField();
-	draw();
-	clear(ctxv);
-	update();
+	draw(field, c);
 	drawNextFigure();
 
 	gLoop = setTimeout(GameLoop, 1000 / 4);
 }
 
-paint(nOfFigure + 1);
-window.addEventListener( "keydown", doKeyDown, true);
+//updatePosition(nOfFigure + 1);
+//window.addEventListener( "keydown", doKeyDown, true);
 
-GameLoop();
+//GameLoop();

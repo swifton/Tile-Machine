@@ -6,6 +6,7 @@ reset(sheet);
 var program = [];
 var workplace = [Math.floor((wid - sheetW * radius * 2)/2), 0];
 clear(c);
+rectangle(workplace, sheetW * radius * 2, sheetH * radius * 2);
 
 //grid();
 

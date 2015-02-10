@@ -1,56 +1,44 @@
 var gLoop,
-	c = document.getElementById('c'),
-	cv = document.getElementById('cv'),	
-	ctx = c.getContext('2d');
-	ctxv = cv.getContext('2d');
-	
-	cv.width = 150;
-	cv.height = 190;
-	
+    c = document.getElementById('c'),
+    ctx = c.getContext('2d');
+
 var figure1 = [[3,0],[4,0],[5,0],[6,0]], 
-	figure2 = [[3,0],[4,0],[5,0],[4,1]], 
-	figure3 = [[5,0],[4,0],[4,1],[3,1]], 
-	figure4 = [[3,0],[4,0],[4,1],[5,1]], 
-	figure5 = [[3,0],[4,0],[3,1],[4,1]],
-	figure6 = [[3,0],[5,0],[4,0],[5,1]],
-	figure7 = [[5,0],[3,0],[4,0],[3,1]],
-	figures = [figure1, figure2, figure3, figure4, figure5, figure6, figure7];
+    figure2 = [[3,0],[4,0],[5,0],[4,1]], 
+    figure3 = [[5,0],[4,0],[4,1],[3,1]], 
+    figure4 = [[3,0],[4,0],[4,1],[5,1]], 
+    figure5 = [[3,0],[4,0],[3,1],[4,1]],
+    figure6 = [[3,0],[5,0],[4,0],[5,1]],
+    figure7 = [[5,0],[3,0],[4,0],[3,1]],
+    figures = [figure1, figure2, figure3, figure4, figure5, figure6, figure7];
 	
-var fieldH = 20, fieldW = 10, radius = 12.5;
+var fieldH = 20, fieldW = 10;
+var radius = 12.5;
 width = fieldW * 2 * radius;
 height = fieldH * 2 * radius;
-//c.width = width;
-//c.height = height;
 
 //Draw functions
 
-var clear = function(cnv){
-	cc = cnv.getContext('2d');
-	cc.fillStyle = '#d0e7f9';
-	cc.clearRect(0, 0, cnv.width, cnv.height);
-	cc.beginPath();
-	cc.rect(0, 0, cnv.width, cnv.height);
-	cc.closePath();
-	cc.fill();
-}
+function draw(data, canvas, start){
+  var context = canvas.getContext('2d');
+  var wid = data.length;
+  var heit = data[0].length;
 
-var drawTile = function(x, y, im, cc){
-	var img=new Image();
-	var str = "images/";
-	img.src= str.concat(im);
-	cc.drawImage(img, x - radius, y - radius); 
-}
+  cwid = 2 * wid * radius;
+  cheit = 2 * heit * radius;
+  //canvas.width = cwid;
+  //canvas.height = cheit;
 
-var draw = function(data,cc){
-	wid = data.length;
-	hei = data[0].length;
-	for (var i = 0; i < wid; i++){
-		for (var j = 0; j < hei; j++){
-			if (data[i][j] != 0){
-				drawTile(i * 2 * radius + radius, j * 2 * radius + radius, images[Math.abs(data[i][j]) - 1],cc);
-			}
-		}
-	}
+  clear(c);
+
+  rectangle(workplace, sheetW * radius * 2, sheetH * radius * 2);
+
+  for (var i = 0; i < wid; i++){
+    for (var j = 0; j < heit; j++){
+      if (data[i][j] != 0){
+        drawTile(start[0] + i * 2 * radius + radius, start[1] + j * 2 * radius + radius, images[Math.abs(data[i][j]) - 1], context);
+      }
+    }
+  }
 };
 
 // Initialization functions
@@ -66,8 +54,8 @@ var newFigure = function(){
 }
 
 var reset = function(data){
-	wid = data.length;
-	hei = data[0].length;
+	var wid = data.length;
+	var hei = data[0].length;
 	for (var i = 0; i < wid; i++){
 		data[i] = new Array(hei);
 		for (var j = 0; j < hei; j++){
@@ -249,24 +237,6 @@ var dropFigure = function(){
 	moveFigure([0, k -1]);
 }
 
-// Second canvas functions
-
-var updateStats = function(){
-	ctxv.fillStyle = '#000000';
-	ctxv.font = 'bold 20px sans-serif';
-	ctxv.textBaseline = 'bottom';
-	a = 'Lines ';
-	b = 'Pieces ';
-	ctxv.fillText(a.concat(linesDeleted.toString()), 30, 40);
-	ctxv.fillText(b.concat(figuresReceived.toString()), 30, 80);
-}
-
-function drawNextFigure(){
-	for (var i = 0; i < 4; i++){
-		drawTile(figures[newNOfFigure][i][0] * 2 * radius - 35, 120 + figures[newNOfFigure][i][1] * 2 * radius, images[newNOfFigure],ctxv);
-	}
-}
-
 function doKeyDown(e) {
 	if (gamePaused == true) {return;}
 	var i = e.keyCode;
@@ -286,15 +256,13 @@ function doKeyDown(e) {
 	}
 	updatePosition(nOfFigure + 1);
 	clear(c);
-	draw(field,ctx);
+	draw(field, c);
 }
 
 var GameLoop = function(){
 	clear(c);
 	updateField();
-	draw(field,ctx);
-	clear(cv);
-	updateStats();
+	draw(field, c);
 	drawNextFigure();
 
 	gLoop = setTimeout(GameLoop, 1000 / 4);
