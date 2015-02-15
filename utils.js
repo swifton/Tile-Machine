@@ -73,6 +73,25 @@ function drawNextFigure(){
 	}
 }
 
+function loadAssets() {
+  for (i = 1; i < images.length; i++) {
+    images[i] = new Image();
+    images[i].src = "images/" + i.toString() + ".png";  
+  }
+
+  images[9].onload = function() {
+    draw(sheet, c, workplace);
+  }
+}
+
+function getMousePos(canvas, evt) {
+  var rect = canvas.getBoundingClientRect();
+  return {
+    x: evt.clientX - rect.left,
+    y: evt.clientY - rect.top
+  };
+}
+
 function p(output) {
   console.log(output);
 }

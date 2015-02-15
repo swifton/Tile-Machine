@@ -14,14 +14,6 @@ function clickReporter(e) {
   draw(sheet, c, workplace);
 }
 
-function getMousePos(canvas, evt) {
-  var rect = canvas.getBoundingClientRect();
-  return {
-    x: evt.clientX - rect.left,
-    y: evt.clientY - rect.top
-  };
-}
-
 var cutSheet = function(){
 	for (var i = 0; ; i++){
 		b = 1;
@@ -78,16 +70,6 @@ var test = function(){
 	c.height = height;
 	newGame();
 	GameLoop();
-}
-
-var detectTile = function(){
-	if (sheet[3][0] == 3) {return 0;}
-	if (sheet[4][0] != 3) {return 2;}
-	if (sheet[4][1] == 3 && sheet[5][1] == 3) {return 4;}
-	if (sheet[6][0] != 3) {return 3;}
-	if (sheet[5][1] == 3) {return 1;}
-	if (sheet[7][1] == 3) {return 5;}
-	if (sheet[5][1] == 3) {return 6;}
 }
 
 var findPosition = function(){

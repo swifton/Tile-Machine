@@ -57,7 +57,6 @@ function grid() {
   }
 }
 
-
 var updateStats = function(){
 /*	ctxv.fillStyle = '#000000';
 	ctxv.font = 'bold 20px sans-serif';
@@ -72,6 +71,17 @@ function drawNextFigure(){
 	for (var i = 0; i < 4; i++){
 //		drawTile(figures[newNOfFigure][i][0] * 2 * radius - 35, 120 + figures[newNOfFigure][i][1] * 2 * radius, images[newNOfFigure],ctxv);
 	}
+}
+
+function loadAssets() {
+  for (i = 1; i < images.length; i++) {
+    images[i] = new Image();
+    images[i].src = "images/" + i.toString() + ".png";  
+  }
+
+  images[9].onload = function() {
+    draw(sheet, c, workplace);
+  }
 }
 
 function p(output) {

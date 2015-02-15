@@ -7,6 +7,7 @@ var gLoop;
 var c = document.getElementById('c');
 var ctx = c.getContext('2d');
 var radius = 12.5;
+var diam = 2 * radius;
 
 var wid, heit;
 
@@ -24,15 +25,7 @@ c.addEventListener('mousedown', clickReporter, false);
 
 // asset load
 var images = new Array(10);
-for (i = 1; i < images.length; i++) {
-  images[i] = new Image();
-  images[i].src = "images/" + i.toString() + ".png";  
-}
-
-images[9].onload = function() {
-  draw(sheet, c, workplace);
-}
-
+loadAssets();
 
 // global variables for running environment
 

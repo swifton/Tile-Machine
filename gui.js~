@@ -3,19 +3,19 @@ function draw(data, canvas, start){
   var wid = data.length;
   var heit = data[0].length;
 
-  cwid = 2 * wid * radius;
-  cheit = 2 * heit * radius;
+  cwid = wid * diam;
+  cheit = heit * diam;
   //canvas.width = cwid;
   //canvas.height = cheit;
 
   clear(c);
 
-  rectangle(workplace, sheetW * radius * 2, sheetH * radius * 2);
+  rectangle(workplace, sheetW * diam, sheetH * diam);
 
   for (var i = 0; i < wid; i++){
     for (var j = 0; j < heit; j++){
       if (data[i][j] != 0) {
-        drawTile(start[0] + i * 2 * radius + radius, start[1] + j * 2 * radius + radius, Math.abs(data[i][j]) - 1, context);
+        drawTile(start[0] + i * diam + radius, start[1] + j * 2 * radius + radius, Math.abs(data[i][j]), context);
       }
     }
   }
