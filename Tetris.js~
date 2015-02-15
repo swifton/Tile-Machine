@@ -16,11 +16,11 @@ var radius = 12.5;
 width = fieldW * 2 * radius;
 height = fieldH * 2 * radius;
 
+var images = ["1.png","2.png","3.png","4.png","5.png","6.png","7.png", "8.png"];
+
 //Draw functions
 
 function draw(data, canvas, start){
-  rectangle(workplace, sheetW * radius * 2, sheetH * radius * 2);
-
   var context = canvas.getContext('2d');
   var wid = data.length;
   var heit = data[0].length;
@@ -32,9 +32,11 @@ function draw(data, canvas, start){
 
   clear(c);
 
+  rectangle(workplace, sheetW * radius * 2, sheetH * radius * 2);
+
   for (var i = 0; i < wid; i++){
     for (var j = 0; j < heit; j++){
-      if (data[i][j] != 0){
+      if (data[i][j] != 0) {
         drawTile(start[0] + i * 2 * radius + radius, start[1] + j * 2 * radius + radius, images[Math.abs(data[i][j]) - 1], context);
       }
     }
@@ -43,7 +45,7 @@ function draw(data, canvas, start){
 
 // Initialization functions
 
-var newFigure = function(){
+var newFigure = function() {
 	nOfFigure = newNOfFigure;
 	newNOfFigure = Math.floor(Math.random()*7);
 	for (var j = 0; j < 4; j++)
@@ -53,30 +55,35 @@ var newFigure = function(){
 	figuresReceived += 1;
 }
 
-var reset = function(data){
-	var wid = data.length;
-	var hei = data[0].length;
-	for (var i = 0; i < wid; i++){
-		data[i] = new Array(hei);
-		for (var j = 0; j < hei; j++){
-			data[i][j] = 0;
-		}
-	}
-	for (var j = 0; j < wid; j++){
-			data[j][hei-1] = -1;
-	}
-	linesDeleted = 0;
-	figuresReceived = 0;
+function reset(data, value, ground) {
+  value = value || 0;
+  var wid = data.length;
+  var hei = data[0].length;
+
+  for (var i = 0; i < wid; i++){
+    data[i] = new Array(hei);
+    for (var j = 0; j < hei; j++){
+      data[i][j] = value;
+    }
+  }
+
+  if (ground) {
+    for (var j = 0; j < wid; j++) {
+      data[j][hei-1] = -1;
+    }
+  }
+
+  linesDeleted = 0;
+  figuresReceived = 0;
 }
 
 function newGame(){
-	reset(field);
+	reset(field, 0, true);
 	newFigure();
 	if (gamePaused == true){ pauseGame(); }
 }
 
 function pauseGame() {
-console.log(gamePaused);
   if (!gamePaused) {
     gLoop = clearTimeout(gLoop);
     gamePaused = true;
@@ -88,7 +95,6 @@ console.log(gamePaused);
 
 var figure = [[0,0],[0,0],[0,0],[0,0]];
 var linesDeleted, figuresReceived;
-var images = ["1.png","2.png","3.png","4.png","5.png","6.png","7.png"]
 var field = new Array(fieldW);
 field[0] = new Array(fieldH + 1);
 var nOfFigure;

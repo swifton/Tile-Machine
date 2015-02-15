@@ -1,31 +1,34 @@
 var sheetH = 10, sheetW = 10;
 
+var mode = "programming";
 var sheet = new Array(sheetW);
-sheet[0] = new Array(sheetH + 1);
-reset(sheet);
+sheet[0] = new Array(sheetH);
+reset(sheet, 9, false);
 var program = [];
 var workplace = [Math.floor((wid - sheetW * radius * 2)/2), 0];
 clear(c);
+draw(sheet, c, workplace);
 
 //grid();
 
 c.addEventListener('mousedown', clickReporter, false);
 
 function clickReporter(e) {
-	var mousePos = getMousePos(c, e);
-	i = Math.floor((mousePos.x - workplace[0])/(2*radius));
-	j = Math.floor((mousePos.y - workplace[1])/(2*radius));
-	sheet[i][j] += 1;
-	if (sheet[i][j] == 4) {sheet[i][j] = 0;}
-	draw(sheet, c, workplace);
+  var mousePos = getMousePos(c, e);
+  i = Math.floor((mousePos.x - workplace[0])/(2*radius));
+  j = Math.floor((mousePos.y - workplace[1])/(2*radius));
+  sheet[i][j] += 1;
+  if (sheet[i][j] == 10) {sheet[i][j] = 0;}
+  if (sheet[i][j] == 1) {sheet[i][j] = 8;}
+  draw(sheet, c, workplace);
 }
 
 function getMousePos(canvas, evt) {
-	var rect = canvas.getBoundingClientRect();
-		return {
-			x: evt.clientX - rect.left,
-			y: evt.clientY - rect.top
-		};
+  var rect = canvas.getBoundingClientRect();
+  return {
+    x: evt.clientX - rect.left,
+    y: evt.clientY - rect.top
+  };
 }
 
 var cutSheet = function(){
