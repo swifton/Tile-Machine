@@ -1,22 +1,15 @@
-var sheetH = 10, sheetW = 10;
-
-var mode = "programming";
-var sheet = new Array(sheetW);
-sheet[0] = new Array(sheetH);
-reset(sheet, 9, false);
-var program = [];
-var workplace = [Math.floor((wid - sheetW * radius * 2)/2), 0];
-clear(c);
-draw(sheet, c, workplace);
-
-//grid();
-
-c.addEventListener('mousedown', clickReporter, false);
+function programmingSetup() {
+  sheet[0] = new Array(sheetH);
+  reset(sheet, 9, false);
+  clear(c);
+  draw(sheet, c, workplace);
+}
 
 function clickReporter(e) {
   var mousePos = getMousePos(c, e);
   i = Math.floor((mousePos.x - workplace[0])/(2*radius));
   j = Math.floor((mousePos.y - workplace[1])/(2*radius));
+p(workplace);
   sheet[i][j] += 1;
   if (sheet[i][j] == 10) {sheet[i][j] = 0;}
   if (sheet[i][j] == 1) {sheet[i][j] = 8;}

@@ -20,10 +20,11 @@
   <body>  
     <canvas id='c'></canvas>
 
-    <script src="utils.js"></script>   
-    <script src="sheet.js"></script>   
-    <script src="Tetris.js"></script>   
-    <script src="ProgrammingTetris.js"></script>   
+    <script src="utils.js"></script>
+    <script src="sheet.js"></script>
+    <script src="run.js"></script>
+    <script src="program.js"></script>
+    <script src="main.js"></script>
   </body> 
  
 </html>  

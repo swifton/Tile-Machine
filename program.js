@@ -1,17 +1,9 @@
-var sheetH = 10, sheetW = 10;
-
-var mode = "programming";
-var sheet = new Array(sheetH);
-sheet[0] = new Array(sheetW);
-reset(sheet, 9, false);
-var program = [];
-var workplace = [Math.floor((wid - sheetW * radius * 2)/2), 0];
-clear(c);
-draw(sheet, c, workplace);
-
-//grid();
-
-c.addEventListener('mousedown', clickReporter, false);
+function programmingSetup() {
+  sheet[0] = new Array(sheetH);
+  reset(sheet, 9, false);
+  clear(c);
+  draw(sheet, c, workplace);
+}
 
 function clickReporter(e) {
   var mousePos = getMousePos(c, e);

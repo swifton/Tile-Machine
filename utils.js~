@@ -17,7 +17,6 @@ function clear(cnv){
 }
 
 function drawLine(x1, y1, x2, y2) {
-console.log(x1, x2, y1, y2);
 	ctx.moveTo(x1,y1);
 	ctx.lineTo(x2,y2);
 	ctx.stroke();
@@ -58,10 +57,10 @@ function grid() {
   }
 }
 
-function drawTile(x, y, im, cc){
-	var img=new Image();
+function drawTile(x, y, im, cc) {
+	var img = new Image();
 	var str = "images/";
-	img.src= str.concat(im);
+	img.src = str.concat(im);
 	cc.drawImage(img, x - radius, y - radius); 
 }
 
@@ -82,5 +81,6 @@ function drawNextFigure(){
 	}
 }
 
-var wid, heit;
-resizeCanvas();
+function p(output) {
+  console.log(output);
+}

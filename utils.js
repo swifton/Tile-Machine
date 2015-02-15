@@ -57,11 +57,11 @@ function grid() {
   }
 }
 
-function drawTile(x, y, im, cc){
-	var img=new Image();
-	var str = "images/";
-	img.src= str.concat(im);
-	cc.drawImage(img, x - radius, y - radius); 
+function drawTile(x, y, im, cc) {
+  var img = new Image();
+  var str = "images/";
+  img.src = str.concat(im);
+  cc.drawImage(img, x - radius, y - radius); 
 }
 
 
@@ -81,5 +81,6 @@ function drawNextFigure(){
 	}
 }
 
-var wid, heit;
-resizeCanvas();
+function p(output) {
+  console.log(output);
+}
