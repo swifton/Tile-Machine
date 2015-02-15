@@ -244,8 +244,3 @@ var GameLoop = function(){
 
 	gLoop = setTimeout(GameLoop, 1000 / 4);
 }
-
-//updatePosition(nOfFigure + 1);
-//window.addEventListener( "keydown", doKeyDown, true);
-
-//GameLoop();

@@ -57,13 +57,6 @@ function grid() {
   }
 }
 
-function drawTile(x, y, im, cc) {
-	var img = new Image();
-	var str = "images/";
-	img.src = str.concat(im);
-	cc.drawImage(img, x - radius, y - radius); 
-}
-
 
 var updateStats = function(){
 /*	ctxv.fillStyle = '#000000';

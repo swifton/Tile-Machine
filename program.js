@@ -2,7 +2,6 @@ function programmingSetup() {
   sheet[0] = new Array(sheetH);
   reset(sheet, 9, false);
   clear(c);
-  draw(sheet, c, workplace);
 }
 
 function clickReporter(e) {
