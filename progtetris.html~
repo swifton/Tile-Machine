@@ -24,6 +24,8 @@
     <script src="sheet.js"></script>
     <script src="run.js"></script>
     <script src="program.js"></script>
+    <script src="gui.js"></script>
+    <script src="buttons.js"></script>
     <script src="game.js"></script>
   </body> 
  

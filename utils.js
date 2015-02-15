@@ -92,6 +92,19 @@ function getMousePos(canvas, evt) {
   };
 }
 
+function drawLabel(label, x, y) {
+  ctx.fillStyle = "blue";
+  ctx.font = "bold 20px Arial";
+  ctx.fillText(label, x, y);
+}
+
+function clickReporter(e) {
+  var mousePos = getMousePos(c, e);
+  sheetInput(mousePos);
+  buttonPress(mousePos);
+}
+
+
 function p(output) {
   console.log(output);
 }

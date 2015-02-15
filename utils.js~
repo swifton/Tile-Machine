@@ -84,6 +84,27 @@ function loadAssets() {
   }
 }
 
+function getMousePos(canvas, evt) {
+  var rect = canvas.getBoundingClientRect();
+  return {
+    x: evt.clientX - rect.left,
+    y: evt.clientY - rect.top
+  };
+}
+
+function drawLabel(label, x, y) {
+  ctx.fillStyle = "blue";
+  ctx.font = "bold 16px Arial";
+  ctx.fillText(label, x, y);
+}
+
+function clickReporter(e) {
+  var mousePos = getMousePos(c, e);
+  sheetInput(mousePos);
+  buttonPress(mousePos);
+}
+
+
 function p(output) {
   console.log(output);
 }

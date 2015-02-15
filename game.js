@@ -17,7 +17,7 @@ resizeCanvas();
 var sheetH = 10, sheetW = 10;
 var sheet = new Array(sheetW);
 var program = [];
-var workplace = [Math.floor((wid - sheetW * radius * 2)/2), 0];
+var workplace = [Math.floor((wid - sheetW * diam)/2), 0];
 
 
 programmingSetup();
@@ -26,6 +26,10 @@ c.addEventListener('mousedown', clickReporter, false);
 // asset load
 var images = new Array(10);
 loadAssets();
+
+// button setup
+var buttons;
+setupButtons();
 
 // global variables for running environment
 
