@@ -18,14 +18,15 @@ var sheetH = 10, sheetW = 10;
 var sheet = new Array(sheetW);
 var program = [];
 var workplace = [Math.floor((wid - sheetW * diam)/2), 0];
-
-
-programmingSetup();
-c.addEventListener('mousedown', clickReporter, false);
+var editingSheet;
+var editing;
 
 // asset load
 var images = new Array(10);
 loadAssets();
+
+programmingSetup();
+c.addEventListener('mousedown', clickReporter, false);
 
 // button setup
 var buttons;

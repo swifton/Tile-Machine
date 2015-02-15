@@ -1,12 +1,17 @@
 function programmingSetup() {
+  newSheet();
+}
+
+function newSheet() {
   sheet[0] = new Array(sheetH);
   reset(sheet, 9, false);
-  clear(c);
+  editing = false;
+  drawEverything();
 }
 
 function sheetInput(mousePos) {
-  i = Math.floor((mousePos.x - workplace[0])/(2*radius));
-  j = Math.floor((mousePos.y - workplace[1])/(2*radius));
+  i = Math.floor((mousePos.x - workplace[0]) / diam);
+  j = Math.floor((mousePos.y - workplace[1]) / diam);
   if ((i > sheetW - 1) || (j > sheetH - 1) || (i < 0) || (j < 0)) return;
   sheet[i][j] += 1;
   if (sheet[i][j] == 10) {sheet[i][j] = 0;}
@@ -15,7 +20,16 @@ function sheetInput(mousePos) {
 }
 	  
 function saveSheet(){
-  program.push(copySheet(sheet));
+  if (!editing) {
+    program.push(copySheet(sheet));
+    editingSheet = program.length - 1;
+    editing = true;
+    var i = program.length - 1;
+    buttons.push(new button("", diam, i * sheetH * diam + diam * (i + 1), diam * sheetW, diam * sheetH, function() {editingSheet = i; editing = true; sheet = copySheet(program[i]); drawEverything();}));
+  }
+  else {
+    program[editingSheet] = copySheet(sheet);
+  }
   drawEverything();
 }
 
