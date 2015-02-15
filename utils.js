@@ -80,7 +80,7 @@ function loadAssets() {
   }
 
   images[9].onload = function() {
-    draw(sheet, c, workplace);
+    drawEverything();
   }
 }
 
@@ -102,6 +102,18 @@ function clickReporter(e) {
   var mousePos = getMousePos(c, e);
   sheetInput(mousePos);
   buttonPress(mousePos);
+}
+
+function copySheet(sheet) {
+  var copy = new Array(sheet.length);
+  copy[0] = new Array(sheet[0].length);
+  reset(copy, 0, false);
+  for (var i = 0; i < sheet.length; i++) {
+    for (var j = 0; j < sheet[0].length; j++) {
+      copy[i][j] = sheet[i][j];
+    }
+  }
+  return copy;
 }
 
 

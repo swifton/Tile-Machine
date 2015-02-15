@@ -11,20 +11,16 @@ function sheetInput(mousePos) {
   sheet[i][j] += 1;
   if (sheet[i][j] == 10) {sheet[i][j] = 0;}
   if (sheet[i][j] == 1) {sheet[i][j] = 8;}
-  draw(sheet, c, workplace);
+  drawEverything();
 }
 	  
 function saveSheet(){
-  console.log('sheet saved');
+  program.push(copySheet(sheet));
+  drawEverything();
 }
 
-var test = function(){
-	width = fieldW * 25;
-	height = fieldH * 25;
-	c.width = width;
-	c.height = height;
-	newGame();
-	GameLoop();
+function test(){
+  
 }
 
 var findPosition = function(){

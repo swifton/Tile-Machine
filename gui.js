@@ -1,29 +1,32 @@
-function draw(data, canvas, start){
-  var context = canvas.getContext('2d');
+function drawData(data, start){
   var wid = data.length;
   var heit = data[0].length;
 
-  cwid = wid * diam;
-  cheit = heit * diam;
-  //canvas.width = cwid;
-  //canvas.height = cheit;
-
-  clear(c);
-
-  rectangle(workplace, sheetW * diam, sheetH * diam);
+  rectangle(start, wid * diam, heit * diam);
 
   for (var i = 0; i < wid; i++){
     for (var j = 0; j < heit; j++){
       if (data[i][j] != 0) {
-        drawTile(start[0] + i * diam + radius, start[1] + j * diam + radius, Math.abs(data[i][j]), context);
+        drawTile(start[0] + i * diam + radius, start[1] + j * diam + radius, Math.abs(data[i][j]), ctx);
       }
     }
   }
 
+};
+
+function drawEverything() {
+  clear(c);
+
+  drawData(sheet, workplace);
+
+  for (i = 0; i < program.length; i++) {
+    drawData(program[i], [diam, i * sheetH * diam + diam * (i + 1)]);
+  }
+  
   for (i in buttons) {
     buttons[i].draw();
   }
-};
+}
 
 function drawTile(x, y, im, cc) {
   cc.drawImage(images[im], x - radius, y - radius); 
@@ -33,7 +36,7 @@ function buttonPress(mousePos) {
   var x = mousePos.x;
   var y = mousePos.y;
 
-  for (i in buttons) {
+  for (i = 0; i < buttons.length; i++) {
     buttons[i].press(x, y);
   }
 }
