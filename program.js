@@ -8,6 +8,7 @@ function clickReporter(e) {
   var mousePos = getMousePos(c, e);
   i = Math.floor((mousePos.x - workplace[0])/(2*radius));
   j = Math.floor((mousePos.y - workplace[1])/(2*radius));
+  if ((i > sheetW - 1) || (j > sheetH - 1) || (i < 0) || (j < 0)) return;
   sheet[i][j] += 1;
   if (sheet[i][j] == 10) {sheet[i][j] = 0;}
   if (sheet[i][j] == 1) {sheet[i][j] = 8;}
