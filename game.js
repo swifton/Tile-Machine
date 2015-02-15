@@ -62,3 +62,29 @@ var figure1 = [[3,0],[4,0],[5,0],[6,0]],
 //window.addEventListener( "keydown", doKeyDown, true);
 
 //GameLoop();
+
+var contents;
+
+document.getElementById('file-input')
+  .addEventListener('change', readSingleFile, false);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

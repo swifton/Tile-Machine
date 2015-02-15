@@ -65,9 +65,11 @@ function button(label, x, y, wid, heit, func) {
 }
 
 function setupButtons() {
-  var save = new button("Save sheet", workplace[0], sheetH * diam + 5, 108, 19, saveSheet);
+  var save = new button("Save sheet", workplace[0], sheetH * diam + 5, 115, 19, saveSheet);
   var newSheetButton = new button("New sheet", workplace[0] + save.wid + diam, sheetH * diam + 5, 108, 19, newSheet);
-  buttons = [save, newSheetButton];
+  var saveProgram = new button("Save program", workplace[0], sheetH * diam + 10 + 20, 140, 19, saveProg);
+ // var loadProgram = new button("Load", workplace[0] + saveProgram.wid + diam, sheetH * diam + 10 + 20, 80, 19, loadProg);
+  buttons = [save, newSheetButton, saveProgram];
 }
 
 

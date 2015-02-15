@@ -33,6 +33,15 @@ function saveSheet(){
   drawEverything();
 }
 
+function saveProg() {
+  p(JSON.stringify(program));
+}
+
+function loadProg(contents) {  
+  program = JSON.parse(contents);
+  drawEverything();
+}
+
 function test(){
   
 }

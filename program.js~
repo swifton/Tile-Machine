@@ -25,12 +25,20 @@ function saveSheet(){
     editingSheet = program.length - 1;
     editing = true;
     var i = program.length - 1;
-    buttons.push(new button("", diam, i * sheetH * diam + diam * (i + 1), diam * sheetW, diam * sheetH, function() {editingSheet = i; editing = true; sheet = program[i]; drawEverything();}));
+    buttons.push(new button("", diam, i * sheetH * diam + diam * (i + 1), diam * sheetW, diam * sheetH, function() {editingSheet = i; editing = true; sheet = copySheet(program[i]); drawEverything();}));
   }
   else {
     program[editingSheet] = copySheet(sheet);
   }
   drawEverything();
+}
+
+function saveProg() {
+  p(JSON.stringify(program));
+}
+
+function loadProg(contents) {  
+  program = JSON.parse(contents);
 }
 
 function test(){

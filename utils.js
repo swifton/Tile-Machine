@@ -116,6 +116,19 @@ function copySheet(sheet) {
   return copy;
 }
 
+function readSingleFile(e) {
+  var file = e.target.files[0];
+  if (!file) {
+    return;
+  }
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var contents = e.target.result;
+    loadProg(contents);
+  };
+  reader.readAsText(file);
+}
+
 
 function p(output) {
   console.log(output);

@@ -104,6 +104,32 @@ function clickReporter(e) {
   buttonPress(mousePos);
 }
 
+function copySheet(sheet) {
+  var copy = new Array(sheet.length);
+  copy[0] = new Array(sheet[0].length);
+  reset(copy, 0, false);
+  for (var i = 0; i < sheet.length; i++) {
+    for (var j = 0; j < sheet[0].length; j++) {
+      copy[i][j] = sheet[i][j];
+    }
+  }
+  return copy;
+}
+
+function readSingleFile(e) {
+  var file = e.target.files[0];
+  if (!file) {
+    return;
+  }
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var contents = e.target.result;
+    displayContents(contents);
+  };
+  reader.readAsText(file);
+}
+
+
 function p(output) {
   console.log(output);
 }
