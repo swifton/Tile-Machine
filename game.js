@@ -20,6 +20,7 @@ var program = [];
 var workplace = [Math.floor((wid - sheetW * diam)/2), 0];
 var editingSheet;
 var editing;
+var programOffset = 0;
 
 // asset load
 var images = new Array(10);
@@ -31,6 +32,7 @@ c.addEventListener('mousedown', clickReporter, false);
 // button setup
 var buttons;
 setupButtons();
+var nOfStandardButtons = buttons.length;
 
 // global variables for running environment
 
@@ -68,7 +70,10 @@ var contents;
 document.getElementById('file-input')
   .addEventListener('change', readSingleFile, false);
 
-
+this.canvas.addEventListener('mousewheel',function(event){
+    scroll(event);
+    return false;
+}, false);
 
 
 

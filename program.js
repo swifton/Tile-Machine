@@ -17,6 +17,16 @@ function sheetInput(mousePos) {
   if (mainSheet.pattern[i][j] == 1) {mainSheet.pattern[i][j] = 8;}
   drawEverything();
 }
+
+function scroll(event) {
+  var direction = Math.sign(event.wheelDeltaY);
+  var scrollSpeed = 30;
+  programOffset += scrollSpeed * direction;
+  for (var i = nOfStandardButtons; i < buttons.length; i++) {
+    buttons[i].y += scrollSpeed * direction;
+  }
+  drawEverything();
+}
 	  
 function saveSheet(){
   if (!editing) {
@@ -25,7 +35,7 @@ function saveSheet(){
     var i = program.length - 1;
     editingSheet = i;
     program[i].number = i;
-    var b = new button("", diam, i * sheetH * diam + diam * (i + 1), diam * sheetW, diam * sheetH, function() {editSheet(i)});
+    var b = new button("", diam, i * sheetH * diam + diam * (i + 1) + programOffset, diam * sheetW, diam * sheetH, function() {editSheet(i)});
     buttons.push(b);
   }
   else {

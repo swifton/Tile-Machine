@@ -18,7 +18,7 @@ function drawEverything() {
   clear(c);
   drawData(mainSheet.pattern, workplace);
   for (i = 0; i < program.length; i++) {
-    drawData(program[i].pattern, [diam, i * sheetH * diam + diam * (i + 1)]);
+    drawData(program[i].pattern, [diam, i * sheetH * diam + diam * (i + 1) + programOffset]);
   }
   
   for (i in buttons) {
