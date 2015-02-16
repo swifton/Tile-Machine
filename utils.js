@@ -3,7 +3,7 @@ function resizeCanvas(){
   heit = window.innerHeight;
   canvas = document.getElementById("c");
   canvas.width = wid;
-  canvas.height = heit;
+  canvas.height = heit - 30;
 }
 
 function clear(cnv){

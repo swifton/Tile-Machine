@@ -15,7 +15,7 @@ resizeCanvas();
 
 // global variables for programming environment
 var sheetH = 10, sheetW = 10;
-var sheet = new Array(sheetW);
+var mainSheet = new sheet(sheetW, sheetH); //new Array(sheetW);
 var program = [];
 var workplace = [Math.floor((wid - sheetW * diam)/2), 0];
 var editingSheet;

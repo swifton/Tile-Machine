@@ -1,31 +1,33 @@
 function sheet(cols, rows) {
+  this.cols = cols;
+  this.rows = rows;
   this.pattern = new Array(cols);
   this.pattern[0] = new Array(rows);
 
   this.reset = reset;
   function reset() {
-    for (var i = 0; i < wid; i++){
-      data[i] = new Array(rows);
+    for (var i = 0; i < this.cols; i++){
+      this.pattern[i] = new Array(rows);
 
-      for (var j = 0; j < hei; j++){
-        data[i][j] = 9;
+      for (var j = 0; j < this.rows; j++){
+        this.pattern[i][j] = 9;
       }
     }
   }
   
+  this.reset();
+
   this.copy = copy;
   function copy() {
-    var copy = new Array(sheet.length);
-    copy[0] = new Array(sheet[0].length);
-    reset(copy, 0, false);
-    for (var i = 0; i < sheet.length; i++) {
-      for (var j = 0; j < sheet[0].length; j++) {
-        copy[i][j] = sheet[i][j];
+    var copy = new sheet(this.cols, this.rows)
+    copy.pattern = new Array(this.cols);
+    copy.pattern[0] = new Array(this.rows);
+    copy.reset();
+    for (var i = 0; i < this.cols; i++) {
+      for (var j = 0; j < this.rows; j++) {
+        copy.pattern[i][j] = this.pattern[i][j];
       }
     }
     return copy;
   }
-
-
-  reset();
 }

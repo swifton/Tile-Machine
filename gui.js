@@ -16,11 +16,9 @@ function drawData(data, start){
 
 function drawEverything() {
   clear(c);
-
-  drawData(sheet, workplace);
-
+  drawData(mainSheet.pattern, workplace);
   for (i = 0; i < program.length; i++) {
-    drawData(program[i], [diam, i * sheetH * diam + diam * (i + 1)]);
+    drawData(program[i].pattern, [diam, i * sheetH * diam + diam * (i + 1)]);
   }
   
   for (i in buttons) {
@@ -69,7 +67,8 @@ function setupButtons() {
   var newSheetButton = new button("New sheet", workplace[0] + save.wid + diam, sheetH * diam + 5, 108, 19, newSheet);
   var saveProgram = new button("Save program", workplace[0], sheetH * diam + 10 + 20, 140, 19, saveProg);
  // var loadProgram = new button("Load", workplace[0] + saveProgram.wid + diam, sheetH * diam + 10 + 20, 80, 19, loadProg);
-  buttons = [save, newSheetButton, saveProgram];
+  var test = new button("Test", workplace[0] + saveProgram.wid + diam, sheetH * diam + 10 + 20, 50, 19, test);
+  buttons = [save, newSheetButton, saveProgram, test];
 }
 
 

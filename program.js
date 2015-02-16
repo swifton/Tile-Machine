@@ -3,8 +3,7 @@ function programmingSetup() {
 }
 
 function newSheet() {
-  sheet[0] = new Array(sheetH);
-  reset(sheet, 9, false);
+  mainSheet.reset();
   editing = false;
   drawEverything();
 }
@@ -13,24 +12,37 @@ function sheetInput(mousePos) {
   i = Math.floor((mousePos.x - workplace[0]) / diam);
   j = Math.floor((mousePos.y - workplace[1]) / diam);
   if ((i > sheetW - 1) || (j > sheetH - 1) || (i < 0) || (j < 0)) return;
-  sheet[i][j] += 1;
-  if (sheet[i][j] == 10) {sheet[i][j] = 0;}
-  if (sheet[i][j] == 1) {sheet[i][j] = 8;}
+  mainSheet.pattern[i][j] += 1;
+  if (mainSheet.pattern[i][j] == 10) {mainSheet.pattern[i][j] = 0;}
+  if (mainSheet.pattern[i][j] == 1) {mainSheet.pattern[i][j] = 8;}
   drawEverything();
 }
 	  
 function saveSheet(){
   if (!editing) {
-    program.push(copySheet(sheet));
-    editingSheet = program.length - 1;
+    program.push(mainSheet.copy());
     editing = true;
     var i = program.length - 1;
-    buttons.push(new button("", diam, i * sheetH * diam + diam * (i + 1), diam * sheetW, diam * sheetH, function() {editingSheet = i; editing = true; sheet = copySheet(program[i]); drawEverything();}));
+    editingSheet = i;
+    program[i].number = i;
+    var b = new button("", diam, i * sheetH * diam + diam * (i + 1), diam * sheetW, diam * sheetH, function() {editSheet(i)});
+    buttons.push(b);
   }
   else {
-    program[editingSheet] = copySheet(sheet);
+    program[editingSheet] = mainSheet.copy();
   }
   drawEverything();
+}
+
+function editSheet(number) {
+  editingSheet = number; 
+  editing = true; 
+  mainSheet = program[number].copy();
+  drawEverything();
+}
+
+function createEdit(number) {
+  return function() {editSheet(number)};
 }
 
 function saveProg() {
@@ -40,6 +52,12 @@ function saveProg() {
 function loadProg(contents) {  
   program = JSON.parse(contents);
   drawEverything();
+  for (var j = 0; j < program.length; j++) {
+    var sh = program[j];
+    program[j] = new sheet(sh.cols, sh.rows);
+    program[j].pattern = sh.pattern;
+    buttons.push(new button("", diam, j * sheetH * diam + diam * (j + 1), diam * sheetW, diam * sheetH, createEdit(j)));
+  }
 }
 
 function test(){
