@@ -21,6 +21,27 @@ function findCommand() {
 }
 
 function checkCommand(command) {
+  if (comparePatterns(command.pattern, field, 0, 10)) {return true;}
+  return false;
+}
+
+function comparePatterns (pattern, field, offsetX, offsetY) {
+  for (var i = 0; i < pattern.length; i++) {
+    for (var j = 0; j < pattern[0].length; j++) {
+      if((field[i + offsetX] == undefined) || (field[i + offsetX][j + offsetY] == undefined)) {
+        if (pattern[i][j] == 9) {continue;}
+        else {return false;}
+      }
+      if (!compare(pattern[i][j], field[i + offsetX][j + offsetY])) {return false;}
+    }
+  }
+  return true;
+}
+
+function compare(pattern, field) {
+  if (pattern == 9) {return true;}
+  if ((pattern == 0) && (field == 0)) {return true;}
+  if ((pattern == 8) && (field != 0)) {return true;} 
   return false;
 }
 
@@ -70,18 +91,18 @@ var updatePosition = function(num){
 	}
 }
 
-var updateField = function(){
-	if (checkMove([0,1])){
-		updatePosition(-nOfFigure - 1);
-		checkField();
-		newFigure();
-		checkEnd();
-		updatePosition(nOfFigure + 1);
-		return 1;
-	}
-	updatePosition(0);
-	for (var i = 0; i < 4; i++){figure[i][1]++;}	
-	updatePosition(nOfFigure + 1);
+function updateField(){
+  if (checkMove([0,1])){
+    updatePosition(-nOfFigure - 1);
+    checkField();
+    newFigure();
+    checkEnd();
+    updatePosition(nOfFigure + 1);
+    return 1;
+  }
+  updatePosition(0);
+  for (var i = 0; i < 4; i++){figure[i][1]++;}	
+  updatePosition(nOfFigure + 1);
 }
 
 // Check functions
@@ -168,5 +189,5 @@ var GameLoop = function(){
 	drawExec(field, c);
 	drawNextFigure();
 
-	gLoop = setTimeout(GameLoop, 1000 / 4);
+	gLoop = setTimeout(GameLoop, 1000/4);
 }

@@ -19,6 +19,7 @@ function sheetInput(mousePos) {
 }
 
 function scroll(event) {
+  if (mode == "executing") return;
   var direction = Math.sign(event.wheelDeltaY);
   var scrollSpeed = 30;
   programOffset += scrollSpeed * direction;
