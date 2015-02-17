@@ -14,16 +14,26 @@ function drawData(data, start){
 
 };
 
-function drawEverything() {
+function drawButtons(buttons) {
+  for (var i = 0; i < buttons.length; i++) {
+    buttons[i].draw();
+  }
+}
+
+function drawProg() {
   clear(c);
   drawData(mainSheet.pattern, workplace);
   for (i = 0; i < program.length; i++) {
     drawData(program[i].pattern, [diam, i * sheetH * diam + diam * (i + 1) + programOffset]);
   }
-  
-  for (i in buttons) {
-    buttons[i].draw();
-  }
+
+  drawButtons(progButtons);
+}
+
+function drawExec() {
+  drawData(field, workplace);
+  drawData(command.pattern, add(workplace, [sheetW * diam, 0]));
+  drawButtons(execButtons);
 }
 
 function drawTile(x, y, im, cc) {
@@ -34,8 +44,16 @@ function buttonPress(mousePos) {
   var x = mousePos.x;
   var y = mousePos.y;
 
-  for (i = 0; i < buttons.length; i++) {
-    buttons[i].press(x, y);
+  if (mode == "programming") {
+    for (var i = 0; i < progButtons.length; i++) {
+      progButtons[i].press(x, y);
+    }
+  }
+
+  else if (mode == "executing") {
+    for (var i = 0; i < execButtons.length; i++) {
+      execButtons[i].press(x, y);
+    }
   }
 }
 
@@ -67,8 +85,9 @@ function setupButtons() {
   var newSheetButton = new button("New sheet", workplace[0] + save.wid + diam, sheetH * diam + 5, 108, 19, newSheet);
   var saveProgram = new button("Save program", workplace[0], sheetH * diam + 10 + 20, 140, 19, saveProg);
  // var loadProgram = new button("Load", workplace[0] + saveProgram.wid + diam, sheetH * diam + 10 + 20, 80, 19, loadProg);
-  var test = new button("Test", workplace[0] + saveProgram.wid + diam, sheetH * diam + 10 + 20, 50, 19, test);
-  buttons = [save, newSheetButton, saveProgram, test];
+  var testButton = new button("Test", workplace[0] + saveProgram.wid + diam, sheetH * diam + 10 + 20, 50, 19, test);
+  progButtons = [save, newSheetButton, saveProgram, testButton];
+  execButtons = [];
 }
 
 

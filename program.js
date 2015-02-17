@@ -5,7 +5,7 @@ function programmingSetup() {
 function newSheet() {
   mainSheet.reset();
   editing = false;
-  drawEverything();
+  drawProg();
 }
 
 function sheetInput(mousePos) {
@@ -15,17 +15,17 @@ function sheetInput(mousePos) {
   mainSheet.pattern[i][j] += 1;
   if (mainSheet.pattern[i][j] == 10) {mainSheet.pattern[i][j] = 0;}
   if (mainSheet.pattern[i][j] == 1) {mainSheet.pattern[i][j] = 8;}
-  drawEverything();
+  drawProg();
 }
 
 function scroll(event) {
   var direction = Math.sign(event.wheelDeltaY);
   var scrollSpeed = 30;
   programOffset += scrollSpeed * direction;
-  for (var i = nOfStandardButtons; i < buttons.length; i++) {
-    buttons[i].y += scrollSpeed * direction;
+  for (var i = nOfStandardButtons; i < progButtons.length; i++) {
+    progButtons[i].y += scrollSpeed * direction;
   }
-  drawEverything();
+  drawProg();
 }
 	  
 function saveSheet(){
@@ -36,19 +36,19 @@ function saveSheet(){
     editingSheet = i;
     program[i].number = i;
     var b = new button("", diam, i * sheetH * diam + diam * (i + 1) + programOffset, diam * sheetW, diam * sheetH, function() {editSheet(i)});
-    buttons.push(b);
+    progButtons.push(b);
   }
   else {
     program[editingSheet] = mainSheet.copy();
   }
-  drawEverything();
+  drawProg();
 }
 
 function editSheet(number) {
   editingSheet = number; 
   editing = true; 
   mainSheet = program[number].copy();
-  drawEverything();
+  drawProg();
 }
 
 function createEdit(number) {
@@ -61,17 +61,19 @@ function saveProg() {
 
 function loadProg(contents) {  
   program = JSON.parse(contents);
-  drawEverything();
+  drawProg();
   for (var j = 0; j < program.length; j++) {
     var sh = program[j];
     program[j] = new sheet(sh.cols, sh.rows);
     program[j].pattern = sh.pattern;
-    buttons.push(new button("", diam, j * sheetH * diam + diam * (j + 1), diam * sheetW, diam * sheetH, createEdit(j)));
+    progButtons.push(new button("", diam, j * sheetH * diam + diam * (j + 1), diam * sheetW, diam * sheetH, createEdit(j)));
   }
 }
 
 function test(){
-  
+  mode = "executing";
+  newGame();
+  GameLoop();
 }
 
 var findPosition = function(){

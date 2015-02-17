@@ -13,11 +13,18 @@ var wid, heit;
 
 resizeCanvas();
 
-// global variables for programming environment
 var sheetH = 10, sheetW = 10;
-var mainSheet = new sheet(sheetW, sheetH); //new Array(sheetW);
-var program = [];
 var workplace = [Math.floor((wid - sheetW * diam)/2), 0];
+
+// button setup
+var progButtons;
+var execButtons;
+setupButtons();
+var nOfStandardButtons = progButtons.length;
+
+// global variables for programming environment
+var mainSheet = new sheet(sheetW, sheetH);
+var program = [];
 var editingSheet;
 var editing;
 var programOffset = 0;
@@ -28,11 +35,6 @@ loadAssets();
 
 programmingSetup();
 c.addEventListener('mousedown', clickReporter, false);
-
-// button setup
-var buttons;
-setupButtons();
-var nOfStandardButtons = buttons.length;
 
 // global variables for running environment
 
@@ -47,6 +49,7 @@ field[0] = new Array(fieldH + 1);
 var nOfFigure;
 var newNOfFigure = Math.floor(Math.random()*7);
 var gamePaused = false;
+var command = new sheet(sheetW, sheetH);
 //newGame();
 
 

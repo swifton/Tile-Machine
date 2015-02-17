@@ -80,7 +80,7 @@ function loadAssets() {
   }
 
   images[9].onload = function() {
-    drawEverything();
+    drawProg();
   }
 }
 

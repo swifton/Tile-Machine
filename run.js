@@ -1,13 +1,27 @@
 // Initialization functions
 
-var newFigure = function() {
-	nOfFigure = newNOfFigure;
-	newNOfFigure = Math.floor(Math.random()*7);
-	for (var j = 0; j < 4; j++)
-	{
-		figure[j] = figures[nOfFigure][j].slice(0);
-	}
-	figuresReceived += 1;
+function newFigure() {
+  nOfFigure = newNOfFigure;
+  newNOfFigure = Math.floor(Math.random()*7);
+  for (var j = 0; j < 4; j++) {
+    figure[j] = figures[nOfFigure][j].slice(0);
+  }
+  figuresReceived += 1;
+  findCommand();
+}
+
+function findCommand() {
+  for (i = 0; i < program.length; i++) {
+    if (checkCommand(program[i])) {
+      command = program[i].copy();
+      return;
+    }
+  }
+  command = new sheet(sheetW, sheetH);
+}
+
+function checkCommand(command) {
+  return false;
 }
 
 function reset(data, value, ground) {
@@ -130,47 +144,6 @@ var moveFigure = function(dir){
 	updatePosition(nOfFigure + 1);
 }
 
-var rotateFigure = function(){
-	if (nOfFigure == 4) { return 1; }
-	tmp = new Array(4);
-	var a;
-	for (var i = 0; i < 4; i++){
-		tmp[i] = figure[i].slice(0);
-		tmp[i][0] -= figure[1][0];
-		tmp[i][1] -= figure[1][1];
-		if (nOfFigure == 0){
-			a = tmp[i][0];
-			tmp[i][0] = tmp[i][1];
-			tmp[i][1] = a;
-		}
-	}
-	if (nOfFigure == 1){
-		tmp = [tmp[3],tmp[1],[-tmp[3][0],-tmp[3][1]],tmp[2]]
-	}
-	
-	if (nOfFigure == 2 || nOfFigure == 3){
-		tmp = [[-tmp[2][0],-tmp[2][1]],tmp[1],tmp[0],[tmp[0][0]+tmp[2][0],tmp[0][1]+tmp[2][1]]]
-	}
-	
-	if (nOfFigure == 5){
-		tmp = [tmp[3],[-tmp[3][0],-tmp[3][1]],tmp[1],[-tmp[3][0]-tmp[2][0],-tmp[3][1]-tmp[2][1]]]
-	} 
-	
-	if (nOfFigure == 6){
-		tmp = [[-tmp[3][0],-tmp[3][1]],tmp[3],tmp[1],[tmp[3][0]+tmp[2][0],tmp[3][1]+tmp[2][1]]]
-	}
-	 
-	for (var i = 0; i < 4; i++){
-		tmp[i][0] += figure[1][0];
-		tmp[i][1] += figure[1][1];
-	}
-	if (checkPosition(tmp)){
-		for (var i = 0; i < 4; i++){
-			figure[i] = tmp[i].slice(0);
-		}
-	}	
-}
-
 var dropFigure = function(){
 	var tmp = new Array(4);
 	for (var i = 0; i < 4; i++){
@@ -189,32 +162,10 @@ var dropFigure = function(){
 	moveFigure([0, k -1]);
 }
 
-function doKeyDown(e) {
-	if (gamePaused == true) {return;}
-	var i = e.keyCode;
-	//console.log(i);
-	updatePosition(0);
-	if (i == 37){
-		moveFigure([-1, 0]);
-	}
-	if (i == 39){
-		moveFigure([1, 0]);
-	}
-	if (i == 38){
-		rotateFigure();
-	}
-	if (i == 40){
-		dropFigure();
-	}
-	updatePosition(nOfFigure + 1);
-	clear(c);
-	draw(field, c);
-}
-
 var GameLoop = function(){
 	clear(c);
 	updateField();
-	draw(field, c);
+	drawExec(field, c);
 	drawNextFigure();
 
 	gLoop = setTimeout(GameLoop, 1000 / 4);
