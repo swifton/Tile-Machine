@@ -14,6 +14,7 @@ var wid, heit;
 resizeCanvas();
 
 var sheetH = 10, sheetW = 10;
+var fieldH = 20, fieldW = 10;
 var workplace = [Math.floor((wid - sheetW * diam)/2), 0];
 
 // button setup
@@ -40,8 +41,6 @@ c.addEventListener('mousedown', clickReporter, false);
 
 // global variables for running environment
 
-var fieldH = 20, fieldW = 10;
-
 width = fieldW * 2 * radius;
 height = fieldH * 2 * radius;
 var figure = [[0,0],[0,0],[0,0],[0,0]];
@@ -52,8 +51,6 @@ var nOfFigure;
 var newNOfFigure = Math.floor(Math.random()*7);
 var gamePaused = false;
 var command = new sheet(sheetW, sheetH);
-//newGame();
-
 
 var figure1 = [[3,0],[4,0],[5,0],[6,0]], // line
     figure2 = [[3,0],[4,0],[5,0],[4,1]], // T
@@ -63,12 +60,6 @@ var figure1 = [[3,0],[4,0],[5,0],[6,0]], // line
     figure6 = [[3,0],[5,0],[4,0],[5,1]], // L
     figure7 = [[5,0],[3,0],[4,0],[3,1]], // G
     figures = [figure1, figure2, figure3, figure4, figure5, figure6, figure7];
-	
-
-//updatePosition(nOfFigure + 1);
-//window.addEventListener( "keydown", doKeyDown, true);
-
-//GameLoop();
 
 var contents;
 

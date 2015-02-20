@@ -111,27 +111,3 @@ function test(){
   newGame();
   GameLoop();
 }
-
-var findPosition = function(){
-	var sh, bool;
-	var WofSh;
-	var HofSh;
-	for (i = 0; i < NofSheets; i++){
-		if (program[i][1][2] != NofTile) {continue;}
-		sh = program[i][0];
-		WofSh = program[i][1][0];
-		HofSh = program[i][1][1];
-		for (var k = 0; k < FieldW - WofSh; k++){
-			for (var l = 0; l < FieldH - HofSh; l++){
-				bool = 1;
-				for (var m = 0; m < WofSH; m++){
-					for (var n = 0; n < HofSH; n++){
-						if (sh[m][n] != field[k+m][l+n]) {bool = 0;}
-					}	
-				}
-				if (bool == 1) {return k;}
-			}	
-		}
-	}
-	return 0;
-}
