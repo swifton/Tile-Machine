@@ -24,6 +24,8 @@ var nOfStandardButtons = progButtons.length;
 
 // global variables for programming environment
 var mainSheet = new sheet(sheetW, sheetH);
+var directive = new sheet(sheetW, 4);
+var currentDirectiveFigure = 0;
 var program = [];
 var editingSheet;
 var editing;
@@ -53,13 +55,13 @@ var command = new sheet(sheetW, sheetH);
 //newGame();
 
 
-var figure1 = [[3,0],[4,0],[5,0],[6,0]], 
-    figure2 = [[3,0],[4,0],[5,0],[4,1]], 
-    figure3 = [[5,0],[4,0],[4,1],[3,1]], 
-    figure4 = [[3,0],[4,0],[4,1],[5,1]], 
-    figure5 = [[3,0],[4,0],[3,1],[4,1]],
-    figure6 = [[3,0],[5,0],[4,0],[5,1]],
-    figure7 = [[5,0],[3,0],[4,0],[3,1]],
+var figure1 = [[3,0],[4,0],[5,0],[6,0]], // line
+    figure2 = [[3,0],[4,0],[5,0],[4,1]], // T
+    figure3 = [[5,0],[4,0],[4,1],[3,1]], // z
+    figure4 = [[3,0],[4,0],[4,1],[5,1]], // s
+    figure5 = [[3,0],[4,0],[3,1],[4,1]], // block
+    figure6 = [[3,0],[5,0],[4,0],[5,1]], // L
+    figure7 = [[5,0],[3,0],[4,0],[3,1]], // G
     figures = [figure1, figure2, figure3, figure4, figure5, figure6, figure7];
 	
 

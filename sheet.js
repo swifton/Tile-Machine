@@ -3,6 +3,7 @@ function sheet(cols, rows) {
   this.rows = rows;
   this.pattern = new Array(cols);
   this.pattern[0] = new Array(rows);
+  this.directives = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]; // 1st coord - offset, 2nd - rotation
 
   this.reset = reset;
   function reset() {
@@ -27,6 +28,11 @@ function sheet(cols, rows) {
       for (var j = 0; j < this.rows; j++) {
         copy.pattern[i][j] = this.pattern[i][j];
       }
+    }
+
+    for (var i = 0; i < this.directives.length; i++) {
+      copy.directives[i][0] = this.directives[i][0];
+      copy.directives[i][1] = this.directives[i][1];
     }
     return copy;
   }

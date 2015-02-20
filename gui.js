@@ -22,7 +22,9 @@ function drawButtons(buttons) {
 
 function drawProg() {
   clear(c);
-  drawData(mainSheet.pattern, workplace);
+  drawData(directive.pattern, add(workplace, [0, diam]));
+  drawData(mainSheet.pattern, add(workplace, [0, 7 * diam]));
+
   for (i = 0; i < program.length; i++) {
     drawData(program[i].pattern, [diam, i * sheetH * diam + diam * (i + 1) + programOffset]);
   }
@@ -81,12 +83,27 @@ function button(label, x, y, wid, heit, func) {
 }
 
 function setupButtons() {
-  var save = new button("Save sheet", workplace[0], sheetH * diam + 5, 115, 19, saveSheet);
-  var newSheetButton = new button("New sheet", workplace[0] + save.wid + diam, sheetH * diam + 5, 108, 19, newSheet);
-  var saveProgram = new button("Save program", workplace[0], sheetH * diam + 10 + 20, 140, 19, saveProg);
+  var save = new button("Save sheet", workplace[0], (sheetH + 7) * diam + 5, 115, 19, saveSheet);
+  var newSheetButton = new button("New sheet", workplace[0] + save.wid + diam, (sheetH + 7) * diam + 5, 108, 19, newSheet);
+  var saveProgram = new button("Save program", workplace[0], (sheetH + 7) * diam + 10 + 20, 140, 19, saveProg);
  // var loadProgram = new button("Load", workplace[0] + saveProgram.wid + diam, sheetH * diam + 10 + 20, 80, 19, loadProg);
-  var testButton = new button("Test", workplace[0] + saveProgram.wid + diam, sheetH * diam + 10 + 20, 50, 19, test);
-  progButtons = [save, newSheetButton, saveProgram, testButton];
+  var testButton = new button("Test", workplace[0] + saveProgram.wid + diam, (sheetH + 7) * diam + 10 + 20, 50, 19, test);
+
+  var left = new button("<---------", workplace[0], 5 * diam + 3, 3 * diam, 19, function() {moveFigure(-1)});
+  var right = new button("--------->", workplace[0] + 7 * diam, 5 * diam + 3, 3 * diam, 19, function() {moveFigure(1)});
+
+  progButtons = [save, newSheetButton, saveProgram, testButton, left, right];
+
+  var figureLabels = ["line", 'T', 'Z', 'S', 'block', 'L', 'G'];
+
+  for (var i = 0; i < 7; i++) {
+    var figureButton = new button(figureLabels[i], workplace[0] + sheetW * diam + diam, diam * (i + 1), 60, 19, createShowFigure(i));
+    progButtons.push(figureButton);
+  }
+
+  //var newGame
+  //var stop
+
   execButtons = [];
 }
 
