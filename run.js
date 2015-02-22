@@ -5,7 +5,7 @@ function newFigure() {
   newNOfFigure = allowedFigures[Math.floor(Math.random()*allowedFigures.length)];
 
   findCommand();
-  var offset = command.directives[newNOfFigure][0];
+  var offset = command.directives[nOfFigure][0];
 
   for (var j = 0; j < 4; j++) {
     figure[j] = figures[nOfFigure][j].slice(0);
@@ -25,7 +25,9 @@ function findCommand() {
 }
 
 function checkCommand(command) {
-  if (comparePatterns(command.pattern, field, 0, 10)) {return true;}
+  for (var off = -10; off < 20; off ++) {
+    if (comparePatterns(command.pattern, field, 0, off)) {return true;}
+  }
   return false;
 }
 

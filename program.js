@@ -10,6 +10,7 @@ function newSheet() {
 }
 
 function sheetInput(mousePos) {
+  if (mode != "programming") return;
   i = Math.floor((mousePos.x - workplace[0]) / diam);
   j = Math.floor((mousePos.y - workplace[1] - 7 * diam) / diam);
   if ((i > sheetW - 1) || (j > sheetH - 1) || (i < 0) || (j < 0)) return;
@@ -20,7 +21,7 @@ function sheetInput(mousePos) {
 }
 
 function scroll(event) {
-  if (mode == "executing") return;
+  if (mode != "programming") return;
   var direction = Math.sign(event.wheelDeltaY);
   var scrollSpeed = 30;
   programOffset += scrollSpeed * direction;
