@@ -2,7 +2,7 @@
 
 function newFigure() {
   nOfFigure = newNOfFigure;
-  newNOfFigure = Math.floor(Math.random()*7);
+  newNOfFigure = allowedFigures[Math.floor(Math.random()*allowedFigures.length)];
 
   findCommand();
   var offset = command.directives[newNOfFigure][0];

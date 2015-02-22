@@ -60,6 +60,7 @@ var figure1 = [[3,0],[4,0],[5,0],[6,0]], // line
     figure6 = [[3,0],[5,0],[4,0],[5,1]], // L
     figure7 = [[5,0],[3,0],[4,0],[3,1]], // G
     figures = [figure1, figure2, figure3, figure4, figure5, figure6, figure7];
+var allowedFigures = [0, 4];
 
 var contents;
 
