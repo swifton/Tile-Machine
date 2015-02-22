@@ -3,11 +3,15 @@
 function newFigure() {
   nOfFigure = newNOfFigure;
   newNOfFigure = Math.floor(Math.random()*7);
+
+  findCommand();
+  var offset = command.directives[newNOfFigure][0];
+
   for (var j = 0; j < 4; j++) {
     figure[j] = figures[nOfFigure][j].slice(0);
+    figure[j][0] += offset;
   }
   figuresReceived += 1;
-  findCommand();
 }
 
 function findCommand() {
@@ -70,7 +74,6 @@ function reset(data, value, ground) {
 function newGame(){
   reset(field, 0, true);
   newFigure();
-  if (gamePaused == true){ pauseGame(); }
 }
 
 function pauseGame() {

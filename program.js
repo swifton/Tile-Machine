@@ -107,6 +107,7 @@ function loadProg(contents) {
 }
 
 function test(){
+  gamePaused = false;
   mode = "executing";
   newGame();
   GameLoop();

@@ -49,7 +49,7 @@ var field = new Array(fieldW);
 field[0] = new Array(fieldH + 1);
 var nOfFigure;
 var newNOfFigure = Math.floor(Math.random()*7);
-var gamePaused = false;
+var gamePaused = true;
 var command = new sheet(sheetW, sheetH);
 
 var figure1 = [[3,0],[4,0],[5,0],[6,0]], // line
