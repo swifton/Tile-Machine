@@ -6,9 +6,10 @@ function newFigure() {
 
   findCommand();
   var offset = command.directives[nOfFigure][0];
+  var rotation = command.directives[nOfFigure][1];
 
   for (var j = 0; j < 4; j++) {
-    figure[j] = figures[nOfFigure][j].slice(0);
+    figure[j] = figures[nOfFigure][rotation][j].slice(0);
     figure[j][0] += offset;
   }
   figuresReceived += 1;
@@ -25,9 +26,7 @@ function findCommand() {
 }
 
 function checkCommand(command) {
-  for (var off = -10; off < 20; off ++) {
-    if (comparePatterns(command.pattern, field, 0, off)) {return true;}
-  }
+    if (comparePatterns(command.pattern, field, 0, 10)) {return true;}
   return false;
 }
 

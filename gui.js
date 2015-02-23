@@ -90,10 +90,11 @@ function setupButtons() {
  // var loadProgram = new button("Load", workplace[0] + saveProgram.wid + diam, sheetH * diam + 10 + 20, 80, buttonHeit, loadProg);
   var testButton = new button("Test", workplace[0] + saveProgram.wid + diam, (sheetH + 7) * diam + 10 + 20, 50, buttonHeit, test);
 
-  var left = new button("<---------", workplace[0], 5 * diam + 3, 3 * diam, buttonHeit, function() {moveFigure(-1)});
-  var right = new button("--------->", workplace[0] + 7 * diam, 5 * diam + 3, 3 * diam, buttonHeit, function() {moveFigure(1)});
+  var left = new button("<---------", workplace[0], 5 * diam + 3, 3 * diam, buttonHeit, function() {moveDirectionFigure(-1)});
+  var rotate = new button("Rotate", workplace[0] + left.wid + radius, 5 * diam + 3, 3 * diam, buttonHeit, rotateDirectionFigure);
+  var right = new button("--------->", workplace[0] + 7 * diam, 5 * diam + 3, 3 * diam, buttonHeit, function() {moveDirectionFigure(1)});
 
-  progButtons = [save, newSheetButton, saveProgram, testButton, left, right];
+  progButtons = [save, newSheetButton, saveProgram, testButton, left, rotate, right];
 
   var figureLabels = ["Line", 'T', 'Z', 'S', 'Block', 'L', 'G'];
 

@@ -68,7 +68,8 @@ function showFigure(number) {
   directive = new sheet(sheetW, 4);
   var offset = mainSheet.directives[number][0];
   var rotation = mainSheet.directives[number][1];
-  var figure = figures[number];
+  var rotation = mainSheet.directives[number][1];
+  var figure = figures[number][rotation];
 
   for (i = 0; i < 4; i++) {
     directive.pattern[figure[i][0] + offset][figure[i][1]] = number + 1;
@@ -81,19 +82,27 @@ function createShowFigure(number) {
   return function() {showFigure(number)};
 }
 
-function checkDirective(number, offset) {
+function checkDirective(number, offset, rotation) {
   for (i = 0; i < 4; i++) {
-    if ((figures[number][i][0] + offset < 0) || (figures[number][i][0] + offset > sheetW - 1)) return false;
+    if ((figures[number][rotation][i][0] + offset < 0) || (figures[number][rotation][i][0] + offset > sheetW - 1)) return false;
   }
   
   return true;
 }
 
-function moveFigure(where) {
-  if (!checkDirective(currentDirectiveFigure, mainSheet.directives[currentDirectiveFigure][0] + where)) return;
+function moveDirectionFigure(where) {
+  if (!checkDirective(currentDirectiveFigure, mainSheet.directives[currentDirectiveFigure][0] + where, mainSheet.directives[currentDirectiveFigure][1])) return;
   mainSheet.directives[currentDirectiveFigure][0] += where;
   showFigure(currentDirectiveFigure);
   drawProg();
+}
+
+function rotateDirectionFigure() {
+  if (!checkDirective(currentDirectiveFigure, mainSheet.directives[currentDirectiveFigure][0], (mainSheet.directives[currentDirectiveFigure][1] + 1) % figures[currentDirectiveFigure].length)) return;
+  mainSheet.directives[currentDirectiveFigure][1] = (mainSheet.directives[currentDirectiveFigure][1] + 1) % figures[currentDirectiveFigure].length;
+  showFigure(currentDirectiveFigure);
+  drawProg();
+
 }
 
 function loadProg(contents) {  
