@@ -40,6 +40,8 @@ function saveSheet(){
     program[i].number = i;
     var b = new button("", diam, i * sheetH * diam + diam * (i + 1) + programOffset, diam * sheetW, diam * sheetH, function() {editSheet(i)});
     progButtons.push(b);
+   // b = new button("Delete", diam * (sheetW + 1) + 5, i * sheetH * diam + diam * (i + 1) + programOffset, 100, 19, function() {deleteSheet(i)});
+   // progButtons.push(b);
   }
   else {
     program[editingSheet] = mainSheet.copy();
@@ -52,6 +54,12 @@ function editSheet(number) {
   editing = true; 
   directive.reset();
   mainSheet = program[number].copy();
+  drawProg();
+}
+
+function deleteSheet(number) {
+// unfinished
+  program.remove(number);
   drawProg();
 }
 
@@ -86,7 +94,6 @@ function checkDirective(number, offset, rotation) {
   for (i = 0; i < 4; i++) {
     if ((figures[number][rotation][i][0] + offset < 0) || (figures[number][rotation][i][0] + offset > sheetW - 1)) return false;
   }
-  
   return true;
 }
 
@@ -103,6 +110,52 @@ function rotateDirectionFigure() {
   showFigure(currentDirectiveFigure);
   drawProg();
 
+}
+
+function moveSheet(where) {
+  if (where == 1) {moveSheetRight()};
+  if (where == -1) {moveSheetLeft()};
+  drawProg();
+} 
+
+function moveSheetLeft() {
+  for (var i = 0; i < sheetW - 1; i++) {
+    mainSheet.pattern[i] = mainSheet.pattern[i + 1];
+  }
+  mainSheet.pattern[sheetW - 1] = new Array(sheetH);
+  for (var i = 0; i < sheetH; i++) {
+    mainSheet.pattern[sheetW - 1][i] = 9;
+  }
+}
+
+function moveSheetRight() {
+  for (var i = 0; i < sheetW - 1; i++) {
+    mainSheet.pattern[sheetW - i - 1] = mainSheet.pattern[sheetW - i - 2];
+  }
+  mainSheet.pattern[0] = new Array(sheetH);
+  for (var i = 0; i < sheetH; i++) {
+    mainSheet.pattern[0][i] = 9;
+  }
+}
+
+function liftSheet() {
+  for (var i = 0; i < sheetW; i++) {
+    for (var j = 0; j < sheetH - 1; j++) {
+      mainSheet.pattern[i][j] = mainSheet.pattern[i][j + 1];
+    }
+    mainSheet.pattern[i][sheetH - 1] = 9;
+  }
+  drawProg();
+}
+
+function pushSheet() {
+  for (var i = 0; i < sheetW; i++) {
+    for (var j = 0; j < sheetH - 1; j++) {
+      mainSheet.pattern[i][sheetH - j - 1] = mainSheet.pattern[i][sheetH - j - 2];
+    }
+    mainSheet.pattern[i][0] = 9;
+  }
+  drawProg();
 }
 
 function loadProg(contents) {  
