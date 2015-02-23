@@ -100,7 +100,7 @@ function setupButtons() {
 
   progButtons = [sheetLeft, sheetRight, sheetUp, sheetDown, save, newSheetButton, saveProgram, testButton, dirLeft, rotate, dirRight, copySheet];
 
-  var figureLabels = ["Line", 'T', 'Z', 'S', 'Block', 'L', 'G'];
+  var figureLabels = ["Line", 'T', 'S', 'Z', 'Block', 'G', 'L'];
 
   for (var i = 0; i < 7; i++) {
     var figureButton = new button(figureLabels[i], workplace[0] + sheetW * diam + diam, diam * (i + 1), 60, buttonHeit, createShowFigure(i));
