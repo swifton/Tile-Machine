@@ -52,7 +52,7 @@ function saveSheet(){
 function editSheet(number) {
   editingSheet = number; 
   editing = true; 
-  directive.reset();
+  directive.reset(); // clean the directive window
   mainSheet = program[number].copy();
   drawProg();
 }
@@ -165,6 +165,7 @@ function loadProg(contents) {
     var sh = program[j];
     program[j] = new sheet(sh.cols, sh.rows);
     program[j].pattern = sh.pattern;
+    program[j].directives = sh.directives;
     progButtons.push(new button("", diam, j * sheetH * diam + diam * (j + 1), diam * sheetW, diam * sheetH, createEdit(j)));
   }
 }
