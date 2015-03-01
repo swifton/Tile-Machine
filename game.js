@@ -49,7 +49,6 @@ var linesDeleted, figuresReceived;
 var field = new Array(fieldW);
 field[0] = new Array(fieldH + 1);
 var nOfFigure;
-var newNOfFigure = Math.floor(Math.random()*7);
 var gamePaused = true;
 var command = new sheet(sheetW, sheetH);
 
@@ -62,6 +61,7 @@ var figure1 = [[[3,0],[4,0],[5,0],[6,0]], [[5,1],[5,2],[5,3],[5,0]]], // line
     figure7 = [[[6,0],[4,0],[5,0],[4,1]], [[4,0],[4,1],[4,2],[5,2]], [[5,1],[3,1],[4,1],[5,0]], [[5,0],[5,1],[5,2],[4,0]]], // L
     figures = [figure1, figure2, figure3, figure4, figure5, figure6, figure7];
 var allowedFigures = [4];
+getNewFigure();
 
 var contents;
 

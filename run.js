@@ -2,7 +2,7 @@
 
 function newFigure() {
   nOfFigure = newNOfFigure;
-  newNOfFigure = allowedFigures[Math.floor(Math.random()*allowedFigures.length)];
+  getNewFigure();
 
   findCommand();
   var offset = command.directives[nOfFigure][0];
@@ -13,6 +13,10 @@ function newFigure() {
     figure[j][0] += offset;
   }
   figuresReceived += 1;
+}
+
+function getNewFigure() {
+  newNOfFigure = allowedFigures[Math.floor(Math.random()*allowedFigures.length)];
 }
 
 function findCommand() {
