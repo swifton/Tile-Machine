@@ -21,6 +21,11 @@ function getNewFigure() {
 
 function findCommand() {
   for (i = 0; i < program.length; i++) {
+    advancedMatching(program[i])
+    if (matches != []){
+      advancedMatch = i;
+      return;
+    }
     if (checkCommand(program[i])) {
       command = program[i].copy();
       return;
@@ -30,18 +35,29 @@ function findCommand() {
 }
 
 function checkCommand(command) {
-    if (comparePatterns(command.pattern, field, 0, 10)) {return true;}
+    if (comparePatterns(command.pattern, field, 0, 10, sheetW, sheetH, 0, 0)) {return true;}
   return false;
 }
 
-function comparePatterns (pattern, field, offsetX, offsetY) {
-  for (var i = 0; i < pattern.length; i++) {
-    for (var j = 0; j < pattern[0].length; j++) {
+function advancedMatching(command) {
+  matches = [];
+  var patternWid = command.right - command.left;
+  var patternHeit = command.down - command.up;
+  for (var i = 0; i < fieldW - patternWid + 1; i++) {
+    for (var j = 0; j < fieldH - patternHeit + 1; j++) {
+      if (comparePatterns(command.pattern, field, i, j, patternWid, patternHeit, command.left, command.up)) {matches.push([i, j])}
+    }
+  }
+}
+
+function comparePatterns (pattern, field, offsetX, offsetY, patternWid, patternHeit, patternLeft, patternUp) {
+  for (var i = 0; i < patternWid; i++) {
+    for (var j = 0; j < patternHeit; j++) {
       if((field[i + offsetX] == undefined) || (field[i + offsetX][j + offsetY] == undefined)) {
-        if (pattern[i][j] == 9) {continue;}
+        if (pattern[i + patternLeft][j + patternUp] == anything) {continue;}
         else {return false;}
       }
-      if (!compare(pattern[i][j], field[i + offsetX][j + offsetY])) {return false;}
+      if (!compare(pattern[i + patternLeft][j + patternUp], field[i + offsetX][j + offsetY])) {return false;}
     }
   }
   return true;
@@ -197,5 +213,5 @@ var GameLoop = function() {
   drawExec();
   drawNextFigure();
 
-  gLoop = setTimeout(GameLoop, 1000/20);
+  gLoop = setTimeout(GameLoop, 1000/2);
 }

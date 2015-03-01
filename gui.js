@@ -38,9 +38,17 @@ function drawProg() {
   drawButtons(progButtons);
 }
 
+function drawFrames() {
+  var sh = program[advancedMatch];
+  for (var i = 0; i < matches.length; i++) {
+    rectangle(add(workplace, [diam * matches[i][0], diam * matches[i][1]]), diam * (sh.right - sh.left), diam * (sh.down - sh.up));
+  }
+}
+
 function drawExec() {
   drawData(field, workplace);
   drawData(command.pattern, add(workplace, [sheetW * diam, 0]));
+  drawFrames();
   drawButtons(execButtons);
 }
 

@@ -49,6 +49,8 @@ var linesDeleted, figuresReceived;
 var field = new Array(fieldW);
 field[0] = new Array(fieldH + 1);
 var nOfFigure;
+var matches = [];
+var advancedMatch = 0;
 var gamePaused = true;
 var command = new sheet(sheetW, sheetH);
 
@@ -65,13 +67,9 @@ getNewFigure();
 
 var contents;
 
-document.getElementById('file-input')
-  .addEventListener('change', readSingleFile, false);
+document.getElementById('file-input').addEventListener('change', readSingleFile, false);
 
-this.canvas.addEventListener('mousewheel',function(event){
-    scroll(event);
-    return false;
-}, false);
+this.canvas.addEventListener('mousewheel',function(event){scroll(event); return false;}, false);
 
 
 
