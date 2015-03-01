@@ -4,6 +4,10 @@ function sheet(cols, rows) {
   this.pattern = new Array(cols);
   this.pattern[0] = new Array(rows);
   this.directives = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]; // 1st coord - offset, 2nd - rotation
+  this.up = 0;
+  this.down = rows;
+  this.left = 0;
+  this.right = cols;
 
   this.reset = reset;
   function reset() {
@@ -11,7 +15,7 @@ function sheet(cols, rows) {
       this.pattern[i] = new Array(rows);
 
       for (var j = 0; j < this.rows; j++){
-        this.pattern[i][j] = 9;
+        this.pattern[i][j] = anything;
       }
     }
   }
@@ -34,6 +38,11 @@ function sheet(cols, rows) {
       copy.directives[i][0] = this.directives[i][0];
       copy.directives[i][1] = this.directives[i][1];
     }
+    copy.down = this.down;
+    copy.up = this.up;
+    copy.right = this.right;
+    copy.left = this.left;
+
     return copy;
   }
 }

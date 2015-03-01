@@ -20,13 +20,19 @@ function drawButtons(buttons) {
   }
 }
 
+function drawFrame(sheet, start) {
+  rectangle(add(start, [diam * (sheet.left), diam * (sheet.up)]), diam * (sheet.right - sheet.left), diam * (sheet.down - sheet.up));
+}
+
 function drawProg() {
   clear(c);
   drawData(directive.pattern, add(workplace, [0, diam]));
   drawData(mainSheet.pattern, add(workplace, [0, 7 * diam]));
+  drawFrame(mainSheet, add(workplace, [0, 7 * diam]));
 
   for (i = 0; i < program.length; i++) {
     drawData(program[i].pattern, [diam, i * sheetH * diam + diam * (i + 1) + programOffset]);
+    drawFrame(program[i], [diam, i * sheetH * diam + diam * (i + 1) + programOffset]);
   }
 
   drawButtons(progButtons);

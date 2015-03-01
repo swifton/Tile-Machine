@@ -32,6 +32,8 @@ function scroll(event) {
 }
 	  
 function saveSheet(){
+  cutSheet(mainSheet);
+
   if (!editing) {
     program.push(mainSheet.copy());
     editing = true;
@@ -124,7 +126,7 @@ function moveSheetLeft() {
   }
   mainSheet.pattern[sheetW - 1] = new Array(sheetH);
   for (var i = 0; i < sheetH; i++) {
-    mainSheet.pattern[sheetW - 1][i] = 9;
+    mainSheet.pattern[sheetW - 1][i] = anything;
   }
 }
 
@@ -134,7 +136,7 @@ function moveSheetRight() {
   }
   mainSheet.pattern[0] = new Array(sheetH);
   for (var i = 0; i < sheetH; i++) {
-    mainSheet.pattern[0][i] = 9;
+    mainSheet.pattern[0][i] = anything;
   }
 }
 
@@ -143,7 +145,7 @@ function liftSheet() {
     for (var j = 0; j < sheetH - 1; j++) {
       mainSheet.pattern[i][j] = mainSheet.pattern[i][j + 1];
     }
-    mainSheet.pattern[i][sheetH - 1] = 9;
+    mainSheet.pattern[i][sheetH - 1] = anything;
   }
   drawProg();
 }
@@ -153,9 +155,32 @@ function pushSheet() {
     for (var j = 0; j < sheetH - 1; j++) {
       mainSheet.pattern[i][sheetH - j - 1] = mainSheet.pattern[i][sheetH - j - 2];
     }
-    mainSheet.pattern[i][0] = 9;
+    mainSheet.pattern[i][0] = anything;
   }
   drawProg();
+}
+
+function cutSheet(sheet) {
+  sheet.up = findBoundary(sheet.pattern, [0, 0], [0, 1], [1, 0]);
+  sheet.down = 1 + sheet.rows - findBoundary(sheet.pattern, [0, sheet.rows], [0, -1], [1, 0]);
+  sheet.left = findBoundary(sheet.pattern, [0, 0], [1, 0], [0, 1]);
+  sheet.right = sheet.cols - findBoundary(sheet.pattern, [sheet.cols - 1, 0], [-1, 0], [0, 1]);
+}
+
+function findBoundary(array, initial, directionGlobal, directionLocal) {
+  var k = 0;
+  for (var init = initial; array[init[0]] != undefined; init = add(init, directionGlobal)) {
+    if (!traverseLine(array, directionLocal, init)) {return k;}
+    k++;
+  }
+  return k;
+}
+
+function traverseLine(array, direction, initial) {
+  for (var iter = initial; (array[iter[0]] != undefined) && (array[iter[0]][iter[1]] != undefined); iter = add(iter, direction)) {
+    if (array[iter[0]][iter[1]] != anything) {return false;}
+  }
+  return true;
 }
 
 function loadProg(contents) {  

@@ -193,5 +193,5 @@ var GameLoop = function() {
   drawExec();
   drawNextFigure();
 
-  gLoop = setTimeout(GameLoop, 1000/4);
+  gLoop = setTimeout(GameLoop, 1000/20);
 }
