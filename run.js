@@ -48,6 +48,14 @@ function advancedMatching(command) {
       if (comparePatterns(command.pattern, field, i, j, patternWid, patternHeit, command.left, command.up)) {matches.push([i, j])}
     }
   }
+
+  for (var i = 0; i < matches.length; i++) {
+    checkMatch(matches[i]);
+  }
+}
+
+function checkMatch(someMatch) {
+  
 }
 
 function comparePatterns (pattern, field, offsetX, offsetY, patternWid, patternHeit, patternLeft, patternUp) {

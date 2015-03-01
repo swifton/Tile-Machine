@@ -8,6 +8,7 @@ function sheet(cols, rows) {
   this.down = rows;
   this.left = 0;
   this.right = cols;
+  this.landing = [0, 0, 0, 0, 0, 0, 0];
 
   this.reset = reset;
   function reset() {

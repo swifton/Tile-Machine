@@ -11,12 +11,25 @@ function drawData(data, start){
       }
     }
   }
-
 };
 
 function drawButtons(buttons) {
   for (var i = 0; i < buttons.length; i++) {
     buttons[i].draw();
+  }
+}
+
+function drawSheet(sheet, start) {
+  // currently unused
+  drawData(sheet.pattern, start);
+  drawFrame(sheet, start);
+}
+
+function drawLanding() {
+  var fig = mainSheet.landing[currentDirectiveFigure];
+  if (fig == 0) {return;}
+  for (var i = 0; i < 4; i++) {
+    drawTile(workplace[0] + fig[i][0] * diam + radius, workplace[1] + fig[i][1] * diam + radius + 7 * diam, currentDirectiveFigure + 1, ctx);
   }
 }
 
@@ -34,6 +47,8 @@ function drawProg() {
     drawData(program[i].pattern, [diam, i * sheetH * diam + diam * (i + 1) + programOffset]);
     drawFrame(program[i], [diam, i * sheetH * diam + diam * (i + 1) + programOffset]);
   }
+
+  drawLanding();
 
   drawButtons(progButtons);
 }
@@ -108,9 +123,9 @@ function setupButtons() {
   var testButton = new button("Test", workplace[0] + saveProgram.wid + diam, (sheetH + 8) * diam + 10 + 20, 50, buttonHeit, test);
   var copySheet = new button("Copy Sheet", workplace[0], (sheetH + 9) * diam + 10 + 20, 140, buttonHeit, function() {mainSheet = mainSheet.copy(); editing = false;});
 
-  var dirLeft = new button("<---------", workplace[0], 5 * diam + 3, 3 * diam, buttonHeit, function() {moveDirectionFigure(-1)});
-  var rotate = new button("Rotate", workplace[0] + dirLeft.wid + radius, 5 * diam + 3, 3 * diam, buttonHeit, rotateDirectionFigure);
-  var dirRight = new button("--------->", workplace[0] + 7 * diam, 5 * diam + 3, 3 * diam, buttonHeit, function() {moveDirectionFigure(1)});
+  var dirLeft = new button("<---------", workplace[0], 5 * diam + 3, 3 * diam, buttonHeit, function() {moveDirectiveFigure(-1)});
+  var rotate = new button("Rotate", workplace[0] + dirLeft.wid + radius, 5 * diam + 3, 3 * diam, buttonHeit, rotateDirectiveFigure);
+  var dirRight = new button("--------->", workplace[0] + 7 * diam, 5 * diam + 3, 3 * diam, buttonHeit, function() {moveDirectiveFigure(1)});
 
   progButtons = [sheetLeft, sheetRight, sheetUp, sheetDown, save, newSheetButton, saveProgram, testButton, dirLeft, rotate, dirRight, copySheet];
 
