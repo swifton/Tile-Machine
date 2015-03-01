@@ -162,14 +162,15 @@ function pushSheet() {
 
 function cutSheet(sheet) {
   sheet.up = findBoundary(sheet.pattern, [0, 0], [0, 1], [1, 0]);
-  sheet.down = 1 + sheet.rows - findBoundary(sheet.pattern, [0, sheet.rows], [0, -1], [1, 0]);
+  if (sheet.up == sheet.rows) {sheet.up = 0; return;}
+  sheet.down = sheet.rows - findBoundary(sheet.pattern, [0, sheet.rows - 1], [0, -1], [1, 0]);
   sheet.left = findBoundary(sheet.pattern, [0, 0], [1, 0], [0, 1]);
   sheet.right = sheet.cols - findBoundary(sheet.pattern, [sheet.cols - 1, 0], [-1, 0], [0, 1]);
 }
 
 function findBoundary(array, initial, directionGlobal, directionLocal) {
   var k = 0;
-  for (var init = initial; array[init[0]] != undefined; init = add(init, directionGlobal)) {
+  for (var init = initial; (array[init[0]] != undefined) && (array[init[0]][init[1]] != undefined); init = add(init, directionGlobal)) {
     if (!traverseLine(array, directionLocal, init)) {return k;}
     k++;
   }
