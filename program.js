@@ -17,6 +17,7 @@ function sheetInput(mousePos) {
   mainSheet.pattern[i][j] += 1;
   if (mainSheet.pattern[i][j] == 10) {mainSheet.pattern[i][j] = 0;}
   if (mainSheet.pattern[i][j] == 1) {mainSheet.pattern[i][j] = 8;}
+  calculateAllLandings()
   drawProg();
 }
 
@@ -32,6 +33,7 @@ function scroll(event) {
 }
 	  
 function saveSheet(){
+  calculateAllLandings()
   cutSheet(mainSheet);
 
   if (!editing) {
