@@ -33,7 +33,8 @@ function scroll(event) {
 }
 	  
 function saveSheet(){
-  calculateAllLandings()
+  calculateAllLandings();
+  p(mainSheet.landing);
   cutSheet(mainSheet);
 
   if (!editing) {

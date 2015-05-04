@@ -39,6 +39,14 @@ function sheet(cols, rows) {
       copy.directives[i][0] = this.directives[i][0];
       copy.directives[i][1] = this.directives[i][1];
     }
+
+    for (var i = 0; i < 7; i++) {
+      copy.landing[i] = [];
+      for (var j = 0; j < 4; j++) {
+        copy.landing[i].push([this.landing[i][j][0], this.landing[i][j][1]]);
+      }
+    }
+
     copy.down = this.down;
     copy.up = this.up;
     copy.right = this.right;

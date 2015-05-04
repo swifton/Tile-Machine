@@ -97,7 +97,7 @@ function button(label, x, y, wid, heit, func) {
 
   this.draw = draw;
   function draw() {
-    rectangle([this.x, this.y], this.wid, this.heit);
+    rectangle([this.x, this.y], this.wid, this.heit, "black");
     drawLabel(this.label, this.x + 1, this.y + this.heit - 2)
   }
 
@@ -136,10 +136,11 @@ function setupButtons() {
     progButtons.push(figureButton);
   }
 
-  var newGameButton = new button("New Game", workplace[0], (fieldH + 2) * diam, 120, buttonHeit, newGame)
-  var stopButton = new button("Stop", workplace[0] + newGameButton.wid + 10, (fieldH + 2) * diam, 100, buttonHeit, function() {pauseGame(); mode = "programming"; drawProg();})
+  var newGameButton = new button("New Game", workplace[0], (fieldH + 2) * diam, 120, buttonHeit, newGame);
+  var stopButton = new button("Stop", workplace[0] + newGameButton.wid + 10, (fieldH + 2) * diam, 100, buttonHeit, function() {pauseGame(); mode = "programming"; drawProg();});
+  var pauseGameButton = new button("Pause", workplace[0], (fieldH + 3) * diam, 120, buttonHeit, pauseGame);
 
-  execButtons = [stopButton, newGameButton];
+  execButtons = [stopButton, newGameButton, pauseGameButton];
 }
 
 

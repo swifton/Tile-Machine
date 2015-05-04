@@ -50,12 +50,20 @@ function advancedMatching(command) {
   }
 
   for (var i = 0; i < matches.length; i++) {
-    checkMatch(matches[i]);
+    if (!checkMatch(matches[i], command)) {matches.remove(i, i + 1);}
   }
 }
 
-function checkMatch(someMatch) {
-  
+function checkMatch(someMatch, command) {
+  var fig = command.landing[nOfFigure];
+  p(command.landing);
+  for (var i = 0; i < 4; i++) {
+    for (var j = 0; j < someMatch[1] + fig[i][1] - command.up + 1; j++) {
+      debugSquare(debugStart(workplace, someMatch[0] + fig[i][0] - command.left - 1, j), i);
+      if (field[someMatch[0] + fig[i][0] - command.left - 1][j] != 0) {return false;}
+    }
+  }
+  return true;
 }
 
 function comparePatterns (pattern, field, offsetX, offsetY, patternWid, patternHeit, patternLeft, patternUp) {
@@ -116,7 +124,6 @@ function pauseGame() {
 }
 
 // Field processing functions
-
 var updatePosition = function(num){
   for (var i = 0; i < 4; i++){
     field[figure[i][0]][figure[i][1]] = num;

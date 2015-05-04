@@ -16,33 +16,37 @@ function clear(cnv){
   cc.fill();
 }
 
-function drawLine(x1, y1, x2, y2) {
-  ctx.moveTo(x1,y1);
-  ctx.lineTo(x2,y2);
+function drawLine(x1, y1, x2, y2, color) {
+  var color = color || "black";
+  ctx.beginPath();
+  ctx.lineWidth = 2;
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x2, y2);
+  ctx.strokeStyle = color;
   ctx.stroke();
 }
 
-function rectangle(LT, length, height) {
+function rectangle(LT, length, height, color) {
   var LB = add(LT, [0, height]);
   var RB = add(LB, [length, 0]);
   var RT = add(LT, [length, 0]);
 
-  fourGon(LT, RT, LB, RB);
+  fourGon(LT, RT, LB, RB, color);
 }
 
-function fourGon(LT, RT, LB, RB) {
-  line(LT, RT);
-  line(LB, RB);
-  line(LT, LB);
-  line(RT, RB);
+function fourGon(LT, RT, LB, RB, color) {
+  line(LT, RT, color);
+  line(LB, RB, color);
+  line(LT, LB, color);
+  line(RT, RB, color);
 }
 
 function add(p1, p2) {
   return [p1[0] + p2[0], p1[1] + p2[1]];
 }
 
-function line(start, end) {
-  drawLine(start[0], start[1], end[0], end[1]);
+function line(start, end, color) {
+  drawLine(start[0], start[1], end[0], end[1], color);
 }
 
 function grid() {
@@ -131,6 +135,15 @@ function readSingleFile(e) {
 
 function p(output) {
   console.log(output);
+}
+
+function debugStart(start, i, j) {
+  return add(start, [i * diam, j * diam]);
+}
+
+function debugSquare(start, n) {
+  var colors = ['red', 'green', 'blue', 'black'];
+  rectangle(add(start, [(1 + 3*(n%2))*diam/6, (1 + 3*(((n-n%2)/2)%2))*diam/6]), diam/6, diam/6 , colors[n % colors.length]);
 }
 
 // Array Remove - By John Resig (MIT Licensed)
