@@ -244,7 +244,7 @@ function loadProg(contents) {
   drawProg();
   for (var j = 0; j < program.length; j++) {
     var sh = program[j];
-    program[j] = new sheet(sh.cols, sh.rows);
+    program[j] = new sheet(sh.patternWid, sh.patternHeit, sh.patternOffsetX, sh.patternOffsetY);
     program[j].pattern = sh.pattern;
     program[j].directives = sh.directives;
     progButtons.push(new button("", diam, j * defaultPatternHeit * diam + diam * (j + 1), diam * defaultPatternWid, diam * defaultPatternHeit, createEdit(j)));
