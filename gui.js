@@ -38,8 +38,9 @@ function drawProg() {
   drawFrame(mainSheet, add(workplace, [0, 7 * diam]));
 
   for (i = 0; i < program.length; i++) {
-    drawData(program[i].pattern, [diam, i * defaultPatternHeit * diam + diam * (i + 1) + programOffset], program[i].patternWid, program[i].patternHeit);
-    drawFrame(program[i], [diam, i * defaultPatternHeit * diam + diam * (i + 1) + programOffset]);
+    var com = program[i];
+    drawData(com.pattern, add([diam, i * defaultPatternHeit * diam + diam * (i + 1) + programOffset], [diam * com.patternOffsetX, diam * com.patternOffsetY]), com.patternWid, com.patternHeit);
+    drawFrame(com, [diam, i * defaultPatternHeit * diam + diam * (i + 1) + programOffset]);
   }
 
   drawLanding();

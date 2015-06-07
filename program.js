@@ -12,21 +12,19 @@ function newSheet() {
 function saveSheet(){
   calculateAllLandings();
 
+  var cshe =  mainSheet.copy();
+  cutSheet(cshe);
+
   if (!editing) {
-    var cshe =  mainSheet.copy();
     program.push(cshe);
-    cutSheet(cshe);
     editing = true;
     var i = program.length - 1;
     editingSheet = i;
     program[i].number = i;
-    var b = new button("", diam, i * defaultPatternHeit * diam + diam * (i + 1) + programOffset, diam * defaultPatternWid, diam * defaultPatternHeit, function() {editSheet(i)});
-    progButtons.push(b);
-   // b = new button("Delete", diam * (defaultPatternWid + 1) + 5, i * defaultPatternHeit * diam + diam * (i + 1) + programOffset, 100, 19, function() {deleteSheet(i)});
-   // progButtons.push(b);
+    createSheetButtons(i);
   }
   else {
-    program[editingSheet] = mainSheet.copy();
+    program[editingSheet] = cshe;
   }
   drawProg();
 }
@@ -35,16 +33,32 @@ function editSheet(number) {
   editingSheet = number; 
   editing = true; 
   directive.reset(); // clean the directive window
-  //mainSheet = program[number].copy();
   mainSheet.copyWithShift(program[number]);
   drawProg();
 }
 
 function deleteSheet(number) {
-// unfinished
   program.remove(number);
+  progButtons.remove(progButtons.length - 4, progButtons.length); // this button removal relies on the structure of the progButtons array and is not robust
+  newSheet();
   drawProg();
 }
+
+function createSheetButtons(i) {
+// these buttons are bound to the place in the program, not to the sheet
+  var b = new button("", diam, i * defaultPatternHeit * diam + diam * (i + 1) + programOffset, diam * defaultPatternWid, diam * defaultPatternHeit, function() {editSheet(i)});
+  progButtons.push(b);
+
+  b = new button("Delete", diam * (defaultPatternWid + 1) + 5, i * defaultPatternHeit * diam + diam * (i + 1) + programOffset, 100, 19, function() {deleteSheet(i)});
+  progButtons.push(b);
+
+  b = new button("^", diam * (defaultPatternWid + 1) + 5, i * defaultPatternHeit * diam + diam * (i + 1) + programOffset + 2 * diam, 100, 19, function() {swapTwoSheets(i, i-1)});
+  progButtons.push(b);
+
+  b = new button("v", diam * (defaultPatternWid + 1) + 5, i * defaultPatternHeit * diam + diam * (i + 1) + programOffset + 4 * diam, 100, 19, function() {swapTwoSheets(i, i+1)});
+  progButtons.push(b);
+}
+
 
 function createEdit(number) {
   return function() {editSheet(number)};
@@ -71,6 +85,14 @@ function showFigure(number) {
   drawProg();
 }
 
+function swapTwoSheets(i, j) {
+  var ns = program[i];
+  program[i] = program[j];
+  program[j] = ns;
+  drawProg();
+}
+
+// Functions that govent figure directions
 function calculateLanding(sh, fignum) {
   var fig = [[0, 0], [0, 0], [0, 0], [0, 0]];
 
@@ -136,6 +158,7 @@ function calculateAllLandings(){
   }
 }
 
+// Premature stuff for shifting sheets. Doesn't work with advanced matching
 function moveSheet(where) {
   if (where == 1) {moveSheetRight()};
   if (where == -1) {moveSheetLeft()};
@@ -185,6 +208,7 @@ function pushSheet() {
   drawProg();
 }
 
+// Three functions for cutting sheets
 function cutSheet(sheet) {
   var up = findBoundary(sheet.pattern, [0, 0], [0, 1], [1, 0]);
   if (up == sheet.patternHeit) {up = 0; return;}
