@@ -89,6 +89,7 @@ function swapTwoSheets(i, j) {
   var ns = program[i];
   program[i] = program[j];
   program[j] = ns;
+  newSheet();
   drawProg();
 }
 

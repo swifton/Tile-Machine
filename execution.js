@@ -30,7 +30,7 @@ function advancedMatching(command) {
     }
   }
 
-  var a = matches[0] || [0, 0, 0];
+  var a = matches[matches.length - 1] || [0, 0, 0];
   return a;
 
   for (var i = 0; i < matches.length; i++) {

@@ -71,6 +71,18 @@ function sheet(patternWid, patternHeit, patternOffsetX, patternOffsetY) {
         this.pattern[i + sourceSheet.patternOffsetX][j + sourceSheet.patternOffsetY] = sourceSheet.pattern[i][j];
       }
     }
+
+    for (var i = 0; i < this.directives.length; i++) {
+      this.directives[i][0] = sourceSheet.directives[i][0];
+      this.directives[i][1] = sourceSheet.directives[i][1];
+    }
+
+    for (var i = 0; i < 7; i++) {
+      this.landing[i] = [];
+      for (var j = 0; j < 4; j++) {
+        this.landing[i].push([sourceSheet.landing[i][j][0], sourceSheet.landing[i][j][1]]);
+      }
+    }
   }
 
   this.copyWithShift = copyWithShift;
