@@ -8,11 +8,11 @@ function sheet(patternWid, patternHeit, patternOffsetX, patternOffsetY) {
 
   this.reset = reset;
   function reset() {
-    this.pattern = new Array(patternWid);
-    this.pattern[0] = new Array(patternHeit);
+    this.pattern = new Array(this.patternWid);
+    this.pattern[0] = new Array(this.patternHeit);
 
     for (var i = 0; i < this.patternWid; i++){
-      this.pattern[i] = new Array(patternHeit);
+      this.pattern[i] = new Array(this.patternHeit);
 
       for (var j = 0; j < this.patternHeit; j++){
         this.pattern[i][j] = anything;
@@ -80,7 +80,7 @@ function sheet(patternWid, patternHeit, patternOffsetX, patternOffsetY) {
     for (var i = 0; i < 7; i++) {
       this.landing[i] = [];
       for (var j = 0; j < 4; j++) {
-        this.landing[i].push([sourceSheet.landing[i][j][0], sourceSheet.landing[i][j][1]]);
+        this.landing[i][j] = [sourceSheet.landing[i][j][0], sourceSheet.landing[i][j][1]];
       }
     }
   }

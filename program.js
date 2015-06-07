@@ -64,10 +64,6 @@ function createEdit(number) {
   return function() {editSheet(number)};
 }
 
-function saveProg() {
-  p(JSON.stringify(program));
-}
-
 function showFigure(number) {
   currentDirectiveFigure = number;
   directive = new sheet(defaultPatternWid, 4);
@@ -159,7 +155,7 @@ function calculateAllLandings(){
   }
 }
 
-// Premature stuff for shifting sheets. Doesn't work with advanced matching
+// both premature and obsolete stuff for shifting sheets. Doesn't work with advanced matching
 function moveSheet(where) {
   if (where == 1) {moveSheetRight()};
   if (where == -1) {moveSheetLeft()};
@@ -239,16 +235,27 @@ function traverseLine(array, direction, initial) {
   return true;
 }
 
-function loadProg(contents) {  
+function saveProg() {
+  p(JSON.stringify(program));
+}
+
+function loadProg(contents) {
+  for (i = 0; i < program.length; i++) {
+    deleteSheet(i);
+  }
+
   program = JSON.parse(contents);
-  drawProg();
+
   for (var j = 0; j < program.length; j++) {
     var sh = program[j];
     program[j] = new sheet(sh.patternWid, sh.patternHeit, sh.patternOffsetX, sh.patternOffsetY);
     program[j].pattern = sh.pattern;
     program[j].directives = sh.directives;
-    progButtons.push(new button("", diam, j * defaultPatternHeit * diam + diam * (j + 1), diam * defaultPatternWid, diam * defaultPatternHeit, createEdit(j)));
+    program[j].landing = sh.landing;
+    createSheetButtons(j);
   }
+
+  drawProg();
 }
 
 function test(){
