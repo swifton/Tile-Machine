@@ -45,6 +45,7 @@ function reset(data, value, ground) {
 
 function newGame(){
   reset(field, 0, true);
+  if (gamePaused) {pauseGame();}
   newFigure();
 }
 

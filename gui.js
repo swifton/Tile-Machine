@@ -156,7 +156,7 @@ function setupButtons() {
   }
 
   var newGameButton = new button("New Game", workplace[0], (fieldHeit + 2) * diam, 120, buttonHeit, newGame);
-  var stopButton = new button("Stop", workplace[0] + newGameButton.wid + 10, (fieldHeit + 2) * diam, 100, buttonHeit, function() {pauseGame(); mode = "programming"; drawProg();});
+  var stopButton = new button("Stop", workplace[0] + newGameButton.wid + 10, (fieldHeit + 2) * diam, 100, buttonHeit, function() {if (!gamePaused) {pauseGame();} mode = "programming"; drawProg();});
   var pauseGameButton = new button("Pause", workplace[0], (fieldHeit + 3) * diam, 120, buttonHeit, pauseGame);
 
   execButtons = [stopButton, newGameButton, pauseGameButton];
