@@ -4,7 +4,9 @@ function newFigure() {
   getNewFigure();
 
   findCommand();
-  var offset = command.directives[nOfFigure][0];
+  var offset = command.directives[nOfFigure][0] - command.patternOffsetX + recognitionOffset;
+  p(offset);
+  p(recognitionOffset);
   var rotation = command.directives[nOfFigure][1];
 
   for (var j = 0; j < 4; j++) {
@@ -81,7 +83,7 @@ function updateField(){
 
 var checkEnd = function(){
   var b = 0;
-  for (var j = 0; j < fieldW; j++){
+  for (var j = 0; j < fieldWid; j++){
     if (field[j][0] < 0) {b = 1}
   }
   if (b == 1) {newGame();}
@@ -89,18 +91,18 @@ var checkEnd = function(){
 
 var checkField = function(){
   var sum;
-  for (var i = 0; i < fieldH; i++){
+  for (var i = 0; i < fieldHeit; i++){
     sum = 1;
-    for (var j = 0; j < fieldW; j++){
+    for (var j = 0; j < fieldWid; j++){
       sum *= field[j][i];
     }
     if (sum != 0){
       linesDeleted += 1;
-      for (var j = 0; j < fieldW; j++){
+      for (var j = 0; j < fieldWid; j++){
         field[j][i] = 0;
       }
       for (var k = i; k > 0; k--){
-        for (var j = 0; j < fieldW; j++){
+        for (var j = 0; j < fieldWid; j++){
           field[j][k] = field[j][k-1];
         }
       }
@@ -118,7 +120,7 @@ var checkMove = function(dir){
 
 var checkPosition = function(arr){
   for (var i = 0; i < 4; i++){
-    if (arr[i][1] < 0 || arr[i][0] > fieldW - 1 || arr[i][0] < 0){ return false; }
+    if (arr[i][1] < 0 || arr[i][0] > fieldWid - 1 || arr[i][0] < 0){ return false; }
     if (field[arr[i][0]][arr[i][1]] < 0){ return false; }
   }
   return true;
@@ -142,7 +144,7 @@ var dropFigure = function() {
   for (var i = 0; i < 4; i++){
     tmp[i] = figure[i].slice(0);
   }
-  var k = fieldH;
+  var k = fieldHeit;
 	
   for (var i = 0; i < 4; i++){
     j = 0;
@@ -159,7 +161,6 @@ var GameLoop = function() {
   clear(c);
   updateField();
   drawExec();
-  drawNextFigure();
 
   gLoop = setTimeout(GameLoop, 1000/8);
 }

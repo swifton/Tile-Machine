@@ -1,21 +1,20 @@
-function sheet(cols, rows) {
-  this.cols = cols;
-  this.rows = rows;
-  this.pattern = new Array(cols);
-  this.pattern[0] = new Array(rows);
+function sheet(patternWid, patternHeit, patternOffsetX, patternOffsetY) {
+  this.patternWid = patternWid;
+  this.patternHeit = patternHeit;
+  this.patternOffsetX = patternOffsetX || 0;
+  this.patternOffsetY = patternOffsetY || 0;
   this.directives = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]; // 1st coord - offset, 2nd - rotation
-  this.up = 0;
-  this.down = rows;
-  this.left = 0;
-  this.right = cols;
   this.landing = [0, 0, 0, 0, 0, 0, 0];
 
   this.reset = reset;
   function reset() {
-    for (var i = 0; i < this.cols; i++){
-      this.pattern[i] = new Array(rows);
+    this.pattern = new Array(patternWid);
+    this.pattern[0] = new Array(patternHeit);
 
-      for (var j = 0; j < this.rows; j++){
+    for (var i = 0; i < this.patternWid; i++){
+      this.pattern[i] = new Array(patternHeit);
+
+      for (var j = 0; j < this.patternHeit; j++){
         this.pattern[i][j] = anything;
       }
     }
@@ -25,12 +24,10 @@ function sheet(cols, rows) {
 
   this.copy = copy;
   function copy() {
-    var copy = new sheet(this.cols, this.rows)
-    copy.pattern = new Array(this.cols);
-    copy.pattern[0] = new Array(this.rows);
+    var copy = new sheet(this.patternWid, this.patternHeit)
     copy.reset();
-    for (var i = 0; i < this.cols; i++) {
-      for (var j = 0; j < this.rows; j++) {
+    for (var i = 0; i < this.patternWid; i++) {
+      for (var j = 0; j < this.patternHeit; j++) {
         copy.pattern[i][j] = this.pattern[i][j];
       }
     }
@@ -54,4 +51,27 @@ function sheet(cols, rows) {
 
     return copy;
   }
+
+  function copyFromArray(array) {
+    this.reset();
+
+    for (var i = 0; i < this.patternWid; i++) {
+      for (var j = 0; j < this.patternHeit; j++) {
+        this.pattern[i][j] = array[i + this.patternOffsetX][j + this.patternOffsetY];
+      }
+    }
+  }
+  this.copyFromArray = copyFromArray;
+
+  function copyWithShift(sourceSheet) {
+    this.reset();
+
+    for (var i = 0; i < sourceSheet.patternWid; i++) {
+      for (var j = 0; j < sourceSheet.patternHeit; j++) {
+        this.pattern[i + sourceSheet.patternOffsetX][j + sourceSheet.patternOffsetY] = sourceSheet.pattern[i][j];
+      }
+    }
+  }
+
+  this.copyWithShift = copyWithShift;
 }

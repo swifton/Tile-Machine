@@ -1,2 +1,5 @@
+programs/
+.idea/
+*.iml
 *~
 *.txt

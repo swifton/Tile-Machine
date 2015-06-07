@@ -3,49 +3,26 @@ function programmingSetup() {
 }
 
 function newSheet() {
-  mainSheet = new sheet(sheetW, sheetH);
+  mainSheet = new sheet(defaultPatternWid, defaultPatternHeit);
   directive.reset();
   editing = false;
   drawProg();
 }
 
-function sheetInput(mousePos) {
-  if (mode != "programming") return;
-  i = Math.floor((mousePos.x - workplace[0]) / diam);
-  j = Math.floor((mousePos.y - workplace[1] - 7 * diam) / diam);
-  if ((i > sheetW - 1) || (j > sheetH - 1) || (i < 0) || (j < 0)) return;
-  mainSheet.pattern[i][j] += 1;
-  if (mainSheet.pattern[i][j] == 10) {mainSheet.pattern[i][j] = 0;}
-  if (mainSheet.pattern[i][j] == 1) {mainSheet.pattern[i][j] = 8;}
-  calculateAllLandings()
-  drawProg();
-}
-
-function scroll(event) {
-  if (mode != "programming") return;
-  var direction = Math.sign(event.wheelDeltaY);
-  var scrollSpeed = 30;
-  programOffset += scrollSpeed * direction;
-  for (var i = nOfStandardButtons; i < progButtons.length; i++) {
-    progButtons[i].y += scrollSpeed * direction;
-  }
-  drawProg();
-}
-	  
 function saveSheet(){
   calculateAllLandings();
-  p(mainSheet.landing);
-  cutSheet(mainSheet);
 
   if (!editing) {
-    program.push(mainSheet.copy());
+    var cshe =  mainSheet.copy();
+    program.push(cshe);
+    cutSheet(cshe);
     editing = true;
     var i = program.length - 1;
     editingSheet = i;
     program[i].number = i;
-    var b = new button("", diam, i * sheetH * diam + diam * (i + 1) + programOffset, diam * sheetW, diam * sheetH, function() {editSheet(i)});
+    var b = new button("", diam, i * defaultPatternHeit * diam + diam * (i + 1) + programOffset, diam * defaultPatternWid, diam * defaultPatternHeit, function() {editSheet(i)});
     progButtons.push(b);
-   // b = new button("Delete", diam * (sheetW + 1) + 5, i * sheetH * diam + diam * (i + 1) + programOffset, 100, 19, function() {deleteSheet(i)});
+   // b = new button("Delete", diam * (defaultPatternWid + 1) + 5, i * defaultPatternHeit * diam + diam * (i + 1) + programOffset, 100, 19, function() {deleteSheet(i)});
    // progButtons.push(b);
   }
   else {
@@ -58,7 +35,8 @@ function editSheet(number) {
   editingSheet = number; 
   editing = true; 
   directive.reset(); // clean the directive window
-  mainSheet = program[number].copy();
+  //mainSheet = program[number].copy();
+  mainSheet.copyWithShift(program[number]);
   drawProg();
 }
 
@@ -78,7 +56,7 @@ function saveProg() {
 
 function showFigure(number) {
   currentDirectiveFigure = number;
-  directive = new sheet(sheetW, 4);
+  directive = new sheet(defaultPatternWid, 4);
   var offset = mainSheet.directives[number][0];
   var rotation = mainSheet.directives[number][1];
   var rotation = mainSheet.directives[number][1];
@@ -130,7 +108,7 @@ function createShowFigure(number) {
 
 function checkDirective(number, offset, rotation) {
   for (i = 0; i < 4; i++) {
-    if ((figures[number][rotation][i][0] + offset < 0) || (figures[number][rotation][i][0] + offset > sheetW - 1)) return false;
+    if ((figures[number][rotation][i][0] + offset < 0) || (figures[number][rotation][i][0] + offset > defaultPatternWid - 1)) return false;
   }
   return true;
 }
@@ -166,40 +144,40 @@ function moveSheet(where) {
 } 
 
 function moveSheetLeft() {
-  for (var i = 0; i < sheetW - 1; i++) {
+  for (var i = 0; i < defaultPatternWid - 1; i++) {
     mainSheet.pattern[i] = mainSheet.pattern[i + 1];
   }
-  mainSheet.pattern[sheetW - 1] = new Array(sheetH);
-  for (var i = 0; i < sheetH; i++) {
-    mainSheet.pattern[sheetW - 1][i] = anything;
+  mainSheet.pattern[defaultPatternWid - 1] = new Array(defaultPatternHeit);
+  for (var i = 0; i < defaultPatternHeit; i++) {
+    mainSheet.pattern[defaultPatternWid - 1][i] = anything;
   }
 }
 
 function moveSheetRight() {
-  for (var i = 0; i < sheetW - 1; i++) {
-    mainSheet.pattern[sheetW - i - 1] = mainSheet.pattern[sheetW - i - 2];
+  for (var i = 0; i < defaultPatternWid - 1; i++) {
+    mainSheet.pattern[defaultPatternWid - i - 1] = mainSheet.pattern[defaultPatternWid - i - 2];
   }
-  mainSheet.pattern[0] = new Array(sheetH);
-  for (var i = 0; i < sheetH; i++) {
+  mainSheet.pattern[0] = new Array(defaultPatternHeit);
+  for (var i = 0; i < defaultPatternHeit; i++) {
     mainSheet.pattern[0][i] = anything;
   }
 }
 
 function liftSheet() {
-  for (var i = 0; i < sheetW; i++) {
-    for (var j = 0; j < sheetH - 1; j++) {
+  for (var i = 0; i < defaultPatternWid; i++) {
+    for (var j = 0; j < defaultPatternHeit - 1; j++) {
       mainSheet.pattern[i][j] = mainSheet.pattern[i][j + 1];
     }
-    mainSheet.pattern[i][sheetH - 1] = anything;
+    mainSheet.pattern[i][defaultPatternHeit - 1] = anything;
   }
   calculateAllLandings();
   drawProg();
 }
 
 function pushSheet() {
-  for (var i = 0; i < sheetW; i++) {
-    for (var j = 0; j < sheetH - 1; j++) {
-      mainSheet.pattern[i][sheetH - j - 1] = mainSheet.pattern[i][sheetH - j - 2];
+  for (var i = 0; i < defaultPatternWid; i++) {
+    for (var j = 0; j < defaultPatternHeit - 1; j++) {
+      mainSheet.pattern[i][defaultPatternHeit - j - 1] = mainSheet.pattern[i][defaultPatternHeit - j - 2];
     }
     mainSheet.pattern[i][0] = anything;
   }
@@ -208,11 +186,16 @@ function pushSheet() {
 }
 
 function cutSheet(sheet) {
-  sheet.up = findBoundary(sheet.pattern, [0, 0], [0, 1], [1, 0]);
-  if (sheet.up == sheet.rows) {sheet.up = 0; return;}
-  sheet.down = sheet.rows - findBoundary(sheet.pattern, [0, sheet.rows - 1], [0, -1], [1, 0]);
-  sheet.left = findBoundary(sheet.pattern, [0, 0], [1, 0], [0, 1]);
-  sheet.right = sheet.cols - findBoundary(sheet.pattern, [sheet.cols - 1, 0], [-1, 0], [0, 1]);
+  var up = findBoundary(sheet.pattern, [0, 0], [0, 1], [1, 0]);
+  if (up == sheet.patternHeit) {up = 0; return;}
+  var down = sheet.patternHeit - findBoundary(sheet.pattern, [0, sheet.patternHeit - 1], [0, -1], [1, 0]);
+  var left = findBoundary(sheet.pattern, [0, 0], [1, 0], [0, 1]);
+  var right = sheet.patternWid - findBoundary(sheet.pattern, [sheet.patternWid - 1, 0], [-1, 0], [0, 1]);
+  sheet.patternOffsetY = up;
+  sheet.patternOffsetX = left;
+  sheet.patternWid = right - left;
+  sheet.patternHeit = down - up;
+  sheet.copyFromArray(sheet.pattern);
 }
 
 function findBoundary(array, initial, directionGlobal, directionLocal) {
@@ -239,7 +222,7 @@ function loadProg(contents) {
     program[j] = new sheet(sh.cols, sh.rows);
     program[j].pattern = sh.pattern;
     program[j].directives = sh.directives;
-    progButtons.push(new button("", diam, j * sheetH * diam + diam * (j + 1), diam * sheetW, diam * sheetH, createEdit(j)));
+    progButtons.push(new button("", diam, j * defaultPatternHeit * diam + diam * (j + 1), diam * defaultPatternWid, diam * defaultPatternHeit, createEdit(j)));
   }
 }
 
