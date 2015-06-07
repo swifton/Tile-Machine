@@ -49,11 +49,15 @@ function drawProg() {
 }
 
 function drawFrames() {
-  rectangle(add(workplace, [diam * recognitionOffset, diam * recognitionOffsetY]), diam * command.patternWid, diam * command.patternHeit);
-  var sh = program[advancedMatch];
   for (var i = 0; i < matches.length; i++) {
-    rectangle(add(workplace, [diam * matches[i][0], diam * matches[i][1]]), diam * (sh.right - sh.left), diam * (sh.down - sh.up));
+    rectangle(add(workplace, [diam * matches[i][1], diam * matches[i][2]]), diam * command.patternWid, diam * command.patternHeit, "#999");
   }
+
+  for (var i = 0; i < removedMatches.length; i++) {
+    rectangle(add(workplace, [diam * removedMatches[i][1], diam * removedMatches[i][2]]), diam * command.patternWid, diam * command.patternHeit, "#900");
+  }
+
+  rectangle(add(workplace, [diam * recognitionOffset, diam * recognitionOffsetY]), diam * command.patternWid, diam * command.patternHeit, "#000");
 }
 
 function drawExec() {
@@ -161,26 +165,3 @@ function setupButtons() {
 
   execButtons = [stopButton, newGameButton, pauseGameButton];
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -52,7 +52,7 @@ var field = new Array(fieldWid);
 field[0] = new Array(fieldHeit + 1);
 var nOfFigure;
 var matches = [];
-var advancedMatch = 0;
+var removedMatches = [];
 var gamePaused = true;
 var command = new sheet(defaultPatternWid, defaultPatternHeit);
 
@@ -72,22 +72,3 @@ var contents;
 document.getElementById('file-input').addEventListener('change', readSingleFile, false);
 
 this.canvas.addEventListener('mousewheel',function(event){scroll(event); return false;}, false);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

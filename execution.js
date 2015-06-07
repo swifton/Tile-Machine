@@ -1,11 +1,10 @@
 function findCommand() {
   for (i = 0; i < program.length; i++) {
-    var c = advancedMatching(program[i]);
+    var c = advancedMatching(program[i], i);
     if (c[0] != 0) {
-      command = c[0];
+      command = program[c[0]];
       recognitionOffset = c[1];
       recognitionOffsetY = c[2];
-      //advancedMatch = i;
       return;
     }
     /*if (checkCommand(program[i])) {
@@ -22,29 +21,33 @@ function checkCommand(command) {
   return false;
 }
 
-function advancedMatching(command) {
+function advancedMatching(command, n) {
   matches = [];
+  removedMatches = [];
   for (var i = 0; i < fieldWid - command.patternWid + 1; i++) {
     for (var j = 0; j < fieldHeit -command.patternHeit + 1; j++) {
-      if (comparePatterns(command.pattern, field, i, j, command.patternWid, command.patternHeit, command.patternOffsetX, command.patternOffsetY)) {matches.push([command, i, j])}
+      if (comparePatterns(command.pattern, field, i, j, command.patternWid, command.patternHeit, command.patternOffsetX, command.patternOffsetY)) {matches.push([n, i, j])}
+    }
+  }
+
+  for (var i = 0; i < matches.length; i++) {
+    if (!checkMatch(matches[i], command)) {
+      removedMatches.push(matches[i]);
+      matches.remove(i, i + 1);
     }
   }
 
   var a = matches[matches.length - 1] || [0, 0, 0];
   return a;
-
-  for (var i = 0; i < matches.length; i++) {
-    if (!checkMatch(matches[i], command)) {matches.remove(i, i + 1);}
-  }
 }
 
-function checkMatch(someMatch, command) {
+function checkMatch(match, command) {
   var fig = command.landing[nOfFigure];
-  p(command.landing);
   for (var i = 0; i < 4; i++) {
-    for (var j = 0; j < someMatch[1] + fig[i][1] - command.up + 1; j++) {
-      debugSquare(debugStart(workplace, someMatch[0] + fig[i][0] - command.left - 1, i), i);
-      if (field[someMatch[0] + fig[i][0] - command.left - 1][j] != 0) {return false;}
+    brk = [fig[i][0] + match[1] - command.patternOffsetX, fig[i][1] + match[2] - command.patternOffsetY];
+
+    for (var j = brk[1]; j > -1; j--) {
+      if (field[brk[0]][j] != 0) {return false;}
     }
   }
   return true;
