@@ -262,5 +262,9 @@ function test(){
   gamePaused = false;
   mode = "executing";
   newGame();
-  GameLoop();
+  clear(c);
+  newFigure();
+  updateField();
+  drawExec();
+  //GameLoop();
 }

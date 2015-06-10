@@ -37,7 +37,7 @@ function drawProg() {
   drawData(mainSheet.pattern, add(workplace, [0, 7 * diam], mainSheet.patternWid, mainSheet.patternHeit));
   drawFrame(mainSheet, add(workplace, [0, 7 * diam]));
 
-  for (i = 0; i < program.length; i++) {
+  for (var i = 0; i < program.length; i++) {
     var com = program[i];
     drawData(com.pattern, add([diam, i * defaultPatternHeit * diam + diam * (i + 1) + programOffset], [diam * com.patternOffsetX, diam * com.patternOffsetY]), com.patternWid, com.patternHeit);
     drawFrame(com, [diam, i * defaultPatternHeit * diam + diam * (i + 1) + programOffset]);
@@ -54,7 +54,7 @@ function drawFrames() {
   }
 
   for (var i = 0; i < removedMatches.length; i++) {
-    rectangle(add(workplace, [diam * removedMatches[i][1], diam * removedMatches[i][2]]), diam * command.patternWid, diam * command.patternHeit, "#900");
+    rectangle(add(workplace, [diam * removedMatches[i][1], diam * removedMatches[i][2]]), diam * removedMatches[i][3], diam * removedMatches[i][4], "#900");
   }
 
   rectangle(add(workplace, [diam * recognitionOffset, diam * recognitionOffsetY]), diam * command.patternWid, diam * command.patternHeit, "#000");
@@ -162,6 +162,7 @@ function setupButtons() {
   var newGameButton = new button("New Game", workplace[0], (fieldHeit + 2) * diam, 120, buttonHeit, newGame);
   var stopButton = new button("Stop", workplace[0] + newGameButton.wid + 10, (fieldHeit + 2) * diam, 100, buttonHeit, function() {if (!gamePaused) {pauseGame();} mode = "programming"; drawProg();});
   var pauseGameButton = new button("Pause", workplace[0], (fieldHeit + 3) * diam, 120, buttonHeit, pauseGame);
+  var nextButton = new button("Next", workplace[0] + pauseGameButton.wid + 10, (fieldHeit + 3) * diam, 120, buttonHeit, nextFigure);
 
-  execButtons = [stopButton, newGameButton, pauseGameButton];
+  execButtons = [stopButton, newGameButton, pauseGameButton, nextButton];
 }

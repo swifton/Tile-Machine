@@ -5,8 +5,6 @@ function newFigure() {
 
   findCommand();
   var offset = command.directives[nOfFigure][0] - command.patternOffsetX + recognitionOffset;
-  p(offset);
-  p(recognitionOffset);
   var rotation = command.directives[nOfFigure][1];
 
   for (var j = 0; j < 4; j++) {
@@ -18,6 +16,13 @@ function newFigure() {
 
 function getNewFigure() {
   newNOfFigure = allowedFigures[Math.floor(Math.random()*allowedFigures.length)];
+}
+
+function nextFigure() {
+  clear(c);
+  dropFigure();
+  updateField();
+  drawExec();
 }
 
 // Tetris game functions
