@@ -2,10 +2,10 @@ function findCommand() {
   removedMatches = [];
   inefficientMatches = [];
 
-  for (var i = 0; i < program.length; i++) {
-    var c = advancedMatching(program[i], i);
+  for (var i = 0; i < program[nOfFigure].length; i++) {
+    var c = advancedMatching(program[nOfFigure][i], i);
     if (c != -1) {
-      command = program[c[0]];
+      command = program[nOfFigure][c[0]];
       recognitionOffset = c[1];
       recognitionOffsetY = c[2];
       return;

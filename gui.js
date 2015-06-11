@@ -37,8 +37,8 @@ function drawProg() {
   drawData(mainSheet.pattern, add(workplace, [0, 7 * diam], mainSheet.patternWid, mainSheet.patternHeit));
   drawFrame(mainSheet, add(workplace, [0, 7 * diam]));
 
-  for (var i = 0; i < program.length; i++) {
-    var com = program[i];
+  for (var i = 0; i < program[nOfProgFigure].length; i++) {
+    var com = program[nOfProgFigure][i];
     drawData(com.pattern, add([diam, i * defaultPatternHeit * diam + diam * (i + 1) + programOffset], [diam * com.patternOffsetX, diam * com.patternOffsetY]), com.patternWid, com.patternHeit);
     drawFrame(com, [diam, i * defaultPatternHeit * diam + diam * (i + 1) + programOffset]);
   }
@@ -50,7 +50,7 @@ function drawProg() {
 
 function drawFrames() {
   for (var i = 0; i < matches.length; i++) {
-    //rectangle(add(workplace, [diam * matches[i][1], diam * matches[i][2]]), diam * command.patternWid, diam * command.patternHeit, "#999");
+    rectangle(add(workplace, [diam * matches[i][1], diam * matches[i][2]]), diam * command.patternWid, diam * command.patternHeit, "#999");
   }
 
   for (var i = 0; i < removedMatches.length; i++) {
@@ -58,7 +58,6 @@ function drawFrames() {
   }
 
   for (var i = 0; i < inefficientMatches.length; i++) {
-    p('Inef match')
     rectangle(add(workplace, [diam * inefficientMatches[i][1], diam * inefficientMatches[i][2]]), diam * inefficientMatches[i][3], diam * inefficientMatches[i][4], "#990");
   }
 
