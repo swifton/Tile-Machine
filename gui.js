@@ -50,6 +50,9 @@ function drawProg() {
 
 function drawFrames() {
   for (var i = 0; i < matches.length; i++) {
+    p('IN CASE IF DEFAULT PATTERN PLAYS');
+    p(matches.slice());
+    p(matches.length);
     rectangle(add(workplace, [diam * matches[i][1], diam * matches[i][2]]), diam * command.patternWid, diam * command.patternHeit, "#999");
   }
 

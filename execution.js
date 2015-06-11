@@ -3,6 +3,8 @@ function findCommand() {
 
   for (var i = 0; i < program.length; i++) {
     var c = advancedMatching(program[i], i);
+    p('c = ');
+    p(c);
     if (c != -1) {
       command = program[c[0]];
       recognitionOffset = c[1];
@@ -14,7 +16,7 @@ function findCommand() {
       return;
     }*/
   }
-  command = new sheet(defaultPatternWid, defaultPatternHeit);
+  command = new sheet(defaultPatternWid, defaultPatternHeit, 0, 0);
   recognitionOffset = 0;
 }
 
@@ -27,7 +29,10 @@ function advancedMatching(command, n) {
   matches = [];
   for (var i = 0; i < fieldWid - command.patternWid + 1; i++) {
     for (var j = 0; j < fieldHeit -command.patternHeit + 1; j++) {
-      if (comparePatterns(command.pattern, field, i, j, command.patternWid, command.patternHeit, command.patternOffsetX, command.patternOffsetY)) {matches.push([n, i, j, command.patternWid, command.patternHeit])}
+      if (comparePatterns(command.pattern, field, i, j, command.patternWid, command.patternHeit, command.patternOffsetX, command.patternOffsetY)) {
+        var topush = [n, i, j, command.patternWid, command.patternHeit];
+        var a = matches.push(topush);
+      }
     }
   }
 
@@ -41,21 +46,18 @@ function advancedMatching(command, n) {
 
 function removeMatches(matchesArray, filterFunction, command) {
   var removedMatchesArray = [];
-  var toRemove = [];
+  var newMatchesArray = [];
 
   for (var i = 0; i < matchesArray.length; i++) {
     if (!filterFunction(matchesArray[i], command)) {
-    p('filter function invoked');
       removedMatchesArray.push(matches[i]);
-      toRemove.push(i);
+    }
+    else {
+      newMatchesArray.push(matches[i]);
     }
   }
 
-  for (var i = 0; i < toRemove.length; i++) {
-    matchesArray.remove(i, i + 1);
-  }
-
-  return [removedMatchesArray, matchesArray];
+  return [removedMatchesArray, newMatchesArray];
 }
 
 function checkMatch(match, command) {
