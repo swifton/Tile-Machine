@@ -50,14 +50,16 @@ function drawProg() {
 
 function drawFrames() {
   for (var i = 0; i < matches.length; i++) {
-  //  p('IN CASE IF DEFAULT PATTERN PLAYS');
-  //  p(matches.slice());
-  //  p(matches.length);
-    rectangle(add(workplace, [diam * matches[i][1], diam * matches[i][2]]), diam * command.patternWid, diam * command.patternHeit, "#999");
+    //rectangle(add(workplace, [diam * matches[i][1], diam * matches[i][2]]), diam * command.patternWid, diam * command.patternHeit, "#999");
   }
 
   for (var i = 0; i < removedMatches.length; i++) {
     rectangle(add(workplace, [diam * removedMatches[i][1], diam * removedMatches[i][2]]), diam * removedMatches[i][3], diam * removedMatches[i][4], "#900");
+  }
+
+  for (var i = 0; i < inefficientMatches.length; i++) {
+    p('Inef match')
+    rectangle(add(workplace, [diam * inefficientMatches[i][1], diam * inefficientMatches[i][2]]), diam * inefficientMatches[i][3], diam * inefficientMatches[i][4], "#990");
   }
 
   rectangle(add(workplace, [diam * recognitionOffset, diam * recognitionOffsetY]), diam * command.patternWid, diam * command.patternHeit, "#000");

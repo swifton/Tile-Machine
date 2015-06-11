@@ -53,6 +53,7 @@ field[0] = new Array(fieldHeit + 1);
 var nOfFigure;
 var matches = [];
 var removedMatches = [];
+var inefficientMatches = [];
 var gamePaused = true;
 var command = new sheet(defaultPatternWid, defaultPatternHeit);
 
