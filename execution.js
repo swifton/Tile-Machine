@@ -3,8 +3,6 @@ function findCommand() {
 
   for (var i = 0; i < program.length; i++) {
     var c = advancedMatching(program[i], i);
-    p('c = ');
-    p(c);
     if (c != -1) {
       command = program[c[0]];
       recognitionOffset = c[1];
@@ -36,7 +34,12 @@ function advancedMatching(command, n) {
     }
   }
 
-  var rm = removeMatches(matches, checkMatch, command);
+  var rm = removeMatches(matches, checkBorders, command);
+  removedMatches = removedMatches.concat(rm[0]);
+  matches = rm[1];
+
+
+  var rm = removeMatches(matches, checkLanding, command);
   removedMatches = removedMatches.concat(rm[0]);
   matches = rm[1];
 
@@ -60,15 +63,37 @@ function removeMatches(matchesArray, filterFunction, command) {
   return [removedMatchesArray, newMatchesArray];
 }
 
-function checkMatch(match, command) {
+function checkLanding(match, command) {
   var fig = command.landing[nOfFigure];
   for (var i = 0; i < 4; i++) {
     brk = [fig[i][0] + match[1] - command.patternOffsetX, fig[i][1] + match[2] - command.patternOffsetY];
     debugField(brk[0], brk[1], i);
 
+p("IN CASE IF LINE 70 CAUSES A CRASH");
+      p(brk);
+      p(fig[i]);
+      p(match);
+      p('offsets');
+      p(command.patternOffsetX);
+      p(command.patternOffsetY);
+      p('position');
+      p(nOfFigure);
+      p(JSON.stringify(field));
+      p("Now, j's");
+
     for (var j = brk[1]; j > -1; j--) {
-      if (field[brk[0]][j] != 0) {return false;}
+      p(j);
+      if (field[brk[0]][j] != 0) {return false;}  // THIS LINE CAUSED A CRASH TWICE
     }
+  }
+  return true;
+}
+
+function checkBorders(match, command) {
+  var fig = command.landing[nOfFigure];
+  for (var i = 0; i < 4; i++) {
+    brk = [fig[i][0] + match[1] - command.patternOffsetX, fig[i][1] + match[2] - command.patternOffsetY];
+    if (field[brk[0]] == undefined) {return false;}
   }
   return true;
 }

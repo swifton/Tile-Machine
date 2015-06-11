@@ -50,9 +50,9 @@ function drawProg() {
 
 function drawFrames() {
   for (var i = 0; i < matches.length; i++) {
-    p('IN CASE IF DEFAULT PATTERN PLAYS');
-    p(matches.slice());
-    p(matches.length);
+  //  p('IN CASE IF DEFAULT PATTERN PLAYS');
+  //  p(matches.slice());
+  //  p(matches.length);
     rectangle(add(workplace, [diam * matches[i][1], diam * matches[i][2]]), diam * command.patternWid, diam * command.patternHeit, "#999");
   }
 
@@ -166,6 +166,7 @@ function setupButtons() {
   var stopButton = new button("Stop", workplace[0] + newGameButton.wid + 10, (fieldHeit + 2) * diam, 100, buttonHeit, function() {if (!gamePaused) {pauseGame();} mode = "programming"; drawProg();});
   var pauseGameButton = new button("Pause", workplace[0], (fieldHeit + 3) * diam, 120, buttonHeit, pauseGame);
   var nextButton = new button("Next", workplace[0] + pauseGameButton.wid + 10, (fieldHeit + 3) * diam, 120, buttonHeit, nextFigure);
+  var fastButton = new button("Fast", workplace[0], (fieldHeit + 4) * diam, 120, buttonHeit, fastGameLoop);
 
-  execButtons = [stopButton, newGameButton, pauseGameButton, nextButton];
+  execButtons = [stopButton, newGameButton, pauseGameButton, nextButton, fastButton];
 }

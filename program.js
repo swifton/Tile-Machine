@@ -268,3 +268,8 @@ function test(){
   drawExec();
   //GameLoop();
 }
+
+function fastGameLoop() {
+  nextFigure();
+  gLoop = setTimeout(fastGameLoop, 1000/100);
+}
