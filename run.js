@@ -1,5 +1,6 @@
 // Initialization functions
 function newFigure() {
+  numberOfTilesDropped ++;
   nOfFigure = newNOfFigure;
   getNewFigure();
 
@@ -49,6 +50,9 @@ function reset(data, value, ground) {
 }
 
 function newGame(){
+  p("THE GAME IS OVER");
+  printStats();
+  newGameStats();
   reset(field, 0, true);
 //  field =  [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-5,-5,-1,-1,-1,-1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-5,-5,-1,-1,-1,-1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-5,-5,-1,-1,-1,-1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-5,-5,0,-5,-5,-1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-5,-5,-5,-5,-1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-5,-5,-5,-5,-1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,-5,-5,-1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,-1],[0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1,-1,-1,-1,-1,-1]];
   if (gamePaused) {pauseGame();}
@@ -105,6 +109,7 @@ var checkField = function(){
     }
     if (sum != 0){
       linesDeleted += 1;
+      numberOfLinesDeleted ++;
       for (var j = 0; j < fieldWid; j++){
         field[j][i] = 0;
       }

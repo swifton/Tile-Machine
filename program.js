@@ -269,6 +269,7 @@ function test(){
   gamePaused = false;
   mode = "executing";
   newGame();
+  numberOfGamesPlayed = 0;
   clear(c);
   newFigure();
   updateField();

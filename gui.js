@@ -168,6 +168,7 @@ function setupButtons() {
   var pauseGameButton = new button("Pause", workplace[0], (fieldHeit + 3) * diam, 120, buttonHeit, pauseGame);
   var nextButton = new button("Next", workplace[0] + pauseGameButton.wid + 10, (fieldHeit + 3) * diam, 120, buttonHeit, nextFigure);
   var fastButton = new button("Fast", workplace[0], (fieldHeit + 4) * diam, 120, buttonHeit, fastGameLoop);
+  var statsButton = new button("Stats", workplace[0] + fastButton.wid + 10, (fieldHeit + 4) * diam, 120, buttonHeit, printStats);
 
-  execButtons = [stopButton, newGameButton, pauseGameButton, nextButton, fastButton];
+  execButtons = [stopButton, newGameButton, pauseGameButton, nextButton, fastButton, statsButton];
 }
