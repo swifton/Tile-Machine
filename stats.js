@@ -22,3 +22,9 @@ function newGameStats() {
   numberOfLinesDeleted = 0;
   numberOfGamesPlayed ++;
 }
+
+function resetStats() {
+  numberOfGamesPlayed = 0;
+  totalLinesDeleted = 0;
+  totalTilesDropped = 0;
+}

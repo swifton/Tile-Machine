@@ -258,8 +258,11 @@ function loadProg(contents) {
       program[i][j].pattern = sh.pattern;
       program[i][j].directives = sh.directives;
       program[i][j].landing = sh.landing;
-      createSheetButtons(j, nOfProgFigure);
     }
+  }
+
+  for (var j = 0; j < program[nOfProgFigure].length; j++) {
+    createSheetButtons(j, nOfProgFigure);
   }
 
   drawProg();
@@ -269,7 +272,7 @@ function test(){
   gamePaused = false;
   mode = "executing";
   newGame();
-  numberOfGamesPlayed = 0;
+  resetStats();
   clear(c);
   newFigure();
   updateField();
