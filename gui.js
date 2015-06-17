@@ -66,7 +66,7 @@ function drawFrames() {
 
 function drawExec() {
   drawData(field, workplace);
-  drawData(command.pattern, add(workplace, [defaultPatternWid * diam, 0]), command.patternWid, command.patternHeit);
+  drawData(command.pattern, add(workplace, [fieldWid * diam, 0]), command.patternWid, command.patternHeit);
   drawFrames();
   drawButtons(execButtons);
 }

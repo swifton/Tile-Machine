@@ -14,7 +14,7 @@ var wid, heit;
 resizeCanvas();
 
 var defaultPatternHeit = 10, defaultPatternWid = 10;
-var fieldHeit = 20, fieldWid = 10;
+var fieldHeit = 19 + 1, fieldWid = 10 + 2;
 var workplace = [Math.floor((wid - defaultPatternWid * diam)/2), 0];
 
 // button setup
@@ -66,7 +66,7 @@ var figure1 = [[[3,0],[4,0],[5,0],[6,0]], [[5,1],[5,2],[5,3],[5,0]]], // line
     figure6 = [[[3,0],[5,0],[4,0],[5,1]], [[4,0],[4,1],[4,2],[5,0]], [[4,0],[6,1],[5,1],[4,1]], [[5,0],[5,1],[5,2],[4,2]]], // G
     figure7 = [[[6,0],[4,0],[5,0],[4,1]], [[4,0],[4,1],[4,2],[5,2]], [[5,1],[3,1],[4,1],[5,0]], [[5,0],[5,1],[5,2],[4,0]]], // L
     figures = [figure1, figure2, figure3, figure4, figure5, figure6, figure7];
-var allowedFigures = [1];
+var allowedFigures = [4, 1];
 getNewFigure();
 
 var contents;

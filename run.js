@@ -27,7 +27,7 @@ function nextFigure() {
 }
 
 // Tetris game functions
-function reset(data, value, ground) {
+function reset(data, value, ground, walls) {
   value = value || 0;
   var wid = data.length;
   var hei = data[0].length;
@@ -35,7 +35,7 @@ function reset(data, value, ground) {
   for (var i = 0; i < wid; i++){
     data[i] = new Array(hei);
     for (var j = 0; j < hei; j++){
-      data[i][j] = value;
+      data[i][j] = (walls && (i == 0 || i == wid - 1))?(-1):value;
     }
   }
 
@@ -51,10 +51,9 @@ function reset(data, value, ground) {
 
 function newGame(){
   p("THE GAME IS OVER");
-  printStats();
+  //printStats();
   newGameStats();
-  reset(field, 0, true);
-//  field =  [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-5,-5,-1,-1,-1,-1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-5,-5,-1,-1,-1,-1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-5,-5,-1,-1,-1,-1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-5,-5,0,-5,-5,-1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-5,-5,-5,-5,-1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-5,-5,-5,-5,-1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,-5,-5,-1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,-1],[0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1,-1,-1,-1,-1,-1]];
+  reset(field, 0, true, true);
   if (gamePaused) {pauseGame();}
   newFigure();
 }
@@ -94,7 +93,7 @@ function updateField(){
 
 var checkEnd = function(){
   var b = 0;
-  for (var j = 0; j < fieldWid; j++){
+  for (var j = 1; j < fieldWid - 1; j++){ // one block on each side doesn't get checked, since these are walls
     if (field[j][0] < 0) {b = 1}
   }
   if (b == 1) {newGame();}
@@ -142,7 +141,7 @@ var checkPosition = function(arr){
 
 var moveFigure = function(dir){
   if (checkMove(dir)){ return 1; }
-	
+
   updatePosition(0);
   for (var i = 0; i < 4; i++){
     figure[i][0] += dir[0];
@@ -166,7 +165,7 @@ var dropFigure = function() {
     if (j < k) { k = j; }
   }
 
-  moveFigure([0, k -1]);
+  moveFigure([0, k - 1]);
 }
 
 var GameLoop = function() {

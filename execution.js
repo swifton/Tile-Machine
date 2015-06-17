@@ -18,7 +18,7 @@ function findCommand() {
 function advancedMatching(command, n) {
   matches = [];
   for (var i = 0; i < fieldWid - command.patternWid + 1; i++) {
-    for (var j = 0; j < fieldHeit -command.patternHeit + 1; j++) {
+    for (var j = 0; j < fieldHeit + 1 -command.patternHeit + 1; j++) {  // fieldHeit + 1 because need to consider the floor
       if (comparePatterns(command.pattern, field, i, j, command.patternWid, command.patternHeit, command.patternOffsetX, command.patternOffsetY)) {
         var topush = [n, i, j, command.patternWid, command.patternHeit];
         var a = matches.push(topush);
