@@ -117,12 +117,15 @@ function scroll(event) {
   drawProg();
 }
 
-function button(label, x, y, wid, heit, func) {
+function button(label, x, y, wid, heit, func, toggle, label2) {
   this.label = label;
   this.x = x;  
   this.y = y;
   this.wid = wid;
   this.heit = heit;
+  this.toggle = toggle;
+  this.toggled = false;
+  this.label2 = label2;
 
   this.draw = draw;
   function draw() {
@@ -133,6 +136,12 @@ function button(label, x, y, wid, heit, func) {
   this.press = press;
   function press(pressX, pressY) {
     if ((pressX > this.x) && (pressX < this.x + this.wid) && (pressY > this.y) && (pressY < this.y + this.heit)) {
+      if (this.toggle) {
+        this.toggled = !this.toggled;
+        var tmp = this.label;
+        this.label = this.label2;
+        this.label2 = tmp;
+      }
       this.func()
     }
   }

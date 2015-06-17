@@ -5,6 +5,8 @@ function sheet(patternWid, patternHeit, patternOffsetX, patternOffsetY) {
   this.patternOffsetY = patternOffsetY || 0;
   this.directives = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]; // 1st coord - offset, 2nd - rotation
   this.landing = [0, 0, 0, 0, 0, 0, 0];
+  this.symmetry = false;
+  this.walls = false;
 
   this.reset = reset;
   function reset() {

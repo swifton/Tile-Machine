@@ -38,13 +38,13 @@ function editSheet(number, tetr) {
 
 function deleteSheet(number, tetr) {
   program[tetr].remove(number);
-  progButtons.remove(progButtons.length - 4, progButtons.length); // this button removal relies on the structure of the progButtons array and is not robust
+  progButtons.remove(progButtons.length - 6, progButtons.length); // this button removal relies on the structure of the progButtons array and is not robust
   newSheet();
   drawProg();
 }
 
 function deleteSheetButtons() {
-  progButtons.remove(progButtons.length - 4, progButtons.length); // this button removal relies on the structure of the progButtons array and is not robust
+  progButtons.remove(progButtons.length - 6, progButtons.length); // this button removal relies on the structure of the progButtons array and is not robust
 }
 
 function createSheetButtons(i, nn, pHeit, heitOffset, pWid) {
@@ -60,8 +60,23 @@ function createSheetButtons(i, nn, pHeit, heitOffset, pWid) {
 
   b = new button("v", diam * (pWid + 1) + 5 + 2 * diam, heitOffset * diam + diam * (i + 1) + programOffset, 20, 19, function() {swapTwoSheets(i, i+1, nn)});
   progButtons.push(b);
+
+  b = new button("", diam * (pWid + 1) + 5 + 3 * diam, heitOffset * diam + diam * (i + 1) + programOffset, 20, 19, function() {toggleSymmetry(i, nn)}, true, "s");
+  progButtons.push(b);
+
+  b = new button("", diam * (pWid + 1) + 5 + 4 * diam, heitOffset * diam + diam * (i + 1) + programOffset, 20, 19, function() {toggleWalls(i, nn)}, true, "w");
+  progButtons.push(b);
 }
 
+function toggleSymmetry(i, nn) {
+  program[nn][i].symmetry = !program[nn][i].symmetry;
+  drawProg();
+}
+
+function toggleWalls(i, nn) {
+  program[nn][i].walls = !program[nn][i].walls;
+  drawProg();
+}
 
 function createEdit(number) {
   return function() {editSheet(number)};
