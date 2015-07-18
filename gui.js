@@ -37,13 +37,7 @@ function drawProg() {
   drawData(mainSheet.pattern, add(workplace, [0, 7 * diam], mainSheet.patternWid, mainSheet.patternHeit));
   drawFrame(mainSheet, add(workplace, [0, 7 * diam]));
 
-  var heitOffset = 0;
-  for (var i = 0; i < program[nOfProgFigure].length; i++) {
-    var com = program[nOfProgFigure][i];
-    drawData(com.pattern, add([diam, heitOffset * diam + diam * (i + 1) + programOffset], /*[diam * com.patternOffsetX, diam * com.patternOffsetY]*/[0,0]), com.patternWid, com.patternHeit);
-    //drawFrame(com, [diam, heitOffset * diam + diam * (i + 1) + programOffset]);
-    heitOffset += com.patternHeit;
-  }
+  program[nOfProgFigure].draw();
 
   drawLanding();
 
@@ -85,6 +79,8 @@ function buttonPress(mousePos) {
     for (var i = 0; i < progButtons.length; i++) {
       progButtons[i].press(x, y);
     }
+
+    program[nOfProgFigure].press(x, y);
   }
 
   else if (mode == "executing") {
@@ -109,11 +105,7 @@ function sheetInput(mousePos) {
 function scroll(event) {
   if (mode != "programming") return;
   var direction = Math.sign(event.wheelDeltaY);
-  var scrollSpeed = 30;
-  programOffset += scrollSpeed * direction;
-  for (var i = nOfStandardButtons; i < progButtons.length; i++) {
-    progButtons[i].y += scrollSpeed * direction;
-  }
+  program[nOfProgFigure].scroll(direction);
   drawProg();
 }
 
