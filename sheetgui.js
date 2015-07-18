@@ -39,24 +39,13 @@ function sheetgui(sheet, funcs) {
   this.createButtons = createButtons;
   function createButtons() {
     var wls = this.sheet.walls;
+    var labels = ['', 'D', '^', 'v', '', ''];
+    var modes = [false, false, false, false, true, true];
 
-    var b = new button("", 0, 0, 0, 0, funcs[1]);
-    this.buttons.push(b);
-
-    b = new button("D", 0, 0, 20, 19, funcs[0]);
-    this.buttons.push(b);
-
-    b = new button("^", 0, 0, 20, 19, funcs[2]);
-    this.buttons.push(b);
-
-    b = new button("v", 0, 0, 20, 19, funcs[3]);
-    this.buttons.push(b);
-
-    b = new button("", 0, 0, 20, 19, funcs[4], true, "s");
-    this.buttons.push(b);
-
-    b = new button(wls?"":"w", 0, 0, 20, 19, funcs[5], true, wls?"w":"");
-    this.buttons.push(b);
+    for (var i = 0; i < 6; i++) {
+      var b = new button(labels[i], 0, 0, 20, 19, funcs[i], modes[i]);
+      this.buttons.push(b);
+    }
   }
 
   this.createButtons();

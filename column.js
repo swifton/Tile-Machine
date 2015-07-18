@@ -50,7 +50,7 @@ function column(tetrNum) {
     var twalls = function() {toggleWalls(l, t)};
     var tsym = function() {toggleSymmetry(l, t)};
 
-    this.gui.push(new sheetgui(pattern, [del, editt, up, down, twalls, tsym]));
+    this.gui.push(new sheetgui(pattern, [editt, del, up, down, tsym, twalls]));
     this.sheets.push(pattern);
     alignSheetButtons(this.tetrNum);
   }

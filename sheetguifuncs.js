@@ -9,7 +9,7 @@ function editSheet(number, tetr) {
 function deleteSheet(number, tetr) {
   program[tetr].heitOffset -= program[tetr].sheets[number].heitOffset;
   program[tetr].sheets.remove(number);
-  program[tetr].gui.remove(number);
+  program[tetr].gui.remove(program[tetr].gui.length - 1);
   alignSheetButtons(tetr);
   //progButtons.remove(progButtons.length - 6, progButtons.length); // this button removal relies on the structure of the progButtons array and is not robust
   newSheet();
@@ -41,8 +41,11 @@ function alignSheetButtons(tetr) {
   var programOffset = col.programOffset;
 
   for (var i = 0; i <  col.sheets.length; i++) {
-    var pWid = col.sheets[i].patternWid + 1;
-    var pHeit = col.sheets[i].patternHeit;
+    var shsh = col.sheets[i];
+    var pWid = shsh.patternWid + 1;
+    var pHeit = shsh.patternHeit;
+    var wls = shsh.walls;
+    var sym = shsh.symmetry;
 
     var xs = [diam, diam * pWid + 5, diam * (pWid + 1) + 5, diam * (pWid + 1) + 5 + 1 * diam, diam * (pWid + 1) + 5 + 2 * diam, diam * (pWid + 1) + 5 + 3 * diam, diam * (pWid + 1) + 5 + 4 * diam];
     var ys = [heitOffset * diam + diam * (i + 1) + programOffset, heitOffset * diam + diam * (i + 1) + programOffset, heitOffset * diam + diam * (i + 1) + programOffset, heitOffset * diam + diam * (i + 1) + programOffset, heitOffset * diam + diam * (i + 1) + programOffset, heitOffset * diam + diam * (i + 1) + programOffset];
@@ -56,6 +59,11 @@ function alignSheetButtons(tetr) {
 
     buts[0].wid = diam * (pWid - 1);
     buts[0].heit = diam * pHeit;
+
+    buts[4].label = sym?"s":"";
+    buts[4].label2 = sym?"":"s";
+    buts[5].label = wls?"w":"";
+    buts[5].label2 = wls?"":"w";
 
     heitOffset += pHeit;
   }
