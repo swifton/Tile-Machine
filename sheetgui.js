@@ -38,7 +38,6 @@ function sheetgui(sheet, funcs) {
 
   this.createButtons = createButtons;
   function createButtons() {
-
     var wls = this.sheet.walls;
 
     var b = new button("", 0, 0, 0, 0, funcs[1]);
