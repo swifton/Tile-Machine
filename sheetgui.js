@@ -1,6 +1,5 @@
-function sheetgui(sheet, prog, heitOffset, programOffset, proglen, funcs) {
+function sheetgui(sheet, funcs) {
   this.sheet = sheet;
-  this.prog = prog;
   this.x = 0;
   this.y = 0;
 
@@ -39,26 +38,25 @@ function sheetgui(sheet, prog, heitOffset, programOffset, proglen, funcs) {
 
   this.createButtons = createButtons;
   function createButtons() {
-    var pWid = this.sheet.patternWid;
-    var pHeit = this.sheet.patternHeit;
+
     var wls = this.sheet.walls;
 
-    var b = new button("", diam, heitOffset * diam + diam * (proglen + 1) + programOffset, diam * pWid, diam * pHeit, funcs[1]);
+    var b = new button("", 0, 0, 0, 0, funcs[1]);
     this.buttons.push(b);
 
-    b = new button("D", diam * (pWid + 1) + 5, heitOffset * diam + diam * (proglen + 1) + programOffset, 20, 19, funcs[0]);
+    b = new button("D", 0, 0, 20, 19, funcs[0]);
     this.buttons.push(b);
 
-    b = new button("^", diam * (pWid + 1) + 5 + 1 * diam, heitOffset * diam + diam * (proglen + 1) + programOffset, 20, 19, funcs[2]);
+    b = new button("^", 0, 0, 20, 19, funcs[2]);
     this.buttons.push(b);
 
-    b = new button("v", diam * (pWid + 1) + 5 + 2 * diam, heitOffset * diam + diam * (proglen + 1) + programOffset, 20, 19, funcs[3]);
+    b = new button("v", 0, 0, 20, 19, funcs[3]);
     this.buttons.push(b);
 
-    b = new button("", diam * (pWid + 1) + 5 + 3 * diam, heitOffset * diam + diam * (proglen + 1) + programOffset, 20, 19, funcs[4], true, "s");
+    b = new button("", 0, 0, 20, 19, funcs[4], true, "s");
     this.buttons.push(b);
 
-    b = new button(wls?"":"w", diam * (pWid + 1) + 5 + 4 * diam, heitOffset * diam + diam * (proglen + 1) + programOffset, 20, 19, funcs[5], true, wls?"w":"");
+    b = new button(wls?"":"w", 0, 0, 20, 19, funcs[5], true, wls?"w":"");
     this.buttons.push(b);
   }
 

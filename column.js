@@ -38,16 +38,6 @@ function column(tetrNum) {
       this.gui[i].scroll(scrollSpeed * direction);
     }
   }
-/*
-  this.deleteSheet = deleteSheet;
-  function deleteSheet(number, tetr) {
-    this.sheets.remove(number);
-    p('1')
-    //progButtons.remove(progButtons.length - 6, progButtons.length); // this button removal relies on the structure of the progButtons array and is not robust
-    newSheet();
-    drawProg();
-  }
-*/
 
   this.addPattern = addPattern;
   function addPattern(pattern) {
@@ -60,9 +50,9 @@ function column(tetrNum) {
     var twalls = function() {toggleWalls(l, t)};
     var tsym = function() {toggleSymmetry(l, t)};
 
-    this.gui.push(new sheetgui(pattern, program[nOfProgFigure], this.heitOffset, this.programOffset, this.sheets.length, [del, editt, up, down, twalls, tsym]));
+    this.gui.push(new sheetgui(pattern, [del, editt, up, down, twalls, tsym]));
     this.sheets.push(pattern);
-    this.heitOffset += pattern.patternHeit;
+    alignSheetButtons(this.tetrNum);
   }
 
 }
