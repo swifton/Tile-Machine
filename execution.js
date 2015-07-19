@@ -44,7 +44,8 @@ function advancedMatching(command, n) {
   inefficientMatches = inefficientMatches.concat(rm[0]);
   matches = rm[1];
 
-  var a = matches[matches.length - 1] || -1;
+  //var a = matches[matches.length - 1] || -1;
+  var a = matches[Math.floor(Math.random()*matches.length)] || -1;
   return a;
 }
 
