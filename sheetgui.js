@@ -19,16 +19,6 @@ function sheetgui(sheet, funcs) {
     }
   }
 
-  this.place = place;  // unfinished function that is not needed for anything
-  function place(x, y) {
-    this.x = x;
-    this.y = y;
-
-    for (var i = 0; i < this.buttons.length; i++) {
-
-    }
-  }
-
   this.scroll = scroll;
   function scroll(dist) {
     for (var i = 0; i < this.buttons.length; i++) {

@@ -11,7 +11,6 @@ function deleteSheet(number, tetr) {
   program[tetr].sheets.remove(number);
   program[tetr].gui.remove(program[tetr].gui.length - 1);
   alignSheetButtons(tetr);
-  //progButtons.remove(progButtons.length - 6, progButtons.length); // this button removal relies on the structure of the progButtons array and is not robust
   newSheet();
   drawProg();
 }

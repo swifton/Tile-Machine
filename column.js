@@ -5,7 +5,6 @@ function column(tetrNum) {
   this.gui = [];
   this.programOffset = 0;
   this.heitOffset = 0; // sum of heits of all patterns in the column
-  this.funcs = [];
   this.tetrNum = tetrNum;
 
   this.draw = draw;
@@ -17,8 +16,7 @@ function column(tetrNum) {
     var heitOffset = 0;
     for (var i = 0; i < this.sheets.length; i++) {
       var com = this.sheets[i];
-      drawData(com.pattern, add([diam, heitOffset * diam + diam * (i + 1) + this.programOffset], /*[diam * com.patternOffsetX, diam * com.patternOffsetY]*/[0,0]), com.patternWid, com.patternHeit);
-      //drawFrame(com, [diam, heitOffset * diam + diam * (i + 1) + programOffset]);
+      drawData(com.pattern, [diam, heitOffset * diam + diam * (i + 1) + this.programOffset], com.patternWid, com.patternHeit);
       heitOffset += com.patternHeit;
     }
   }
@@ -54,5 +52,4 @@ function column(tetrNum) {
     this.sheets.push(pattern);
     alignSheetButtons(this.tetrNum);
   }
-
 }

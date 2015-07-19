@@ -28,32 +28,26 @@ function saveSheet(){
 }
 
 function saveProg() {
-  p(JSON.stringify(program));
+  var pr = JSON.stringify(program);
+  var blob = new Blob([pr], {type: "text/plain;charset=utf-8"});
+  saveAs(blob, "program");
 }
 
 function loadProg(contents) {
   for (var j = 0; j < 7; j++) {
-    for (var i = 0; i < program[j].length; i++) {
-      deleteSheet(i, j);
-    }
+    program[j] = new column(j);
   }
 
-  program = JSON.parse(contents);
+  progra = JSON.parse(contents);
   for (var i = 0; i < 7; i++) {
-    for (var j = 0; j < program[i].length; j++) {
-      var sh = program[i][j];
-      program[i][j] = new sheet(sh.patternWid, sh.patternHeit, sh.patternOffsetX, sh.patternOffsetY);
-      program[i][j].pattern = sh.pattern;
-      program[i][j].directives = sh.directives;
-      program[i][j].landing = sh.landing;
+    for (var j = 0; j < progra[i].sheets.length; j++) {
+      var sh = progra[i].sheets[j];
+      var shhh = new sheet(sh.patternWid, sh.patternHeit, sh.patternOffsetX, sh.patternOffsetY);
+      shhh.pattern = sh.pattern;
+      shhh.directives = sh.directives;
+      shhh.landing = sh.landing;
+      program[i].addPattern(shhh);
     }
-  }
-
-  var heitOffset = 0;
-  for (var j = 0; j < program[nOfProgFigure].length; j++) {
-    var com = program[nOfProgFigure][j];
-    createSheetButtons(j, nOfProgFigure, com.patternHeit, heitOffset, com.patternWid);
-    heitOffset += com.patternHeit;
   }
 
   drawProg();
