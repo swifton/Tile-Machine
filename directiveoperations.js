@@ -19,8 +19,6 @@ function showFigure(number) {
 
   calculateLanding(mainSheet, number);
 
-  newSheet();
-
   drawProg();
 }
 
