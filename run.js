@@ -55,6 +55,7 @@ function newGame(){
   newGameStats();
   reset(field, 0, true, true);
   if (gamePaused) {pauseGame();}
+  getNewFigure();
   newFigure();
 }
 

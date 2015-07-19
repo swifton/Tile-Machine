@@ -164,6 +164,8 @@ function setupButtons() {
   for (var i = 0; i < 7; i++) {
     var figureButton = new button(figureLabels[i], workplace[0] + defaultPatternWid * diam + diam, diam * (i + 1), 60, buttonHeit, createShowFigure(i));
     progButtons.push(figureButton);
+    var figureToggle = new button("", workplace[0] + defaultPatternWid * diam + diam + figureButton.wid + 5, diam * (i + 1), buttonHeit, buttonHeit, createToggleFigure(i), true, "+");
+    progButtons.push(figureToggle);
   }
 
   var newGameButton = new button("New Game", workplace[0], (fieldHeit + 2) * diam, 120, buttonHeit, newGame);

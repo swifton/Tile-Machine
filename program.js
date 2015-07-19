@@ -27,6 +27,21 @@ function saveSheet(){
   drawProg();
 }
 
+function toggleFigure(num) {
+  var ind = allowedFigures.indexOf(num);
+  if (ind == -1) {
+    allowedFigures.push(num);
+  }
+  else {
+    allowedFigures.remove(ind);
+  }
+  drawProg();
+}
+
+function createToggleFigure(num) {
+  return function() {toggleFigure(num)};
+}
+
 function saveProg() {
   var pr = JSON.stringify(program);
   var blob = new Blob([pr], {type: "text/plain;charset=utf-8"});
