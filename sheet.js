@@ -3,10 +3,11 @@ function sheet(patternWid, patternHeit, patternOffsetX, patternOffsetY) {
   this.patternHeit = patternHeit;
   this.patternOffsetX = patternOffsetX || 0;
   this.patternOffsetY = patternOffsetY || 0;
-  this.directives = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]; // 1st coord - offset, 2nd - rotation
+  this.directive = [0, 0]; // 1st coord - offset, 2nd - rotation
   this.landing = [0, 0, 0, 0, 0, 0, 0];
   this.symmetry = false;
   this.walls = false;
+  this.symmetricSheet = undefined;
 
   this.reset = reset;
   function reset() {
@@ -34,10 +35,8 @@ function sheet(patternWid, patternHeit, patternOffsetX, patternOffsetY) {
       }
     }
 
-    for (var i = 0; i < this.directives.length; i++) {
-      copy.directives[i][0] = this.directives[i][0];
-      copy.directives[i][1] = this.directives[i][1];
-    }
+    copy.directive[0] = this.directive[0];
+    copy.directive[1] = this.directive[1];
 
     for (var i = 0; i < 7; i++) {
       copy.landing[i] = [];
@@ -65,6 +64,7 @@ function sheet(patternWid, patternHeit, patternOffsetX, patternOffsetY) {
   }
   this.copyFromArray = copyFromArray;
 
+  this.copyWithShift = copyWithShift;
   function copyWithShift(sourceSheet) {
     this.reset();
 
@@ -87,5 +87,15 @@ function sheet(patternWid, patternHeit, patternOffsetX, patternOffsetY) {
     }
   }
 
-  this.copyWithShift = copyWithShift;
+  this.makeSymmetricSheet = makeSymmetricSheet;  //unfinished
+  function makeSymmetricSheet() {
+    this.symmetricSheet = new sheet(this.patternWid, this.patternHeit);
+    this.symmetricSheet.walls = this.walls;
+
+    for (var i = 0; i < this.patternWid; i++) {
+      for (var j = 0; j < this.patternHeit; j++) {
+        this.symmetricSheet.pattern[i][j] = this.pattern[i][j];
+      }
+    }
+  }
 }

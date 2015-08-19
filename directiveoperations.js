@@ -6,11 +6,12 @@ function checkDirective(number, offset, rotation) {
 }
 
 function showFigure(number) {
+  if (number != currentDirectiveFigure) {mainSheet.directive[0] = 0;}
   currentDirectiveFigure = number;
   nOfProgFigure = number;
   directive = new sheet(defaultPatternWid, 4);
-  var offset = mainSheet.directives[number][0];
-  var rotation = mainSheet.directives[number][1];
+  var offset = mainSheet.directive[0];
+  var rotation = mainSheet.directive[1];
   var figure = figures[number][rotation];
 
   for (i = 0; i < 4; i++) {
@@ -23,16 +24,16 @@ function showFigure(number) {
 }
 
 function moveDirectiveFigure(where) {
-  if (!checkDirective(currentDirectiveFigure, mainSheet.directives[currentDirectiveFigure][0] + where, mainSheet.directives[currentDirectiveFigure][1])) return;
-  mainSheet.directives[currentDirectiveFigure][0] += where;
+  if (!checkDirective(currentDirectiveFigure, mainSheet.directive[0] + where, mainSheet.directive[1])) return;
+  mainSheet.directive[0] += where;
   showFigure(currentDirectiveFigure);
   calculateLanding(mainSheet, currentDirectiveFigure);
   drawProg();
 }
 
 function rotateDirectiveFigure() {
-  if (!checkDirective(currentDirectiveFigure, mainSheet.directives[currentDirectiveFigure][0], (mainSheet.directives[currentDirectiveFigure][1] + 1) % figures[currentDirectiveFigure].length)) return;
-  mainSheet.directives[currentDirectiveFigure][1] = (mainSheet.directives[currentDirectiveFigure][1] + 1) % figures[currentDirectiveFigure].length;
+  if (!checkDirective(currentDirectiveFigure, mainSheet.directive[0], (mainSheet.directive[1] + 1) % figures[currentDirectiveFigure].length)) return;
+  mainSheet.directive[1] = (mainSheet.directive[1] + 1) % figures[currentDirectiveFigure].length;
   showFigure(currentDirectiveFigure);
   calculateLanding(mainSheet, currentDirectiveFigure);
   drawProg();
@@ -42,9 +43,9 @@ function calculateLanding(sh, fignum) {
   var fig = [[0, 0], [0, 0], [0, 0], [0, 0]];
 
   for (var j = 0; j < 4; j++) {
-    fig[j][0] = figures[fignum][sh.directives[fignum][1]][j][0];
-    fig[j][1] = figures[fignum][sh.directives[fignum][1]][j][1];
-    fig[j][0] += sh.directives[fignum][0];
+    fig[j][0] = figures[fignum][sh.directive[1]][j][0];
+    fig[j][1] = figures[fignum][sh.directive[1]][j][1];
+    fig[j][0] += sh.directive[0];
   }
 
   if (!checkFig(fig)) {}// this is a shitty pattern. do something about it later.

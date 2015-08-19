@@ -5,8 +5,8 @@ function newFigure() {
   getNewFigure();
 
   findCommand();
-  var offset = command.directives[nOfFigure][0] - command.patternOffsetX + recognitionOffset;
-  var rotation = command.directives[nOfFigure][1];
+  var offset = command.directive[0] - command.patternOffsetX + recognitionOffset;
+  var rotation = command.directive[1];
 
   for (var j = 0; j < 4; j++) {
     figure[j] = figures[nOfFigure][rotation][j].slice(0);
@@ -51,8 +51,8 @@ function reset(data, value, ground, walls) {
 
 function newGame(){
   p("THE GAME IS OVER");
-  printStats();
   newGameStats();
+  printStats();
   reset(field, 0, true, true);
   if (gamePaused) {pauseGame();}
   getNewFigure();
