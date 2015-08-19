@@ -74,10 +74,8 @@ function sheet(patternWid, patternHeit, patternOffsetX, patternOffsetY) {
       }
     }
 
-    for (var i = 0; i < this.directives.length; i++) {
-      this.directives[i][0] = sourceSheet.directives[i][0];
-      this.directives[i][1] = sourceSheet.directives[i][1];
-    }
+    this.directive[0] = sourceSheet.directive[0];
+    this.directive[1] = sourceSheet.directive[1];
 
     for (var i = 0; i < 7; i++) {
       this.landing[i] = [];
@@ -97,5 +95,36 @@ function sheet(patternWid, patternHeit, patternOffsetX, patternOffsetY) {
         this.symmetricSheet.pattern[i][j] = this.pattern[i][j];
       }
     }
+  }
+
+  // Three functions for cutting sheets
+  this.cutSheet = cutSheet;
+  function cutSheet() {
+    var up = findBoundary(this.pattern, [0, 0], [0, 1], [1, 0]);
+    if (up == this.patternHeit) {up = 0; return;}
+    var down = this.patternHeit - findBoundary(this.pattern, [0, this.patternHeit - 1], [0, -1], [1, 0]);
+    var left = findBoundary(this.pattern, [0, 0], [1, 0], [0, 1]);
+    var right = this.patternWid - findBoundary(this.pattern, [this.patternWid - 1, 0], [-1, 0], [0, 1]);
+    this.patternOffsetY = up;
+    this.patternOffsetX = left;
+    this.patternWid = right - left;
+    this.patternHeit = down - up;
+    this.copyFromArray(this.pattern);
+  }
+
+  function findBoundary(array, initial, directionGlobal, directionLocal) {
+    var k = 0;
+    for (var init = initial; (array[init[0]] != undefined) && (array[init[0]][init[1]] != undefined); init = add(init, directionGlobal)) {
+      if (!traverseLine(array, directionLocal, init)) {return k;}
+      k++;
+    }
+    return k;
+  }
+
+  function traverseLine(array, direction, initial) {
+    for (var iter = initial; (array[iter[0]] != undefined) && (array[iter[0]][iter[1]] != undefined); iter = add(iter, direction)) {
+      if (array[iter[0]][iter[1]] != anything) {return false;}
+    }
+    return true;
   }
 }

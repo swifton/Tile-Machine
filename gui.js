@@ -143,10 +143,6 @@ function button(label, x, y, wid, heit, func, toggle, label2) {
 
 function setupButtons() {
   var buttonHeit = 19;
-  var sheetLeft = new button("<---------", workplace[0], (defaultPatternHeit + 7) * diam + 3, 3 * diam, buttonHeit, function() {moveSheet(-1)});
-  var sheetRight = new button("--------->", workplace[0] + 7 * diam, (defaultPatternHeit + 7) * diam + 3, 3 * diam, buttonHeit, function() {moveSheet(1)});
-  var sheetUp = new button("^", workplace[0] - diam, (7) * diam + 3, buttonHeit, diam, liftSheet);
-  var sheetDown = new button("v", workplace[0] - diam, (9 + 7) * diam + 3, buttonHeit, diam, pushSheet);
   var save = new button("Save sheet", workplace[0], (defaultPatternHeit + 8) * diam + 5, 115, buttonHeit, saveSheet);
   var newSheetButton = new button("New sheet", workplace[0] + save.wid + diam, (defaultPatternHeit + 8) * diam + 5, 108, buttonHeit, newSheet);
   var saveProgram = new button("Save program", workplace[0], (defaultPatternHeit + 8) * diam + 10 + 20, 140, buttonHeit, saveProg);
@@ -157,7 +153,7 @@ function setupButtons() {
   var rotate = new button("Rotate", workplace[0] + dirLeft.wid + radius, 5 * diam + 3, 3 * diam, buttonHeit, rotateDirectiveFigure);
   var dirRight = new button("--------->", workplace[0] + 7 * diam, 5 * diam + 3, 3 * diam, buttonHeit, function() {moveDirectiveFigure(1)});
 
-  progButtons = [sheetLeft, sheetRight, sheetUp, sheetDown, save, newSheetButton, saveProgram, testButton, dirLeft, rotate, dirRight, copySheet];
+  progButtons = [save, newSheetButton, saveProgram, testButton, dirLeft, rotate, dirRight, copySheet];
 
   var figureLabels = ["Line", 'T', 'S', 'Z', 'Block', 'G', 'L'];
 

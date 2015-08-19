@@ -13,7 +13,7 @@ function saveSheet(){
   calculateAllLandings();
 
   var cshe =  mainSheet.copy();
-  cutSheet(cshe);
+  cshe.cutSheet();
 
   if (!editing) {
     program[nOfProgFigure].addPattern(cshe);
