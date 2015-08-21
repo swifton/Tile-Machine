@@ -15,12 +15,15 @@ function printStats() {
   p(totalLinesDeleted * 1.0 / numberOfGamesPlayed);
 }
 
-function newGameStats() {
+function finishGameStats() {
   totalLinesDeleted += numberOfLinesDeleted;
   totalTilesDropped += numberOfTilesDropped;
+}
+
+function newGameStats() {
+  numberOfGamesPlayed ++;
   numberOfTilesDropped = 0;
   numberOfLinesDeleted = 0;
-  numberOfGamesPlayed ++;
 }
 
 function resetStats() {

@@ -62,8 +62,9 @@ function loadProg(contents) {
       shhh.pattern = sh.pattern;
       shhh.directive = sh.directive;
       shhh.landing = sh.landing;
-      program[i].addPattern(shhh);
       shhh.symmetry = sh.symmetry;
+      shhh.walls = sh.walls;
+      program[i].addPattern(shhh);
     }
   }
 
@@ -81,7 +82,7 @@ function makeSymmetricSheets() {
 }
 
 function test(){
-  makeSymmetricSheets();
+  //makeSymmetricSheets();
   gamePaused = false;
   mode = "executing";
   newGame();

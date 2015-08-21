@@ -51,8 +51,9 @@ function reset(data, value, ground, walls) {
 
 function newGame(){
   p("THE GAME IS OVER");
+  finishGameStats()
+  if (numberOfGamesPlayed != 0) {printStats();}
   newGameStats();
-  printStats();
   reset(field, 0, true, true);
   if (gamePaused) {pauseGame();}
   getNewFigure();
