@@ -97,7 +97,7 @@ function sheet(patternWid, patternHeit, patternOffsetX, patternOffsetY) {
 
   this.makeSymmetricSheet = makeSymmetricSheet;  //unfinished
   function makeSymmetricSheet(nOfFig) {
-    this.symmetricSheet = new sheet(this.patternWid, this.patternHeit);
+    this.symmetricSheet = new sheet(this.patternWid, this.patternHeit, defaultPatternWid - this.sheetOffsetX - this.sheetWid, this.sheetOffsetY);
     this.symmetricSheet.walls = this.walls;
 
     for (var i = 0; i < this.patternWid; i++) {
@@ -108,7 +108,11 @@ function sheet(patternWid, patternHeit, patternOffsetX, patternOffsetY) {
 
     this.symmetricSheet.directive = [this.patternWid + this.patternOffsetX -this.directive[0], this.symmetricRotation(this.directive[1])];
     this.symmetricSheet.landing = [0, 0, 0, 0, 0, 0, 0];
-    this.symmetricSheet.landing[nOfFig] = [this.patternWid + this.patternOffsetX - this.landing[nOfFig][0], this.landing[nOfFig][1]];
+    this.symmetricSheet.landing[nOfFig] = [0,0,0,0];
+    for (var j = 0; j < 4; j++) {
+      this.symmetricSheet.landing[nOfFig][j] = [this.patternWid + this.patternOffsetX - this.landing[nOfFig][j][0], this.landing[nOfFig][j][1]];
+    }
+    this.symmetricSheet.walls = this.walls;
   }
 
   this.symmetricRotation = symmetricRotation;

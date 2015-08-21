@@ -63,6 +63,7 @@ function loadProg(contents) {
       shhh.directive = sh.directive;
       shhh.landing = sh.landing;
       program[i].addPattern(shhh);
+      shhh.symmetry = sh.symmetry;
     }
   }
 
@@ -71,8 +72,10 @@ function loadProg(contents) {
 
 function makeSymmetricSheets() {
   for (var i = 0; i < program.length; i++) {
-    for (var j = 0; j < program[0].sheets.length; j++) {
-      program[i].sheets[j].makeSymmetricSheet();
+    for (var j = 0; j < program[i].sheets.length; j++) {
+      if (program[i].sheets[j].symmetry) {
+        program[i].sheets[j].makeSymmetricSheet(i);
+      }
     }
   }
 }
