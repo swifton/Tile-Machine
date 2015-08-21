@@ -39,9 +39,14 @@ function sheet(patternWid, patternHeit, patternOffsetX, patternOffsetY) {
     copy.directive[1] = this.directive[1];
 
     for (var i = 0; i < 7; i++) {
-      copy.landing[i] = [];
-      for (var j = 0; j < 4; j++) {
-        copy.landing[i].push([this.landing[i][j][0], this.landing[i][j][1]]);
+      if (this.landing[i] != 0) {
+        copy.landing[i] = [];
+        for (var j = 0; j < 4; j++) {
+          copy.landing[i].push([this.landing[i][j][0], this.landing[i][j][1]]);
+        }
+      }
+      else {
+        copy.landing[i] = 0;
       }
     }
 
@@ -78,23 +83,39 @@ function sheet(patternWid, patternHeit, patternOffsetX, patternOffsetY) {
     this.directive[1] = sourceSheet.directive[1];
 
     for (var i = 0; i < 7; i++) {
+    if (sourceSheet.landing[i] != 0) {
       this.landing[i] = [];
       for (var j = 0; j < 4; j++) {
         this.landing[i][j] = [sourceSheet.landing[i][j][0], sourceSheet.landing[i][j][1]];
       }
     }
+    else {
+      this.landing[i] = 0;
+    }
+    }
   }
 
   this.makeSymmetricSheet = makeSymmetricSheet;  //unfinished
-  function makeSymmetricSheet() {
+  function makeSymmetricSheet(nOfFig) {
     this.symmetricSheet = new sheet(this.patternWid, this.patternHeit);
     this.symmetricSheet.walls = this.walls;
 
     for (var i = 0; i < this.patternWid; i++) {
       for (var j = 0; j < this.patternHeit; j++) {
-        this.symmetricSheet.pattern[i][j] = this.pattern[i][j];
+        this.symmetricSheet.pattern[i][j] = this.pattern[this.patternWid - 1 - i][j];
       }
     }
+
+    this.symmetricSheet.directive = [this.patternWid + this.patternOffsetX -this.directive[0], this.symmetricRotation(this.directive[1])];
+    this.symmetricSheet.landing = [0, 0, 0, 0, 0, 0, 0];
+    this.symmetricSheet.landing[nOfFig] = [this.patternWid + this.patternOffsetX - this.landing[nOfFig][0], this.landing[nOfFig][1]];
+  }
+
+  this.symmetricRotation = symmetricRotation;
+  function symmetricRotation(nOF, rotation) {
+    if ((nOF == 1) && (rotation == 1)) {return 3}
+    if ((nOF == 1) && (rotation == 3)) {return 1}
+    return rotation;
   }
 
   // Three functions for cutting sheets

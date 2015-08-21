@@ -22,8 +22,9 @@ function saveSheet(){
     editingSheet = i;
   }
   else {
-    program[nOfProgFigure][editingSheet] = cshe;
+    program[nOfProgFigure].sheets[editingSheet] = cshe;
   }
+  alignSheetButtons(nOfProgFigure);
   drawProg();
 }
 
@@ -59,7 +60,7 @@ function loadProg(contents) {
       var sh = progra[i].sheets[j];
       var shhh = new sheet(sh.patternWid, sh.patternHeit, sh.patternOffsetX, sh.patternOffsetY);
       shhh.pattern = sh.pattern;
-      shhh.directives = sh.directives;
+      shhh.directive = sh.directive;
       shhh.landing = sh.landing;
       program[i].addPattern(shhh);
     }
@@ -68,7 +69,16 @@ function loadProg(contents) {
   drawProg();
 }
 
+function makeSymmetricSheets() {
+  for (var i = 0; i < program.length; i++) {
+    for (var j = 0; j < program[0].sheets.length; j++) {
+      program[i].sheets[j].makeSymmetricSheet();
+    }
+  }
+}
+
 function test(){
+  makeSymmetricSheets();
   gamePaused = false;
   mode = "executing";
   newGame();

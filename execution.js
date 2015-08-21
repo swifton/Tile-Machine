@@ -10,6 +10,16 @@ function findCommand() {
       recognitionOffsetY = c[2];
       return;
     }
+    if (program[nOfFigure].sheets[i].symmetry) {
+      c = advancedMatching(program[nOfFigure].sheets[i], i);
+      if (c != -1) {
+            command = program[nOfFigure].sheets[c[0]];
+            recognitionOffset = c[1];
+            recognitionOffsetY = c[2];
+            return;
+       }
+    }
+
   }
   command = new sheet(defaultPatternWid, defaultPatternHeit, 0, 0);
   recognitionOffset = 0;

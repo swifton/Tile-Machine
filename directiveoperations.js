@@ -73,8 +73,8 @@ function createShowFigure(number) {
   return function() {showFigure(number)};
 }
 
-function calculateAllLandings(){
-  for (i = 0; i < 7; i++) {
-    calculateLanding(mainSheet, i);
-  }
+function calculateAllLandings(){ // TODO: remove entirely
+  //for (i = 0; i < 7; i++) {
+    calculateLanding(mainSheet, nOfProgFigure);
+  //}
 }
