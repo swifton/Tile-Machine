@@ -55,6 +55,9 @@ function sheet(patternWid, patternHeit, patternOffsetX, patternOffsetY) {
     copy.right = this.right;
     copy.left = this.left;
 
+    copy.walls = this.walls;
+    copy.symmetry = this.symmetry;
+
     return copy;
   }
 
@@ -95,6 +98,7 @@ function sheet(patternWid, patternHeit, patternOffsetX, patternOffsetY) {
     }
   }
 
+/*
   this.makeSymmetricSheet = makeSymmetricSheet;  //unfinished
   function makeSymmetricSheet(nOfFig) {
     this.symmetricSheet = new sheet(this.patternWid, this.patternHeit, defaultPatternWid - this.sheetOffsetX - this.sheetWid, this.sheetOffsetY);
@@ -121,6 +125,8 @@ function sheet(patternWid, patternHeit, patternOffsetX, patternOffsetY) {
     if ((nOF == 1) && (rotation == 3)) {return 1}
     return rotation;
   }
+
+  */
 
   // Three functions for cutting sheets
   this.cutSheet = cutSheet;

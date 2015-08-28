@@ -1,7 +1,3 @@
-function programmingSetup() {
-  newSheet();
-}
-
 function newSheet() {
   mainSheet = new sheet(defaultPatternWid, defaultPatternHeit);
   directive.reset();
@@ -30,6 +26,7 @@ function saveSheet(){
 
 function toggleFigure(num) {
   var ind = allowedFigures.indexOf(num);
+  newSheet();
   if (ind == -1) {
     allowedFigures.push(num);
   }

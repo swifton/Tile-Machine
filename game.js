@@ -1,10 +1,12 @@
+// Initialization of global variables and launch of functions that prepare the game for playing
+
 var mode = "programming";
 //grid();
 
 var gLoop;
 
 // global variables for drawing
-var c = document.getElementById('c');
+var c = document.getElementById('canvas');
 var ctx = c.getContext('2d');
 var radius = 12.5;
 var diam = 2 * radius;
@@ -44,7 +46,7 @@ var recognitionOffsetY = 0;
 var images = new Array(10);
 loadAssets();
 
-programmingSetup();
+newSheet();
 c.addEventListener('mousedown', clickReporter, false);
 
 // global variables for running environment

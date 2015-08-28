@@ -1,19 +1,19 @@
 function resizeCanvas(){
   wid = window.innerWidth;
   heit = window.innerHeight;
-  canvas = document.getElementById("c");
-  canvas.width = wid;
+  canvas = document.getElementById("canvas");
+  canvas.width = wid - 10;
   canvas.height = heit - 30;
 }
 
 function clear(cnv){
-  cc = cnv.getContext('2d');
-  cc.fillStyle = '#d0e7f9';
-  cc.clearRect(0, 0, cnv.width, cnv.height);
-  cc.beginPath();
-  cc.rect(0, 0, cnv.width, cnv.height);
-  cc.closePath();
-  cc.fill();
+  var context = cnv.getContext('2d');
+  context.fillStyle = '#d0e7f9';
+  context.clearRect(0, 0, cnv.width, cnv.height);
+  context.beginPath();
+  context.rect(0, 0, cnv.width, cnv.height);
+  context.closePath();
+  context.fill();
 }
 
 function drawLine(x1, y1, x2, y2, color) {
