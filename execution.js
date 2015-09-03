@@ -12,8 +12,6 @@ function findCommand() {
     }
 /*
     if (program[nOfFigure].sheets[i].symmetry) {
-      p('symmetry')
-      p(program[nOfFigure].sheets[i].symmetricSheet)
       c = advancedMatching(program[nOfFigure].sheets[i].symmetricSheet, i);
       if (c != -1) {
         command = program[nOfFigure].sheets[c[0]];
@@ -79,7 +77,7 @@ function removeMatches(matchesArray, filterFunction, command, params) {
 }
 
 function checkLanding(match, command, params) {
-  var fig = command.landing[nOfFigure];
+  var fig = command.landing;
   for (var i = 0; i < 4; i++) {
     brk = [fig[i][0] + match[1] - command.patternOffsetX, fig[i][1] + match[2] - command.patternOffsetY];
     debugField(brk[0], brk[1], i);
@@ -92,7 +90,7 @@ function checkLanding(match, command, params) {
 }
 
 function checkBorders(match, command, params) {
-  var fig = command.landing[nOfFigure];
+  var fig = command.landing;
   for (var i = 0; i < 4; i++) {
     brk = [fig[i][0] + match[1] - command.patternOffsetX, fig[i][1] + match[2] - command.patternOffsetY];
     if (field[brk[0]] == undefined) {return false;}
@@ -108,8 +106,8 @@ function comparePatterns(pattern1, pattern2, offsetX, offsetY, patternWid, patte
   for (var i = 0; i < patternWid; i++) {
     for (var j = 0; j < patternHeit; j++) {
       if((pattern2[i + offsetX] == undefined) || (pattern2[i + offsetX][j + offsetY] == undefined)) {
-        p('undefined field invoked');
-        if (pattern1[i + patternLeft][j + patternUp] == anything) {continue;}
+        print('undefined field invoked');
+        if (pattern1[i + patternLeft][j + patternUp] == ANYTHING) {continue;}
         else {return false;}
       }
       if (!compare(pattern1[i][j], pattern2[i + offsetX][j + offsetY])) {return false;}

@@ -1,43 +1,44 @@
 function newSheet() {
   mainSheet = new sheet(defaultPatternWid, defaultPatternHeit);
-  directive.reset();
+  mainSheet.directive[0] = 3;
+  directiveWindow.reset();
   editing = false;
+  showFigure();
+  calculateLanding(mainSheet);
+}
+
+function changeSheet(i, j) {
+  if ((i > defaultPatternWid - 1) || (j > defaultPatternHeit - 1) || (i < 0) || (j < 0)) return;
+  mainSheet.pattern[i][j] += 1;
+  if (mainSheet.pattern[i][j] == 10) {mainSheet.pattern[i][j] = 0;}
+  if (mainSheet.pattern[i][j] == 1) {mainSheet.pattern[i][j] = 8;}
+  calculateLanding(mainSheet);
   drawProg();
 }
 
 function saveSheet(){
-  calculateAllLandings();
+  calculateLanding(mainSheet, N_PROG_FIGURE); //TODO: get rid of the second variable (and do it for other functions too)
 
   var cshe =  mainSheet.copy();
   cshe.cutSheet();
 
   if (!editing) {
-    program[nOfProgFigure].addPattern(cshe);
+    program[N_PROG_FIGURE].addPattern(cshe);
     editing = true;
-    var i = program[nOfProgFigure].length - 1;
+    var i = program[N_PROG_FIGURE].sheets.length - 1;
     editingSheet = i;
   }
   else {
-    program[nOfProgFigure].sheets[editingSheet] = cshe;
+    program[N_PROG_FIGURE].sheets[editingSheet] = cshe;
   }
-  alignSheetButtons(nOfProgFigure);
-  drawProg();
+  alignSheetButtons(N_PROG_FIGURE);
 }
 
-function toggleFigure(num) {
-  var ind = allowedFigures.indexOf(num);
-  newSheet();
-  if (ind == -1) {
-    allowedFigures.push(num);
+function makeAllowedFigures() {
+  allowedFigures = [];
+  for (i = 0; i < FIGURE_BUTTONS.length; i++) {
+    if (FIGURE_BUTTONS[i].toggled == true) {allowedFigures.push(i);}
   }
-  else {
-    allowedFigures.remove(ind);
-  }
-  drawProg();
-}
-
-function createToggleFigure(num) {
-  return function() {toggleFigure(num)};
 }
 
 function saveProg() {
@@ -46,12 +47,12 @@ function saveProg() {
   saveAs(blob, "program");
 }
 
-function loadProg(contents) {
+function loadProg(FILE_CONTENT) {
   for (var j = 0; j < 7; j++) {
     program[j] = new column(j);
   }
 
-  progra = JSON.parse(contents);
+  progra = JSON.parse(FILE_CONTENT);
   for (var i = 0; i < 7; i++) {
     for (var j = 0; j < progra[i].sheets.length; j++) {
       var sh = progra[i].sheets[j];
@@ -80,11 +81,13 @@ function makeSymmetricSheets() {
 
 function test(){
   //makeSymmetricSheets();
+  makeAllowedFigures();
+  if (allowedFigures.length == 0) {return;} // TODO: add some reminder for the player to toggle at least one figure
   gamePaused = false;
   mode = "executing";
   newGame();
   resetStats();
-  clear(c);
+  clear(CANVAS);
   newFigure();
   updateField();
   drawExec();

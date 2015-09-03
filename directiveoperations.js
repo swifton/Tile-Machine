@@ -1,54 +1,49 @@
-function checkDirective(number, offset, rotation) {
+function changeFigure(number) {
+  if (number == N_PROG_FIGURE) {return;}
+  N_PROG_FIGURE = number;
+  newSheet();
+  showFigure();
+}
+
+function showFigure() {
+  var figure = figures[N_PROG_FIGURE][mainSheet.directive[1]];
+  directiveWindow.reset();
+  for (i = 0; i < 4; i++) {
+    directiveWindow.pattern[figure[i][0] + mainSheet.directive[0]][figure[i][1]] = N_PROG_FIGURE + 1;
+  }
+}
+
+function moveDirectiveFigure(where) {
+  if (!checkDirective(N_PROG_FIGURE, mainSheet.directive[0] + where, mainSheet.directive[1])) return;
+  mainSheet.directive[0] += where;
+  showFigure();
+  calculateLanding(mainSheet);
+}
+
+function rotateDirectiveFigure() {
+  if (!checkDirective(N_PROG_FIGURE, mainSheet.directive[0], (mainSheet.directive[1] + 1) % figures[N_PROG_FIGURE].length)) return;
+  mainSheet.directive[1] = (mainSheet.directive[1] + 1) % figures[N_PROG_FIGURE].length;
+  showFigure();
+  calculateLanding(mainSheet);
+}
+
+function checkDirective(number, offset, rotation) { // TODO: replace every use of the word offset with something more descriptive
   for (i = 0; i < 4; i++) {
     if ((figures[number][rotation][i][0] + offset < 0) || (figures[number][rotation][i][0] + offset > defaultPatternWid - 1)) return false;
   }
   return true;
 }
 
-function showFigure(number) {
-  if (number != currentDirectiveFigure) {mainSheet.directive[0] = 0;}
-  currentDirectiveFigure = number;
-  nOfProgFigure = number;
-  directive = new sheet(defaultPatternWid, 4);
-  var offset = mainSheet.directive[0];
-  var rotation = mainSheet.directive[1];
-  var figure = figures[number][rotation];
-
-  for (i = 0; i < 4; i++) {
-    directive.pattern[figure[i][0] + offset][figure[i][1]] = number + 1;
-  }
-
-  calculateLanding(mainSheet, number);
-
-  drawProg();
-}
-
-function moveDirectiveFigure(where) {
-  if (!checkDirective(currentDirectiveFigure, mainSheet.directive[0] + where, mainSheet.directive[1])) return;
-  mainSheet.directive[0] += where;
-  showFigure(currentDirectiveFigure);
-  calculateLanding(mainSheet, currentDirectiveFigure);
-  drawProg();
-}
-
-function rotateDirectiveFigure() {
-  if (!checkDirective(currentDirectiveFigure, mainSheet.directive[0], (mainSheet.directive[1] + 1) % figures[currentDirectiveFigure].length)) return;
-  mainSheet.directive[1] = (mainSheet.directive[1] + 1) % figures[currentDirectiveFigure].length;
-  showFigure(currentDirectiveFigure);
-  calculateLanding(mainSheet, currentDirectiveFigure);
-  drawProg();
-}
-
-function calculateLanding(sh, fignum) {
+function calculateLanding(sh) {
   var fig = [[0, 0], [0, 0], [0, 0], [0, 0]];
 
   for (var j = 0; j < 4; j++) {
-    fig[j][0] = figures[fignum][sh.directive[1]][j][0];
-    fig[j][1] = figures[fignum][sh.directive[1]][j][1];
-    fig[j][0] += sh.directive[0];
+    fig[j][0] = figures[N_PROG_FIGURE][sh.directive[1]][j][0];
+    fig[j][1] = figures[N_PROG_FIGURE][sh.directive[1]][j][1];
+    fig[j][0] += sh.directive[0] + sh.patternOffsetX;
   }
 
-  if (!checkFig(fig)) {}// this is a shitty pattern. do something about it later.
+ // if (!checkFig(fig)) {} // this is a shitty pattern. do something about it later. (And I don't even remember what I meant by that)
 
   for (;checkFig(fig);) {
     for (var i = 0; i < 4; i++) {
@@ -58,7 +53,7 @@ function calculateLanding(sh, fignum) {
   for (var i = 0; i < 4; i++) {
       fig[i][1] -= 1;
   }
-  mainSheet.landing[fignum] = fig;
+  mainSheet.landing = fig;
 }
 
 function checkFig(fig) {
@@ -67,14 +62,4 @@ function checkFig(fig) {
     if (mainSheet.pattern[fig[i][0]][fig[i][1]] == 8) {return false;}
   }
   return true;
-}
-
-function createShowFigure(number) {
-  return function() {showFigure(number)};
-}
-
-function calculateAllLandings(){ // TODO: remove entirely
-  //for (i = 0; i < 7; i++) {
-    calculateLanding(mainSheet, nOfProgFigure);
-  //}
 }

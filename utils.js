@@ -1,9 +1,8 @@
 function resizeCanvas(){
-  wid = window.innerWidth;
-  heit = window.innerHeight;
-  canvas = document.getElementById("canvas");
-  canvas.width = wid - 10;
-  canvas.height = heit - 30;
+  CANVAS_WID = window.innerWidth - 10;
+  CANVAS_HEIT = window.innerHeight - 30;
+  CANVAS.width = CANVAS_WID;
+  CANVAS.height = CANVAS_HEIT;
 }
 
 function clear(cnv){
@@ -18,12 +17,12 @@ function clear(cnv){
 
 function drawLine(x1, y1, x2, y2, color) {
   var color = color || "black";
-  ctx.beginPath();
-  ctx.lineWidth = 2;
-  ctx.moveTo(x1, y1);
-  ctx.lineTo(x2, y2);
-  ctx.strokeStyle = color;
-  ctx.stroke();
+  CONTEXT.beginPath();
+  CONTEXT.lineWidth = 2;
+  CONTEXT.moveTo(x1, y1);
+  CONTEXT.lineTo(x2, y2);
+  CONTEXT.strokeStyle = color;
+  CONTEXT.stroke();
 }
 
 function rectangle(LT, length, height, color) {
@@ -50,30 +49,14 @@ function line(start, end, color) {
 }
 
 function grid() {
-  var diameter = 2 * radius;
+  var diameter = TILE_WID;
 
-  for (var i = 0; i <= wid/diameter; i++) {
-    drawLine(i*diameter, 0, i*diameter, heit);
+  for (var i = 0; i <= CANVAS_WID/TILE_WID; i++) {
+    drawLine(i * TILE_WID, 0, i * TILE_WID, CANVAS_HEIT);
   }
 
-  for (var i = 0; i < heit/diameter; i++) {
-    drawLine(0,i*diameter, wid, i*diameter);
-  }
-}
-
-var updateStats = function(){
-/*ctxv.fillStyle = '#000000';
-  ctxv.font = 'bold 20px sans-serif';
-  ctxv.textBaseline = 'bottom';
-  a = 'Lines ';
-  b = 'Pieces ';
-  ctxv.fillText(a.concat(linesDeleted.toString()), 30, 40);
-  ctxv.fillText(b.concat(figuresReceived.toString()), 30, 80);*/
-}
-
-function drawNextFigure(){
-  for (var i = 0; i < 4; i++){
-//    drawTile(figures[newNOfFigure][i][0] * 2 * radius - 35, 120 + figures[newNOfFigure][i][1] * 2 * radius, images[newNOfFigure],ctxv);
+  for (var i = 0; i < CANVAS_HEIT/TILE_WID; i++) {
+    drawLine(0,i * TILE_WID, CANVAS_WID, i * TILE_WID);
   }
 }
 
@@ -97,13 +80,13 @@ function getMousePos(canvas, evt) {
 }
 
 function drawLabel(label, x, y) {
-  ctx.fillStyle = "blue";
-  ctx.font = "bold 20px Arial";
-  ctx.fillText(label, x, y);
+  CONTEXT.fillStyle = "blue";
+  CONTEXT.font = "bold 20px Arial";
+  CONTEXT.fillText(label, x, y);
 }
 
 function clickReporter(e) {
-  var mousePos = getMousePos(c, e);
+  var mousePos = getMousePos(CANVAS, e);
   sheetInput(mousePos);
   buttonPress(mousePos);
 }
@@ -127,13 +110,13 @@ function readSingleFile(e) {
   }
   var reader = new FileReader();
   reader.onload = function(e) {
-    var contents = e.target.result;
-    loadProg(contents);
+    var FILE_CONTENT = e.target.result;
+    loadProg(FILE_CONTENT);
   };
   reader.readAsText(file);
 }
 
-function p(output) {
+function print(output) {
   console.log(output);
 }
 

@@ -1,13 +1,14 @@
-function drawData(data, start, wid, heit){
-  var wid = wid || data.length;
-  var heit = heit || data[0].length;
+// TODO: GUI is very messy. Need to make it more abstract.
+function drawData(data, start, dataWid, dataHeit){
+  var dataWid = dataWid || data.length;
+  var dataHeit = dataHeit || data[0].length;
 
-  rectangle(start, wid * diam, heit * diam);
+  rectangle(start, dataWid * TILE_WID, dataHeit * TILE_WID);
 
-  for (var i = 0; i < wid; i++){
-    for (var j = 0; j < heit; j++){
+  for (var i = 0; i < dataWid; i++){
+    for (var j = 0; j < dataHeit; j++){
       if (data[i][j] != 0) {
-        drawTile(start[0] + i * diam + radius, start[1] + j * diam + radius, Math.abs(data[i][j]), ctx);
+        drawTile(start[0] + i * TILE_WID, start[1] + j * TILE_WID, Math.abs(data[i][j]), CONTEXT);
       }
     }
   }
@@ -19,56 +20,56 @@ function drawButtons(buttons) {
   }
 }
 
-function drawLanding() {
-  var fig = mainSheet.landing[currentDirectiveFigure];
+function drawLanding() { // TODO: Write code for drawing something starting at a given point. Or abstract this mess somehow.
+  var fig = mainSheet.landing;
   if (fig == 0) {return;}
-  for (var i = 0; i < 4; i++) {
-    drawTile(workplace[0] + fig[i][0] * diam + radius, workplace[1] + fig[i][1] * diam + radius + 7 * diam, currentDirectiveFigure + 1, ctx);
+  for (var i = 0; i < 4; i++) { // TODO: Also, make the landing transparent.
+    drawTile(workplace[0] + fig[i][0] * TILE_WID, workplace[1] + fig[i][1] * TILE_WID + 7 * TILE_WID, N_PROG_FIGURE + 1, CONTEXT);
   }
 }
 
-function drawFrame(sheet, start) {
-  rectangle(add(start, [diam * (sheet.patternOffsetX), diam * (sheet.patternOffsetY)]), diam * (sheet.patternWid), diam * (sheet.patternHeit));
+function drawFrame(sheet, start) { // TODO: WTF is this?!
+  rectangle(add(start, [TILE_WID * (sheet.patternOffsetX), TILE_WID * (sheet.patternOffsetY)]), TILE_WID * (sheet.patternWid), TILE_WID * (sheet.patternHeit));
 }
 
 function drawProg() {
-  clear(c);
-  drawData(directive.pattern, add(workplace, [0, diam]));
-  drawData(mainSheet.pattern, add(workplace, [0, 7 * diam], mainSheet.patternWid, mainSheet.patternHeit));
-  drawFrame(mainSheet, add(workplace, [0, 7 * diam]));
+  clear(CANVAS);
+  drawData(directiveWindow.pattern, add(workplace, [0, TILE_WID]));
+  drawData(mainSheet.pattern, add(workplace, [0, 7 * TILE_WID], mainSheet.patternWid, mainSheet.patternHeit));
+  //drawFrame(mainSheet, add(workplace, [0, 7 * TILE_WID]));  // TODO: fix the frame drawing code and enable this
 
-  program[nOfProgFigure].draw();
+  program[N_PROG_FIGURE].draw();
 
   drawLanding();
 
   drawButtons(progButtons);
 }
 
-function drawFrames() {
+function drawFrames() { // TODO: this is bulshit. Formulas shouldn't be so long.
   for (var i = 0; i < matches.length; i++) {
-    rectangle(add(workplace, [diam * matches[i][1], diam * matches[i][2]]), diam * command.patternWid, diam * command.patternHeit, "#999");
+    rectangle(add(workplace, [TILE_WID * matches[i][1], TILE_WID * matches[i][2]]), TILE_WID * command.patternWid, TILE_WID * command.patternHeit, "#999");
   }
 
   for (var i = 0; i < removedMatches.length; i++) {
-    rectangle(add(workplace, [diam * removedMatches[i][1], diam * removedMatches[i][2]]), diam * removedMatches[i][3], diam * removedMatches[i][4], "#900");
+    rectangle(add(workplace, [TILE_WID * removedMatches[i][1], TILE_WID * removedMatches[i][2]]), TILE_WID * removedMatches[i][3], TILE_WID * removedMatches[i][4], "#900");
   }
 
   for (var i = 0; i < inefficientMatches.length; i++) {
-    rectangle(add(workplace, [diam * inefficientMatches[i][1], diam * inefficientMatches[i][2]]), diam * inefficientMatches[i][3], diam * inefficientMatches[i][4], "#990");
+    rectangle(add(workplace, [TILE_WID * inefficientMatches[i][1], TILE_WID * inefficientMatches[i][2]]), TILE_WID * inefficientMatches[i][3], TILE_WID * inefficientMatches[i][4], "#990");
   }
 
-  rectangle(add(workplace, [diam * recognitionOffset, diam * recognitionOffsetY]), diam * command.patternWid, diam * command.patternHeit, "#000");
+  rectangle(add(workplace, [TILE_WID * recognitionOffset, TILE_WID * recognitionOffsetY]), TILE_WID * command.patternWid, TILE_WID * command.patternHeit, "#000");
 }
 
 function drawExec() {
   drawData(field, workplace);
-  drawData(command.pattern, add(workplace, [fieldWid * diam, 0]), command.patternWid, command.patternHeit);
+  drawData(command.pattern, add(workplace, [fieldWid * TILE_WID, 0]), command.patternWid, command.patternHeit);
   drawFrames();
   drawButtons(execButtons);
 }
 
 function drawTile(x, y, im, cc) {
-  cc.drawImage(images[im], x - radius, y - radius); 
+  cc.drawImage(images[im], x, y);
 }
 
 function buttonPress(mousePos) {
@@ -80,7 +81,7 @@ function buttonPress(mousePos) {
       progButtons[i].press(x, y);
     }
 
-    program[nOfProgFigure].press(x, y);
+    program[N_PROG_FIGURE].press(x, y);
   }
 
   else if (mode == "executing") {
@@ -88,53 +89,57 @@ function buttonPress(mousePos) {
       execButtons[i].press(x, y);
     }
   }
+
+  if (mode == "programming") {drawProg();}
 }
 
 function sheetInput(mousePos) {
   if (mode != "programming") return;
-  i = Math.floor((mousePos.x - workplace[0]) / diam);
-  j = Math.floor((mousePos.y - workplace[1] - 7 * diam) / diam);
-  if ((i > defaultPatternWid - 1) || (j > defaultPatternHeit - 1) || (i < 0) || (j < 0)) return;
-  mainSheet.pattern[i][j] += 1;
-  if (mainSheet.pattern[i][j] == 10) {mainSheet.pattern[i][j] = 0;}
-  if (mainSheet.pattern[i][j] == 1) {mainSheet.pattern[i][j] = 8;}
-  calculateAllLandings()
-  drawProg();
+  i = Math.floor((mousePos.x - workplace[0]) / TILE_WID);
+  j = Math.floor((mousePos.y - workplace[1] - 7 * TILE_WID) / TILE_WID);
+  changeSheet(i, j);
 }
 
 function scroll(event) {
   if (mode != "programming") return;
   var direction = Math.sign(event.wheelDeltaY);
-  program[nOfProgFigure].scroll(direction);
+  program[N_PROG_FIGURE].scroll(direction);
   drawProg();
 }
 
-function button(label, x, y, wid, heit, func, toggle, label2) {
+function button(label, x, y, buttonWid, buttonHeit, func, params, toggle, label2) {
   this.label = label;
   this.x = x;  
   this.y = y;
-  this.wid = wid;
-  this.heit = heit;
+  this.buttonWid = buttonWid;
+  this.buttonHeit = buttonHeit;
   this.toggle = toggle;
   this.toggled = false;
   this.label2 = label2;
+  this.params = params;
 
   this.draw = draw;
   function draw() {
-    rectangle([this.x, this.y], this.wid, this.heit, "black");
-    drawLabel(this.label, this.x + 1, this.y + this.heit - 2)
+    rectangle([this.x, this.y], this.buttonWid, this.buttonHeit, "black");
+    drawLabel(this.label, this.x + 1, this.y + this.buttonHeit - 2)
   }
 
   this.press = press;
   function press(pressX, pressY) {
-    if ((pressX > this.x) && (pressX < this.x + this.wid) && (pressY > this.y) && (pressY < this.y + this.heit)) {
+    if ((pressX > this.x) && (pressX < this.x + this.buttonWid) && (pressY > this.y) && (pressY < this.y + this.buttonHeit)) {
       if (this.toggle) {
         this.toggled = !this.toggled;
         var tmp = this.label;
         this.label = this.label2;
         this.label2 = tmp;
       }
-      this.func()
+
+      if (this.params == undefined) {
+        this.func();
+      }
+      else {
+        this.func(params);
+      }
     }
   }
 
@@ -143,33 +148,34 @@ function button(label, x, y, wid, heit, func, toggle, label2) {
 
 function setupButtons() {
   var buttonHeit = 19;
-  var save = new button("Save sheet", workplace[0], (defaultPatternHeit + 8) * diam + 5, 115, buttonHeit, saveSheet);
-  var newSheetButton = new button("New sheet", workplace[0] + save.wid + diam, (defaultPatternHeit + 8) * diam + 5, 108, buttonHeit, newSheet);
-  var saveProgram = new button("Save program", workplace[0], (defaultPatternHeit + 8) * diam + 10 + 20, 140, buttonHeit, saveProg);
-  var testButton = new button("Test", workplace[0] + saveProgram.wid + diam, (defaultPatternHeit + 8) * diam + 10 + 20, 50, buttonHeit, test);
-  var copySheet = new button("Copy Sheet", workplace[0], (defaultPatternHeit + 9) * diam + 10 + 20, 140, buttonHeit, function() {mainSheet = mainSheet.copy(); editing = false;});
+  var save = new button("Save sheet", workplace[0], (defaultPatternHeit + 8) * TILE_WID + 5, 115, buttonHeit, saveSheet);
+  var newSheetButton = new button("New sheet", workplace[0] + save.buttonWid + TILE_WID, (defaultPatternHeit + 8) * TILE_WID + 5, 108, buttonHeit, newSheet);
+  var saveProgram = new button("Save program", workplace[0], (defaultPatternHeit + 8) * TILE_WID + 10 + 20, 140, buttonHeit, saveProg);
+  var testButton = new button("Test", workplace[0] + saveProgram.buttonWid + TILE_WID, (defaultPatternHeit + 8) * TILE_WID + 10 + 20, 50, buttonHeit, test);
+  var copySheet = new button("Copy Sheet", workplace[0], (defaultPatternHeit + 9) * TILE_WID + 10 + 20, 140, buttonHeit, function() {mainSheet = mainSheet.copy(); editing = false;});
 
-  var dirLeft = new button("<---------", workplace[0], 5 * diam + 3, 3 * diam, buttonHeit, function() {moveDirectiveFigure(-1)});
-  var rotate = new button("Rotate", workplace[0] + dirLeft.wid + radius, 5 * diam + 3, 3 * diam, buttonHeit, rotateDirectiveFigure);
-  var dirRight = new button("--------->", workplace[0] + 7 * diam, 5 * diam + 3, 3 * diam, buttonHeit, function() {moveDirectiveFigure(1)});
+  var dirLeft = new button("<---------", workplace[0], 5 * TILE_WID + 3, 3 * TILE_WID, buttonHeit, moveDirectiveFigure, -1);
+  var rotate = new button("Rotate", workplace[0] + dirLeft.buttonWid + TILE_WID/2, 5 * TILE_WID + 3, 3 * TILE_WID, buttonHeit, rotateDirectiveFigure);
+  var dirRight = new button("--------->", workplace[0] + 7 * TILE_WID, 5 * TILE_WID + 3, 3 * TILE_WID, buttonHeit, moveDirectiveFigure, 1);
 
   progButtons = [save, newSheetButton, saveProgram, testButton, dirLeft, rotate, dirRight, copySheet];
 
   var figureLabels = ["Line", 'T', 'S', 'Z', 'Block', 'G', 'L'];
 
   for (var i = 0; i < 7; i++) {
-    var figureButton = new button(figureLabels[i], workplace[0] + defaultPatternWid * diam + diam, diam * (i + 1), 60, buttonHeit, createShowFigure(i));
+    var figureButton = new button(figureLabels[i], workplace[0] + defaultPatternWid * TILE_WID + TILE_WID, TILE_WID * (i + 1), 60, buttonHeit, changeFigure, i);
     progButtons.push(figureButton);
-    var figureToggle = new button("", workplace[0] + defaultPatternWid * diam + diam + figureButton.wid + 5, diam * (i + 1), buttonHeit, buttonHeit, createToggleFigure(i), true, "+");
+    var figureToggle = new button("", workplace[0] + defaultPatternWid * TILE_WID + TILE_WID + figureButton.buttonWid + 5, TILE_WID * (i + 1), buttonHeit, buttonHeit, drawProg, undefined, true, "+");
     progButtons.push(figureToggle);
+    FIGURE_BUTTONS.push(figureToggle);
   }
 
-  var newGameButton = new button("New Game", workplace[0], (fieldHeit + 2) * diam, 120, buttonHeit, newGame);
-  var stopButton = new button("Stop", workplace[0] + newGameButton.wid + 10, (fieldHeit + 2) * diam, 100, buttonHeit, function() {if (!gamePaused) {pauseGame();} mode = "programming"; drawProg();});
-  var pauseGameButton = new button("Pause", workplace[0], (fieldHeit + 3) * diam, 120, buttonHeit, pauseGame);
-  var nextButton = new button("Next", workplace[0] + pauseGameButton.wid + 10, (fieldHeit + 3) * diam, 120, buttonHeit, nextFigure);
-  var fastButton = new button("Fast", workplace[0], (fieldHeit + 4) * diam, 120, buttonHeit, fastGameLoop);
-  var statsButton = new button("Stats", workplace[0] + fastButton.wid + 10, (fieldHeit + 4) * diam, 120, buttonHeit, printStats);
+  var newGameButton = new button("New Game", workplace[0], (fieldHeit + 2) * TILE_WID, 120, buttonHeit, newGame);
+  var stopButton = new button("Stop", workplace[0] + newGameButton.buttonWid + 10, (fieldHeit + 2) * TILE_WID, 100, buttonHeit, function() {if (!gamePaused) {pauseGame();} mode = "programming"; drawProg();});
+  var pauseGameButton = new button("Pause", workplace[0], (fieldHeit + 3) * TILE_WID, 120, buttonHeit, pauseGame);
+  var nextButton = new button("Next", workplace[0] + pauseGameButton.buttonWid + 10, (fieldHeit + 3) * TILE_WID, 120, buttonHeit, nextFigure);
+  var fastButton = new button("Fast", workplace[0], (fieldHeit + 4) * TILE_WID, 120, buttonHeit, fastGameLoop);
+  var statsButton = new button("Stats", workplace[0] + fastButton.buttonWid + 10, (fieldHeit + 4) * TILE_WID, 120, buttonHeit, printStats);
 
   execButtons = [stopButton, newGameButton, pauseGameButton, nextButton, fastButton, statsButton];
 }

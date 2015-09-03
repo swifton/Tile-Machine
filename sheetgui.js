@@ -1,4 +1,4 @@
-function sheetgui(sheet, funcs) {
+function sheetgui(sheet, funcs, params) {
   this.sheet = sheet;
   this.x = 0;
   this.y = 0;
@@ -33,7 +33,7 @@ function sheetgui(sheet, funcs) {
     var modes = [false, false, false, false, true, true];
 
     for (var i = 0; i < 6; i++) {
-      var b = new button(labels[i], 0, 0, 20, 19, funcs[i], modes[i]);
+      var b = new button(labels[i], 0, 0, 20, 19, funcs[i], params, modes[i]);
       this.buttons.push(b);
     }
   }

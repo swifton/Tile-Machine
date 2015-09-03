@@ -1,9 +1,9 @@
 function editSheet(number, tetr) {
   editingSheet = number;
   editing = true;
-  directive.reset(); // clean the directive window
+  directiveWindow.reset(); // clean the directive window
   mainSheet.copyWithShift(program[tetr].sheets[number]);
-  drawProg();
+  showFigure();
 }
 
 function deleteSheet(number, tetr) {
@@ -12,17 +12,14 @@ function deleteSheet(number, tetr) {
   program[tetr].gui.remove(program[tetr].gui.length - 1);
   alignSheetButtons(tetr);
   newSheet();
-  drawProg();
 }
 
 function toggleSymmetry(i, nn) {
   program[nn].sheets[i].symmetry = !program[nn].sheets[i].symmetry;
-  drawProg();
 }
 
 function toggleWalls(i, nn) {
   program[nn].sheets[i].walls = !program[nn].sheets[i].walls;
-  drawProg();
 }
 
 function swapTwoSheets(i, j, nn) {
@@ -31,7 +28,6 @@ function swapTwoSheets(i, j, nn) {
   program[nn].sheets[j] = ns;
   alignSheetButtons(nn);
   newSheet();
-  drawProg();
 }
 
 function alignSheetButtons(tetr) {
@@ -46,8 +42,8 @@ function alignSheetButtons(tetr) {
     var wls = shsh.walls;
     var sym = shsh.symmetry;
 
-    var xs = [diam, diam * pWid + 5, diam * (pWid + 1) + 5, diam * (pWid + 1) + 5 + 1 * diam, diam * (pWid + 1) + 5 + 2 * diam, diam * (pWid + 1) + 5 + 3 * diam, diam * (pWid + 1) + 5 + 4 * diam];
-    var ys = [heitOffset * diam + diam * (i + 1) + programOffset, heitOffset * diam + diam * (i + 1) + programOffset, heitOffset * diam + diam * (i + 1) + programOffset, heitOffset * diam + diam * (i + 1) + programOffset, heitOffset * diam + diam * (i + 1) + programOffset, heitOffset * diam + diam * (i + 1) + programOffset];
+    var xs = [TILE_WID, TILE_WID * pWid + 5, TILE_WID * (pWid + 1) + 5, TILE_WID * (pWid + 1) + 5 + 1 * TILE_WID, TILE_WID * (pWid + 1) + 5 + 2 * TILE_WID, TILE_WID * (pWid + 1) + 5 + 3 * TILE_WID, TILE_WID * (pWid + 1) + 5 + 4 * TILE_WID];
+    var ys = [heitOffset * TILE_WID + TILE_WID * (i + 1) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 1) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 1) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 1) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 1) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 1) + programOffset];
 
     buts = col.gui[i].buttons;
 
@@ -56,8 +52,8 @@ function alignSheetButtons(tetr) {
       buts[j].y = ys[j];
     }
 
-    buts[0].wid = diam * (pWid - 1);
-    buts[0].heit = diam * pHeit;
+    buts[0].buttonWid = TILE_WID * (pWid - 1);
+    buts[0].buttonHeit = TILE_WID * pHeit;
 
     buts[4].label = sym?"s":"";
     buts[4].label2 = sym?"":"s";

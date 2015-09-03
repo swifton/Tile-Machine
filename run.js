@@ -5,14 +5,13 @@ function newFigure() {
   getNewFigure();
 
   findCommand();
-  var offset = command.directive[0] - command.patternOffsetX + recognitionOffset;
+  var offset = command.directive[0] + recognitionOffset;
   var rotation = command.directive[1];
 
   for (var j = 0; j < 4; j++) {
     figure[j] = figures[nOfFigure][rotation][j].slice(0);
     figure[j][0] += offset;
   }
-  figuresReceived += 1;
 }
 
 function getNewFigure() {
@@ -20,7 +19,7 @@ function getNewFigure() {
 }
 
 function nextFigure() {
-  clear(c);
+  clear(CANVAS);
   dropFigure();
   updateField();
   drawExec();
@@ -29,28 +28,25 @@ function nextFigure() {
 // Tetris game functions
 function reset(data, value, ground, walls) {
   value = value || 0;
-  var wid = data.length;
-  var hei = data[0].length;
+  var dataWid = data.length;
+  var dataHeit = data[0].length;
 
-  for (var i = 0; i < wid; i++){
-    data[i] = new Array(hei);
-    for (var j = 0; j < hei; j++){
-      data[i][j] = (walls && (i == 0 || i == wid - 1))?(-1):value;
+  for (var i = 0; i < dataWid; i++){
+    data[i] = new Array(dataHeit);
+    for (var j = 0; j < dataHeit; j++){
+      data[i][j] = (walls && (i == 0 || i == dataWid - 1))?(-1):value;
     }
   }
 
   if (ground) {
-    for (var j = 0; j < wid; j++) {
-      data[j][hei-1] = -1;
+    for (var j = 0; j < dataWid; j++) {
+      data[j][dataHeit - 1] = -1;
     }
   }
-
-  linesDeleted = 0;
-  figuresReceived = 0;
 }
 
 function newGame(){
-  p("THE GAME IS OVER");
+  print("THE GAME IS OVER");
   finishGameStats()
   if (numberOfGamesPlayed != 0) {printStats();}
   newGameStats();
@@ -109,7 +105,6 @@ var checkField = function(){
       sum *= field[j][i];
     }
     if (sum != 0){
-      linesDeleted += 1;
       numberOfLinesDeleted ++;
       for (var j = 0; j < fieldWid; j++){
         field[j][i] = 0;
