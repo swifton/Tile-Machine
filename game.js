@@ -13,6 +13,8 @@ var CANVAS_WID, CANVAS_HEIT;
 
 resizeCanvas();
 
+
+
 var defaultPatternHeit = 10, defaultPatternWid = 10;
 var fieldHeit = 19 + 1, fieldWid = 10 + 2;
 var workplace = [Math.floor((CANVAS_WID - defaultPatternWid * TILE_WID)/2), 0];
@@ -28,7 +30,7 @@ var nOfStandardButtons = progButtons.length;
 var mainSheet = new sheet(defaultPatternWid, defaultPatternHeit);
 var directiveWindow = new sheet(defaultPatternWid, 4);
 // The number of the figure whose column is now being edited
-var N_PROG_FIGURE = 0; // TODO: Make it something else so that it shows up when you click it first time. Or fuck it, actually.
+var N_PROG_FIGURE = 0;
 var nOfFigures = 7;  // TODO: replace this and nOfFigure with new vars carefully
 var program = [];
 for (var i = 0; i < nOfFigures; i++) {
@@ -69,8 +71,6 @@ var figure1 = [[[0,0],[1,0],[2,0],[3,0]], [[2,1],[2,2],[2,3],[2,0]]], // line
 var allowedFigures = [];
 
 newSheet();
-
-var FILE_CONTENT;
 
 document.getElementById('file-input').addEventListener('change', readSingleFile, false);
 

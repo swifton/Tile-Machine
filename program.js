@@ -47,12 +47,12 @@ function saveProg() {
   saveAs(blob, "program");
 }
 
-function loadProg(FILE_CONTENT) {
+function loadProg(fileContent) {
   for (var j = 0; j < 7; j++) {
     program[j] = new column(j);
   }
 
-  progra = JSON.parse(FILE_CONTENT);
+  progra = JSON.parse(fileContent);
   for (var i = 0; i < 7; i++) {
     for (var j = 0; j < progra[i].sheets.length; j++) {
       var sh = progra[i].sheets[j];

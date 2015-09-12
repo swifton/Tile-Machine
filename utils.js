@@ -110,8 +110,7 @@ function readSingleFile(e) {
   }
   var reader = new FileReader();
   reader.onload = function(e) {
-    var FILE_CONTENT = e.target.result;
-    loadProg(FILE_CONTENT);
+    loadProg(e.target.result);
   };
   reader.readAsText(file);
 }

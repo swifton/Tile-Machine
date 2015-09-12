@@ -27,9 +27,9 @@ function rotateDirectiveFigure() {
   calculateLanding(mainSheet);
 }
 
-function checkDirective(number, offset, rotation) { // TODO: replace every use of the word offset with something more descriptive
+function checkDirective(number, directiveShift, rotation) {
   for (i = 0; i < 4; i++) {
-    if ((figures[number][rotation][i][0] + offset < 0) || (figures[number][rotation][i][0] + offset > defaultPatternWid - 1)) return false;
+    if ((figures[number][rotation][i][0] + directiveShift < 0) || (figures[number][rotation][i][0] + directiveShift > defaultPatternWid - 1)) return false;
   }
   return true;
 }
@@ -42,8 +42,6 @@ function calculateLanding(sh) {
     fig[j][1] = figures[N_PROG_FIGURE][sh.directive[1]][j][1];
     fig[j][0] += sh.directive[0] + sh.patternOffsetX;
   }
-
- // if (!checkFig(fig)) {} // this is a shitty pattern. do something about it later. (And I don't even remember what I meant by that)
 
   for (;checkFig(fig);) {
     for (var i = 0; i < 4; i++) {

@@ -1,19 +1,4 @@
 // TODO: GUI is very messy. Need to make it more abstract.
-function drawData(data, start, dataWid, dataHeit){
-  var dataWid = dataWid || data.length;
-  var dataHeit = dataHeit || data[0].length;
-
-  rectangle(start, dataWid * TILE_WID, dataHeit * TILE_WID);
-
-  for (var i = 0; i < dataWid; i++){
-    for (var j = 0; j < dataHeit; j++){
-      if (data[i][j] != 0) {
-        drawTile(start[0] + i * TILE_WID, start[1] + j * TILE_WID, Math.abs(data[i][j]), CONTEXT);
-      }
-    }
-  }
-};
-
 function drawButtons(buttons) {
   for (var i = 0; i < buttons.length; i++) {
     buttons[i].draw();
@@ -68,10 +53,6 @@ function drawExec() {
   drawButtons(execButtons);
 }
 
-function drawTile(x, y, im, cc) {
-  cc.drawImage(images[im], x, y);
-}
-
 function buttonPress(mousePos) {
   var x = mousePos.x;
   var y = mousePos.y;
@@ -107,52 +88,14 @@ function scroll(event) {
   drawProg();
 }
 
-function button(label, x, y, buttonWid, buttonHeit, func, params, toggle, label2) {
-  this.label = label;
-  this.x = x;  
-  this.y = y;
-  this.buttonWid = buttonWid;
-  this.buttonHeit = buttonHeit;
-  this.toggle = toggle;
-  this.toggled = false;
-  this.label2 = label2;
-  this.params = params;
-
-  this.draw = draw;
-  function draw() {
-    rectangle([this.x, this.y], this.buttonWid, this.buttonHeit, "black");
-    drawLabel(this.label, this.x + 1, this.y + this.buttonHeit - 2)
-  }
-
-  this.press = press;
-  function press(pressX, pressY) {
-    if ((pressX > this.x) && (pressX < this.x + this.buttonWid) && (pressY > this.y) && (pressY < this.y + this.buttonHeit)) {
-      if (this.toggle) {
-        this.toggled = !this.toggled;
-        var tmp = this.label;
-        this.label = this.label2;
-        this.label2 = tmp;
-      }
-
-      if (this.params == undefined) {
-        this.func();
-      }
-      else {
-        this.func(params);
-      }
-    }
-  }
-
-  this.func = func;
-}
-
 function setupButtons() {
   var buttonHeit = 19;
   var save = new button("Save sheet", workplace[0], (defaultPatternHeit + 8) * TILE_WID + 5, 115, buttonHeit, saveSheet);
   var newSheetButton = new button("New sheet", workplace[0] + save.buttonWid + TILE_WID, (defaultPatternHeit + 8) * TILE_WID + 5, 108, buttonHeit, newSheet);
-  var saveProgram = new button("Save program", workplace[0], (defaultPatternHeit + 8) * TILE_WID + 10 + 20, 140, buttonHeit, saveProg);
+  var saveProgram = new button("Save program", workplace[0], (defaultPatternHeit + 9) * TILE_WID + 10 + 20, 140, buttonHeit, saveProg);
   var testButton = new button("Test", workplace[0] + saveProgram.buttonWid + TILE_WID, (defaultPatternHeit + 8) * TILE_WID + 10 + 20, 50, buttonHeit, test);
-  var copySheet = new button("Copy Sheet", workplace[0], (defaultPatternHeit + 9) * TILE_WID + 10 + 20, 140, buttonHeit, function() {mainSheet = mainSheet.copy(); editing = false;});
+  var copySheet = new button("Copy Sheet", workplace[0], (defaultPatternHeit + 8) * TILE_WID + 10 + 20, 140, buttonHeit, function() {mainSheet = mainSheet.copy(); editing = false;});
+  //var loadProgram = new button("Load", workplace[0] + saveProgram.buttonWid + TILE_WID, (defaultPatternHeit + 9) * TILE_WID + 10 + 20, 60, buttonHeit, readSingleFile);
 
   var dirLeft = new button("<---------", workplace[0], 5 * TILE_WID + 3, 3 * TILE_WID, buttonHeit, moveDirectiveFigure, -1);
   var rotate = new button("Rotate", workplace[0] + dirLeft.buttonWid + TILE_WID/2, 5 * TILE_WID + 3, 3 * TILE_WID, buttonHeit, rotateDirectiveFigure);
