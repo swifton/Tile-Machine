@@ -80,7 +80,6 @@ function checkLanding(match, command, params) {
   var fig = command.landing;
   for (var i = 0; i < 4; i++) {
     brk = [fig[i][0] + match[1] - command.patternOffsetX, fig[i][1] + match[2] - command.patternOffsetY];
-    debugField(brk[0], brk[1], i);
 
     for (var j = brk[1]; j > -1; j--) {
       if (field[brk[0]][j] != 0) {return false;}

@@ -7,7 +7,7 @@ function newSheet() {
   calculateLanding(mainSheet);
 }
 
-function changeSheet(i, j) {
+function changeSheet(i, j) { // TODO: Everything is empty by default. Then full, then question mark.
   if ((i > defaultPatternWid - 1) || (j > defaultPatternHeit - 1) || (i < 0) || (j < 0)) return;
   mainSheet.pattern[i][j] += 1;
   if (mainSheet.pattern[i][j] == 10) {mainSheet.pattern[i][j] = 0;}

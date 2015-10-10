@@ -37,7 +37,7 @@ function button(label, x, y, buttonWid, buttonHeit, func, params, toggle, label2
   this.func = func;
 }
 
-// Unfinishied
+// TODO: Unfinishied
 function buttonTable(startX, startY, wid) {
   this.buttons = [];
   this.startX = startX;
@@ -55,7 +55,7 @@ function buttonTable(startX, startY, wid) {
   }
 }
 
-function drawData(data, start, dataWid, dataHeit){
+function drawData(data, start, dataWid, dataHeit){ // TODO: do we really need to pass dataWid and dataHeit parameters?
   var dataWid = dataWid || data.length;
   var dataHeit = dataHeit || data[0].length;
 
@@ -72,4 +72,8 @@ function drawData(data, start, dataWid, dataHeit){
 
 function drawTile(x, y, im, cc) {
   cc.drawImage(images[im], x, y);
+}
+
+function drawFrame(sheet, start) { // TODO: WTF is this?!
+  rectangle(add(start, [TILE_WID * (sheet.patternOffsetX), TILE_WID * (sheet.patternOffsetY)]), TILE_WID * (sheet.patternWid), TILE_WID * (sheet.patternHeit));
 }
