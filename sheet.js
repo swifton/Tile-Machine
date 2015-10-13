@@ -1,107 +1,66 @@
-function sheet(patternWid, patternHeit, patternOffsetX, patternOffsetY) {
+function sheet(patternWid, patternHeit) {
   this.patternWid = patternWid;
   this.patternHeit = patternHeit;
-  this.patternOffsetX = patternOffsetX || 0;
-  this.patternOffsetY = patternOffsetY || 0;
+  this.patternOffsetX = 0;
+  this.patternOffsetY = 0;
   this.directive = [0, 0]; // 1st coord - offset, 2nd - rotation
   this.landing = 0;
   this.symmetry = false;
   this.walls = false;
-  this.symmetricSheet = undefined;
+  //this.symmetricSheet = undefined;
 
   this.reset = reset;
   function reset() {
     this.pattern = new Array(this.patternWid);
     this.pattern[0] = new Array(this.patternHeit);
 
-    for (var i = 0; i < this.patternWid; i++){
-      this.pattern[i] = new Array(this.patternHeit);
-
-      for (var j = 0; j < this.patternHeit; j++){
-        this.pattern[i][j] = ANYTHING;
-      }
-    }
+    fill2DArray(this.pattern, ANYTHING);
   }
   
   this.reset();
 
   // TODO: the following functions are not DRY enough.
 
+  // Deep copy of an instance of this class.
   this.copy = copy;
   function copy() {
     var copy = new sheet(this.patternWid, this.patternHeit)
-    copy.reset();
-    for (var i = 0; i < this.patternWid; i++) {
-      for (var j = 0; j < this.patternHeit; j++) {
-        copy.pattern[i][j] = this.pattern[i][j];
-      }
-    }
 
+    copy.patternOffsetX = this.patternOffsetX;
+    copy.patternOffsetY = this.patternOffsetY;
     copy.directive[0] = this.directive[0];
     copy.directive[1] = this.directive[1];
-
-    if (this.landing != 0) {
-      copy.landing = [];
-      for (var j = 0; j < 4; j++) {
-        copy.landing.push([this.landing[j][0], this.landing[j][1]]);
-      }
-    }
-    else {
-      copy.landing = 0;
-    }
-
-
-    copy.down = this.down;
-    copy.up = this.up;
-    copy.right = this.right;
-    copy.left = this.left;
-
-    copy.walls = this.walls;
     copy.symmetry = this.symmetry;
+    copy.walls = this.walls;
+
+    copy.reset();
+
+    copy.pattern = copy2DArray(this.pattern);
+    copy.landing = this.landing == 0 ? 0:copy2DArray(this.landing);
 
     return copy;
   }
 
-  this.copyFromArray = copyFromArray;
-  function copyFromArray(array) {
-    this.reset();
+  this.copyWithShift = copyWithShift;
+  function copyWithShift(pWid, pHeit) {
+    var copy = this.copy();
+
+    copy.patternWid = pWid;
+    copy.patternHeit = pHeit;
+    copy.reset();
 
     for (var i = 0; i < this.patternWid; i++) {
       for (var j = 0; j < this.patternHeit; j++) {
-        this.pattern[i][j] = array[i + this.patternOffsetX][j + this.patternOffsetY];
+        copy.pattern[i + this.patternOffsetX][j + this.patternOffsetY] = this.pattern[i][j];
       }
     }
+
+    copy.directive[0] += this.patternOffsetX;
+
+    return copy;
   }
 
-  this.copyWithShift = copyWithShift;
-  function copyWithShift(sourceSheet) {
-    this.reset();
 
-    for (var i = 0; i < sourceSheet.patternWid; i++) {
-      for (var j = 0; j < sourceSheet.patternHeit; j++) {
-        this.pattern[i + sourceSheet.patternOffsetX][j + sourceSheet.patternOffsetY] = sourceSheet.pattern[i][j];
-      }
-    }
-
-    //TODO: Abstract copying of all variables in sheet and use in all copies and program load
-    this.patternOffsetX = sourceSheet.patternOffsetX;
-    this.patternOffsetY = sourceSheet.patternOffsetY;
-    this.directive[0] = sourceSheet.directive[0] + this.patternOffsetX;
-    this.directive[1] = sourceSheet.directive[1];
-    this.symmetry = sourceSheet.symmetry;
-    this.walls = sourceSheet.walls;
-    this.symmetricSheet = sourceSheet.symmetricSheet;
-
-    if (sourceSheet.landing != 0) {
-      this.landing = [];
-      for (var j = 0; j < 4; j++) {
-        this.landing[j] = [sourceSheet.landing[j][0], sourceSheet.landing[j][1]];
-      }
-    }
-    else {
-      this.landing = 0;
-    }
-  }
 
 /*
   this.makeSymmetricSheet = makeSymmetricSheet;  //unfinished
@@ -142,11 +101,22 @@ function sheet(patternWid, patternHeit, patternOffsetX, patternOffsetY) {
     var left = findBoundary(this.pattern, [0, 0], [1, 0], [0, 1]);
     var right = this.patternWid - findBoundary(this.pattern, [this.patternWid - 1, 0], [-1, 0], [0, 1]);
     this.patternOffsetY = up;
-    this.directive[0] -= left - this.patternOffsetX;
+    this.directive[0] -= left;
     this.patternOffsetX = left;
     this.patternWid = right - left;
     this.patternHeit = down - up;
     this.copyFromArray(this.pattern);
+  }
+
+  this.copyFromArray = copyFromArray;
+  function copyFromArray(array) {
+    this.reset();
+
+    for (var i = 0; i < this.patternWid; i++) {
+      for (var j = 0; j < this.patternHeit; j++) {
+        this.pattern[i][j] = array[i + this.patternOffsetX][j + this.patternOffsetY];
+      }
+    }
   }
 
   function findBoundary(array, initial, directionGlobal, directionLocal) {

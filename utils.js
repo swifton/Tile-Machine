@@ -99,18 +99,6 @@ function clickReporter(e) {
   buttonPress(mousePos);
 }
 
-function copySheet(sheet) {
-  var copy = new Array(sheet.length);
-  copy[0] = new Array(sheet[0].length);
-  reset(copy, 0, false);
-  for (var i = 0; i < sheet.length; i++) {
-    for (var j = 0; j < sheet[0].length; j++) {
-      copy[i][j] = sheet[i][j];
-    }
-  }
-  return copy;
-}
-
 function readSingleFile(e) {
   var file = e.target.files[0];
   if (!file) {
@@ -125,6 +113,38 @@ function readSingleFile(e) {
 
 function print(output) {
   console.log(output);
+}
+
+function fill2DArray(data, value, ground, walls) {
+  value = value || 0;
+  var dataWid = data.length;
+  var dataHeit = data[0].length;
+
+  for (var i = 0; i < dataWid; i++){
+    data[i] = new Array(dataHeit);
+    for (var j = 0; j < dataHeit; j++){
+      data[i][j] = (walls && (i == 0 || i == dataWid - 1))?(-1):value;
+    }
+  }
+
+  if (ground) {
+    for (var j = 0; j < dataWid; j++) {
+      data[j][dataHeit - 1] = -1;
+    }
+  }
+}
+
+function copy2DArray(sourceArray) {
+  var result = new Array(sourceArray.length);
+
+  for (var i = 0; i < sourceArray.length; i++){
+      result[i] = new Array(sourceArray[0].length);
+      for (var j = 0; j < sourceArray[0].length; j++){
+        result[i][j] = sourceArray[i][j];
+      }
+    }
+
+  return result;
 }
 
 // Array Remove - By John Resig (MIT Licensed)

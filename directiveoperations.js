@@ -9,6 +9,8 @@ function showFigure() {
   var figure = figures[N_PROG_FIGURE][mainSheet.directive[1]];
   directiveWindow.reset();
   for (i = 0; i < 4; i++) {
+    //print(mainSheet.directive)
+    //print(directiveWindow.pattern)
     directiveWindow.pattern[figure[i][0] + mainSheet.directive[0]][figure[i][1]] = N_PROG_FIGURE + 1;
   }
 }
@@ -40,7 +42,7 @@ function calculateLanding(sh) {
   for (var j = 0; j < 4; j++) {
     fig[j][0] = figures[N_PROG_FIGURE][sh.directive[1]][j][0];
     fig[j][1] = figures[N_PROG_FIGURE][sh.directive[1]][j][1];
-    fig[j][0] += sh.directive[0] + sh.patternOffsetX;
+    fig[j][0] += sh.directive[0];
   }
 
   for (;checkFig(fig);) {

@@ -22,7 +22,7 @@ function findCommand() {
     }
 */
   }
-  command = new sheet(defaultPatternWid, defaultPatternHeit, 0, 0);
+  command = new sheet(defaultPatternWid, defaultPatternHeit);
   recognitionOffset = 0;
 }
 

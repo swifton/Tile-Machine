@@ -59,12 +59,11 @@ function loadProg(fileContent) {
   for (var i = 0; i < 7; i++) {
     for (var j = 0; j < progra[i].sheets.length; j++) {
       var sh = progra[i].sheets[j];
-      var shhh = new sheet(sh.patternWid, sh.patternHeit, sh.patternOffsetX, sh.patternOffsetY);
+      var shhh = new sheet(sh.patternWid, sh.patternHeit);
+      shhh.copyVars(sh);
       shhh.pattern = sh.pattern;
-      shhh.directive = sh.directive;
       shhh.landing = sh.landing;
-      shhh.symmetry = sh.symmetry;
-      shhh.walls = sh.walls;
+
       program[i].addPattern(shhh);
     }
   }

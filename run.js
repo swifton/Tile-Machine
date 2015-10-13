@@ -26,31 +26,13 @@ function nextFigure() {
 }
 
 // Tetris game functions
-function reset(data, value, ground, walls) {
-  value = value || 0;
-  var dataWid = data.length;
-  var dataHeit = data[0].length;
-
-  for (var i = 0; i < dataWid; i++){
-    data[i] = new Array(dataHeit);
-    for (var j = 0; j < dataHeit; j++){
-      data[i][j] = (walls && (i == 0 || i == dataWid - 1))?(-1):value;
-    }
-  }
-
-  if (ground) {
-    for (var j = 0; j < dataWid; j++) {
-      data[j][dataHeit - 1] = -1;
-    }
-  }
-}
 
 function newGame(){
   print("THE GAME IS OVER");
   finishGameStats()
   if (numberOfGamesPlayed != 0) {printStats();}
   newGameStats();
-  reset(field, 0, true, true);
+  fill2DArray(field, 0, true, true);
   if (gamePaused) {pauseGame();}
   getNewFigure();
   newFigure();

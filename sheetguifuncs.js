@@ -1,8 +1,9 @@
 function editSheet(number, tetr) {
+  editingWindowEnabled = true;
   editingSheet = number;
   editing = true;
   directiveWindow.reset(); // clean the directive window
-  mainSheet.copyWithShift(program[tetr].sheets[number]);
+  mainSheet = program[tetr].sheets[number].copyWithShift(defaultPatternWid, defaultPatternHeit);
   showFigure();
 }
 

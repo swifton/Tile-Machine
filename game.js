@@ -1,3 +1,5 @@
+// TODO: When there is no floor, where should the landing be?
+
 // Initialization of global variables and launch of functions that prepare the game for playing
 var mode = "programming";
 //grid();
