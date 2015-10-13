@@ -1,12 +1,17 @@
 function drawProg() {
-  clear(CANVAS);
-  drawData(directiveWindow.pattern, add(workplace, [0, TILE_WID]));
-  drawData(mainSheet.pattern, add(workplace, [0, 7 * TILE_WID], mainSheet.patternWid, mainSheet.patternHeit));
+  clear();
   //drawFrame(mainSheet, add(workplace, [0, 7 * TILE_WID]));  // TODO: fix the frame drawing code and enable this
 
   program[N_PROG_FIGURE].draw();
 
-  drawLanding();
+  if (editingWindowEnabled) {
+    filledRectangle([workplace[0] - 10, workplace[1] + 15], TILE_WID * defaultPatternWid + 20, TILE_WID * (defaultPatternHeit + 9), '#b0d5c3');
+    rectangle([workplace[0] - 10, workplace[1] + 15], TILE_WID * defaultPatternWid + 20, TILE_WID * (defaultPatternHeit + 9));
+    drawData(directiveWindow.pattern, add(workplace, [0, TILE_WID]));
+    drawData(mainSheet.pattern, add(workplace, [0, 7 * TILE_WID], mainSheet.patternWid, mainSheet.patternHeit));
+    drawLanding();
+    drawButtons(editingWindow);
+  }
 
   drawButtons(progButtons);
 }
@@ -35,25 +40,29 @@ function scroll(event) {
 
 function setupProgButtons() {
   var buttonHeit = 19;
-  var save = new button("Save sheet", workplace[0], (defaultPatternHeit + 8) * TILE_WID + 5, 115, buttonHeit, saveSheet);
-  var newSheetButton = new button("New sheet", workplace[0] + save.buttonWid + TILE_WID, (defaultPatternHeit + 8) * TILE_WID + 5, 108, buttonHeit, newSheet);
-  var saveProgram = new button("Save program", workplace[0], (defaultPatternHeit + 9) * TILE_WID + 10 + 20, 140, buttonHeit, saveProg);
-  var testButton = new button("Test", workplace[0] + saveProgram.buttonWid + TILE_WID, (defaultPatternHeit + 8) * TILE_WID + 10 + 20, 50, buttonHeit, test);
-  var copySheet = new button("Copy Sheet", workplace[0], (defaultPatternHeit + 8) * TILE_WID + 10 + 20, 140, buttonHeit, function() {mainSheet = mainSheet.copy(); editing = false;});
+  var saveSh = new button("Save sheet", workplace[0], (defaultPatternHeit + 8) * TILE_WID + 5, 115, buttonHeit, saveSheet);
+  var cancelSheet = new button("Cancel", workplace[0] + saveSh.buttonWid + 5, (defaultPatternHeit + 8) * TILE_WID + 5, 115, buttonHeit, function() {editingWindowEnabled = false;} );
+ // var clearSheet = new button("Clear", workplace[0], (defaultPatternHeit + 9) * TILE_WID + 5, 115, buttonHeit, function() {} ); // TODO: write a function
+  var newSheetButton = new button(" + New sheet", workplace[0] + 12 * TILE_WID, TILE_WID, 130, buttonHeit, newSheet);
+  //var copySheet = new button("Copy Sheet", workplace[0], (defaultPatternHeit + 8) * TILE_WID + 10 + 20, 140, buttonHeit, function() {mainSheet = mainSheet.copy(); editing = false;});
   //var loadProgram = new button("Load", workplace[0] + saveProgram.buttonWid + TILE_WID, (defaultPatternHeit + 9) * TILE_WID + 10 + 20, 60, buttonHeit, readSingleFile);
 
   var dirLeft = new button("<---------", workplace[0], 5 * TILE_WID + 3, 3 * TILE_WID, buttonHeit, moveDirectiveFigure, -1);
   var rotate = new button("Rotate", workplace[0] + dirLeft.buttonWid + TILE_WID/2, 5 * TILE_WID + 3, 3 * TILE_WID, buttonHeit, rotateDirectiveFigure);
   var dirRight = new button("--------->", workplace[0] + 7 * TILE_WID, 5 * TILE_WID + 3, 3 * TILE_WID, buttonHeit, moveDirectiveFigure, 1);
 
-  progButtons = [save, newSheetButton, saveProgram, testButton, dirLeft, rotate, dirRight, copySheet];
+  var saveProgram = new button("Save", CANVAS_WID - 70, TILE_WID * 8, 60, buttonHeit, saveProg);
+  var testButton = new button("Test", CANVAS_WID - 70, TILE_WID * 9, 60, buttonHeit, test);
+
+  editingWindow = [saveSh, dirLeft, rotate, dirRight, cancelSheet];
+  progButtons = [newSheetButton, saveProgram, testButton];
 
   var figureLabels = ["Line", 'T', 'S', 'Z', 'Block', 'G', 'L'];
 
     for (var i = 0; i < 7; i++) {
-      var figureButton = new button(figureLabels[i], workplace[0] + defaultPatternWid * TILE_WID + TILE_WID, TILE_WID * (i + 1), 60, buttonHeit, changeFigure, i);
+      var figureButton = new button(figureLabels[i], CANVAS_WID - 70, TILE_WID * (i + 1), 60, buttonHeit, changeFigure, i);
       progButtons.push(figureButton);
-      var figureToggle = new button("", workplace[0] + defaultPatternWid * TILE_WID + TILE_WID + figureButton.buttonWid + 5, TILE_WID * (i + 1), buttonHeit, buttonHeit, drawProg, undefined, true, "+");
+      var figureToggle = new button("", CANVAS_WID - 95, TILE_WID * (i + 1), buttonHeit, buttonHeit, drawProg, undefined, true, "+");
       progButtons.push(figureToggle);
       FIGURE_BUTTONS.push(figureToggle);
     }

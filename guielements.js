@@ -7,6 +7,7 @@ function button(label, x, y, buttonWid, buttonHeit, func, params, toggle, label2
   this.toggle = toggle;
   this.toggled = false;
   this.label2 = label2;
+  this.func = func;
   this.params = params;
 
   this.draw = draw;
@@ -33,8 +34,6 @@ function button(label, x, y, buttonWid, buttonHeit, func, params, toggle, label2
       }
     }
   }
-
-  this.func = func;
 }
 
 // TODO: Unfinishied

@@ -1,4 +1,5 @@
 function newSheet() {
+  editingWindowEnabled = true;
   mainSheet = new sheet(defaultPatternWid, defaultPatternHeit);
   mainSheet.directive[0] = 3;
   directiveWindow.reset();
@@ -18,6 +19,8 @@ function changeSheet(i, j) { // TODO: Everything is empty by default. Then full,
 
 function saveSheet(){
   calculateLanding(mainSheet, N_PROG_FIGURE); //TODO: get rid of the second variable (and do it for other functions too)
+
+  editingWindowEnabled = false;
 
   var cshe =  mainSheet.copy();
   cshe.cutSheet();
@@ -87,7 +90,7 @@ function test(){
   mode = "executing";
   newGame();
   resetStats();
-  clear(CANVAS);
+  clear();
   newFigure();
   updateField();
   drawExec();

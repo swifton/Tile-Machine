@@ -1,18 +1,18 @@
 function resizeCanvas(){
-  CANVAS_WID = window.innerWidth - 10;
-  CANVAS_HEIT = window.innerHeight - 30;
+// TODO: make it fit the window size and prevent it from creating scrollbars and empty borders on all screen sizes. Or make the window background have the same color.
+  CANVAS_WID = window.innerWidth - 15;
+  CANVAS_HEIT = window.innerHeight - 39;
   CANVAS.width = CANVAS_WID;
   CANVAS.height = CANVAS_HEIT;
 }
 
-function clear(cnv){
-  var context = cnv.getContext('2d');
-  context.fillStyle = '#d0e7f9';
-  context.clearRect(0, 0, cnv.width, cnv.height);
-  context.beginPath();
-  context.rect(0, 0, cnv.width, cnv.height);
-  context.closePath();
-  context.fill();
+function clear(){
+  CONTEXT.fillStyle = '#d0f9e7';
+  CONTEXT.clearRect(0, 0, CANVAS_WID, CANVAS_HEIT);
+  CONTEXT.beginPath();
+  CONTEXT.rect(0, 0, CANVAS_WID, CANVAS_HEIT);
+  CONTEXT.closePath();
+  CONTEXT.fill();
 }
 
 function drawLine(x1, y1, x2, y2, color) {
@@ -25,15 +25,23 @@ function drawLine(x1, y1, x2, y2, color) {
   CONTEXT.stroke();
 }
 
+function filledRectangle(LT, wid, heit, color) {
+  CONTEXT.fillStyle = color;
+  CONTEXT.beginPath();
+  CONTEXT.rect(LT[0], LT[1], wid, heit);
+  CONTEXT.closePath();
+  CONTEXT.fill();
+}
+
 function rectangle(LT, length, height, color) {
   var LB = add(LT, [0, height]);
   var RB = add(LB, [length, 0]);
   var RT = add(LT, [length, 0]);
 
-  fourGon(LT, RT, LB, RB, color);
+  tetraGon(LT, RT, LB, RB, color);
 }
 
-function fourGon(LT, RT, LB, RB, color) {
+function tetraGon(LT, RT, LB, RB, color) {
   line(LT, RT, color);
   line(LB, RB, color);
   line(LT, LB, color);

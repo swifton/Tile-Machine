@@ -10,20 +10,26 @@ function buttonPress(mousePos) {
   var y = mousePos.y;
 
   if (mode == "programming") {
-    for (var i = 0; i < progButtons.length; i++) {
-      progButtons[i].press(x, y);
+    pressButtons(progButtons, x, y);
+
+    if (editingWindowEnabled) {
+      pressButtons(editingWindow, x, y);
     }
 
     program[N_PROG_FIGURE].press(x, y);
   }
 
   else if (mode == "executing") {
-    for (var i = 0; i < execButtons.length; i++) {
-      execButtons[i].press(x, y);
-    }
+    pressButtons(execButtons, x, y);
   }
 
   if (mode == "programming") {drawProg();}
+}
+
+function pressButtons(buttonsArray, x, y) {
+  for (var i = 0; i < buttonsArray.length; i++) {
+    buttonsArray[i].press(x, y);
+  }
 }
 
 function setupButtons() {

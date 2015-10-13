@@ -5,7 +5,6 @@ function drawExec() {
   drawButtons(execButtons);
 }
 
-// This is for execution
 function drawFrames() { // TODO: this is bulshit. Formulas shouldn't be so long. Abstract this into a new function.
   for (var i = 0; i < matches.length; i++) {
     rectangle(add(workplace, [TILE_WID * matches[i][1], TILE_WID * matches[i][2]]), TILE_WID * command.patternWid, TILE_WID * command.patternHeit, "#999");

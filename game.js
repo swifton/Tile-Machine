@@ -22,6 +22,7 @@ var workplace = [Math.floor((CANVAS_WID - defaultPatternWid * TILE_WID)/2), 0];
 // button setup
 var progButtons;
 var execButtons;
+var editingWindow;
 var FIGURE_BUTTONS = []; // Array of toggle buttons needed to make the array of allowed figures
 setupButtons();
 var nOfStandardButtons = progButtons.length;
@@ -39,6 +40,7 @@ for (var i = 0; i < nOfFigures; i++) {
 
 var editingSheet;
 var editing;
+var editingWindowEnabled = false;
 var ANYTHING = 9;
 
 // Recognition variables. It's convenient to make them global, because several parts of the game use them.
@@ -70,7 +72,7 @@ var figure1 = [[[0,0],[1,0],[2,0],[3,0]], [[2,1],[2,2],[2,3],[2,0]]], // line
     figures = [figure1, figure2, figure3, figure4, figure5, figure6, figure7];
 var allowedFigures = [];
 
-newSheet();
+//newSheet();
 
 document.getElementById('file-input').addEventListener('change', readSingleFile, false);
 

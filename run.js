@@ -19,7 +19,7 @@ function getNewFigure() {
 }
 
 function nextFigure() {
-  clear(CANVAS);
+  clear();
   dropFigure();
   updateField();
   drawExec();
@@ -166,7 +166,7 @@ var dropFigure = function() {
 }
 
 var GameLoop = function() {
-  clear(c);
+  clear();
   updateField();
   drawExec();
 
