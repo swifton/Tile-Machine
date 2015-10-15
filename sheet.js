@@ -19,9 +19,7 @@ function sheet(patternWid, patternHeit) {
   
   this.reset();
 
-  // TODO: the following functions are not DRY enough.
-
-  // Copies all variables from a source sheet to this sheet.
+  // Copy all variables from a source sheet to this sheet.
   this.copyVars = copyVars;
   function copyVars(source) {
     this.patternOffsetX = source.patternOffsetX;
@@ -45,6 +43,7 @@ function sheet(patternWid, patternHeit) {
     return copy;
   }
 
+  // TODO: Get rid of this and store two patterns: one for editing and one for matching.
   this.copyWithShift = copyWithShift;
   function copyWithShift(pWid, pHeit) {
     var copy = this.copy();
@@ -64,13 +63,11 @@ function sheet(patternWid, patternHeit) {
     return copy;
   }
 
-
-
-/*
-  this.makeSymmetricSheet = makeSymmetricSheet;  //unfinished
-  function makeSymmetricSheet(nOfFig) {
-    this.symmetricSheet = new sheet(this.patternWid, this.patternHeit, defaultPatternWid - this.sheetOffsetX - this.sheetWid, this.sheetOffsetY);
-    this.symmetricSheet.walls = this.walls;
+/* TODO: This is almost done. I need to make a decent directive architecture and finish this.
+  // TODO: Make it possible for a column to have sheets derived from symmetry and sheets drawn specifically for this column.
+  this.makeSymmetricSheet = makeSymmetricSheet;
+  function makeSymmetricSheet() {
+    this.symmetricSheet = this.copy();
 
     for (var i = 0; i < this.patternWid; i++) {
       for (var j = 0; j < this.patternHeit; j++) {
@@ -78,23 +75,49 @@ function sheet(patternWid, patternHeit) {
       }
     }
 
-    this.symmetricSheet.directive = [this.patternWid + this.patternOffsetX -this.directive[0], this.symmetricRotation(this.directive[1])];
-    this.symmetricSheet.landing = 0;
-    this.symmetricSheet.landing = [0,0,0,0];
-    for (var j = 0; j < 4; j++) {
-      this.symmetricSheet.landing[j] = [this.patternWid + this.patternOffsetX - this.landing[j][0], this.landing[j][1]];
-    }
-    this.symmetricSheet.walls = this.walls;
+    this.symmetricSheet.directive = [this.patternWid + this.patternOffsetX -this.directive[0] - polyominoLength(N_PROG_FIGURE, this.directive[0]), this.symmetricRotation(N_PROG_FIGURE, this.directive[1])];
+    this.symmetricSheet.symmetry = false;
+    this.symmetricSheet.calculateLanding();
   }
 
+  // TODO: Create the polyomino class and put it there.
   this.symmetricRotation = symmetricRotation;
   function symmetricRotation(nOF, rotation) {
     if ((nOF == 1) && (rotation == 1)) {return 3}
     if ((nOF == 1) && (rotation == 3)) {return 1}
     return rotation;
   }
+*/
+  this.calculateLanding = calculateLanding;
+  function calculateLanding() {
+    var fig = [[0, 0], [0, 0], [0, 0], [0, 0]];
 
-  */
+    for (var j = 0; j < 4; j++) { // TODO: Replace with copy2DArray and a better architecture.
+      fig[j][0] = figures[N_PROG_FIGURE][this.directive[1]][j][0]; // TODO: N_PROG_FIGURE should be specified in the sheet vars, since it belongs to some figure.
+      fig[j][1] = figures[N_PROG_FIGURE][this.directive[1]][j][1];
+      fig[j][0] += this.directive[0];
+    }
+
+    for (;this.checkFig(fig);) { // TODO: there should be a function for this in the tetris engine.
+      for (var i = 0; i < 4; i++) {
+        fig[i][1] += 1;
+      }
+    }
+    for (var i = 0; i < 4; i++) {
+        fig[i][1] -= 1;
+    }
+    this.landing = fig;
+  }
+
+  this.checkFig = checkFig;
+  function checkFig(fig) {
+    for (var i = 0; i < 4; i++) {
+      if (this.pattern[fig[i][0]][fig[i][1]] == undefined) {return false;}
+      //print(fig)
+      if (this.pattern[fig[i][0]][fig[i][1]] == 8) {return false;}
+    }
+    return true;
+  }
 
   // Three functions for cutting sheets
   this.cutSheet = cutSheet;

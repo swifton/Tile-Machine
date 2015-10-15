@@ -5,7 +5,7 @@ function newSheet() {
   directiveWindow.reset();
   editing = false;
   showFigure();
-  calculateLanding(mainSheet);
+  mainSheet.calculateLanding();
 }
 
 function changeSheet(i, j) { // TODO: Everything is empty by default. Then full, then question mark.
@@ -13,12 +13,12 @@ function changeSheet(i, j) { // TODO: Everything is empty by default. Then full,
   mainSheet.pattern[i][j] += 1;
   if (mainSheet.pattern[i][j] == 10) {mainSheet.pattern[i][j] = 0;}
   if (mainSheet.pattern[i][j] == 1) {mainSheet.pattern[i][j] = 8;}
-  calculateLanding(mainSheet);
+  mainSheet.calculateLanding();
   drawProg();
 }
 
 function saveSheet(){
-  calculateLanding(mainSheet, N_PROG_FIGURE); //TODO: get rid of the second variable (and do it for other functions too)
+  mainSheet.calculateLanding(); //TODO: get rid of the second variable (and do it for other functions too)
 
   editingWindowEnabled = false;
 
@@ -50,6 +50,7 @@ function saveProg() {
   saveAs(blob, "program");
 }
 
+// TODO: After loading, open the first nonempty column.
 function loadProg(fileContent) {
   for (var j = 0; j < 7; j++) {
     program[j] = new column(j);
@@ -72,10 +73,16 @@ function makeSymmetricSheets() {
   for (var i = 0; i < program.length; i++) {
     for (var j = 0; j < program[i].sheets.length; j++) {
       if (program[i].sheets[j].symmetry) {
-        program[i].sheets[j].makeSymmetricSheet(i);
+        program[i].sheets[j].makeSymmetricSheet();
       }
     }
   }
+}
+
+// A temporary function for testing the symmetric sheet building function.
+function revertSheet() {
+  mainSheet.makeSymmetricSheet();
+  mainSheet = mainSheet.symmetricSheet;
 }
 
 function test(){

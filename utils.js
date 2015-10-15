@@ -147,6 +147,28 @@ function copy2DArray(sourceArray) {
   return result;
 }
 
+//TODO: This is a complete bullshit. This is by no means a polyomino length. Replace this by a decent architecture for directives and make a tool to match landings.
+function polyominoLength(n, rotation) {
+  if (n == 0) {
+    if (rotation == 0) {
+      return 4;
+    }
+    else {
+      return 5;
+    }
+  }
+
+  if (n == 4) {return 2;}
+
+  if (rotation == 0 || rotation == 2) {
+    return 3;
+  }
+
+  if (rotation == 1 || rotation == 3) {
+      return 2;
+  }
+}
+
 // Array Remove - By John Resig (MIT Licensed)
 Array.prototype.remove = function(from, to) {
   var rest = this.slice((to || from) + 1 || this.length);

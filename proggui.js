@@ -44,6 +44,7 @@ function setupProgButtons() {
   var cancelSheet = new button("Cancel", workplace[0] + saveSh.buttonWid + 5, (defaultPatternHeit + 8) * TILE_WID + 5, 115, buttonHeit, function() {editingWindowEnabled = false;} );
  // var clearSheet = new button("Clear", workplace[0], (defaultPatternHeit + 9) * TILE_WID + 5, 115, buttonHeit, function() {} ); // TODO: write a function
   var newSheetButton = new button(" + New sheet", workplace[0] + 12 * TILE_WID, TILE_WID, 130, buttonHeit, newSheet);
+  var revertSheetButton = new button("Revert sheet", workplace[0], (defaultPatternHeit + 9) * TILE_WID + 5, 115, buttonHeit, revertSheet);
   //var copySheet = new button("Copy Sheet", workplace[0], (defaultPatternHeit + 8) * TILE_WID + 10 + 20, 140, buttonHeit, function() {mainSheet = mainSheet.copy(); editing = false;});
   //var loadProgram = new button("Load", workplace[0] + saveProgram.buttonWid + TILE_WID, (defaultPatternHeit + 9) * TILE_WID + 10 + 20, 60, buttonHeit, readSingleFile);
 
@@ -54,7 +55,7 @@ function setupProgButtons() {
   var saveProgram = new button("Save", CANVAS_WID - 70, TILE_WID * 8, 60, buttonHeit, saveProg);
   var testButton = new button("Test", CANVAS_WID - 70, TILE_WID * 9, 60, buttonHeit, test);
 
-  editingWindow = [saveSh, dirLeft, rotate, dirRight, cancelSheet];
+  editingWindow = [saveSh, dirLeft, rotate, dirRight, cancelSheet, revertSheetButton ];
   progButtons = [newSheetButton, saveProgram, testButton];
 
   var figureLabels = ["Line", 'T', 'S', 'Z', 'Block', 'G', 'L'];
