@@ -55,15 +55,12 @@ function loadProg(fileContent) {
     program[j] = new column(j);
   }
 
-  progra = JSON.parse(fileContent);
+  var progra = JSON.parse(fileContent);
   for (var i = 0; i < 7; i++) {
     for (var j = 0; j < progra[i].sheets.length; j++) {
       var sh = progra[i].sheets[j];
       var shhh = new sheet(sh.patternWid, sh.patternHeit);
       shhh.copyVars(sh);
-      shhh.pattern = sh.pattern;
-      shhh.landing = sh.landing;
-
       program[i].addPattern(shhh);
     }
   }

@@ -3,7 +3,7 @@ function sheet(patternWid, patternHeit) {
   this.patternHeit = patternHeit;
   this.patternOffsetX = 0;
   this.patternOffsetY = 0;
-  this.directive = [0, 0]; // 1st coord - offset, 2nd - rotation
+  this.directive = [0, 0]; // 1st coordinate - offset, 2nd - rotation
   this.landing = 0;
   this.symmetry = false;
   this.walls = false;
@@ -21,23 +21,27 @@ function sheet(patternWid, patternHeit) {
 
   // TODO: the following functions are not DRY enough.
 
+  // Copies all variables from a source sheet to this sheet.
+  this.copyVars = copyVars;
+  function copyVars(source) {
+    this.patternOffsetX = source.patternOffsetX;
+    this.patternOffsetY = source.patternOffsetY;
+    this.directive[0] = source.directive[0];
+    this.directive[1] = source.directive[1];
+    this.symmetry = source.symmetry;
+    this.walls = source.walls;
+
+    this.reset();
+
+    this.pattern = copy2DArray(source.pattern);
+    this.landing = source.landing == 0 ? 0 : copy2DArray(source.landing);
+  }
+
   // Deep copy of an instance of this class.
   this.copy = copy;
   function copy() {
     var copy = new sheet(this.patternWid, this.patternHeit)
-
-    copy.patternOffsetX = this.patternOffsetX;
-    copy.patternOffsetY = this.patternOffsetY;
-    copy.directive[0] = this.directive[0];
-    copy.directive[1] = this.directive[1];
-    copy.symmetry = this.symmetry;
-    copy.walls = this.walls;
-
-    copy.reset();
-
-    copy.pattern = copy2DArray(this.pattern);
-    copy.landing = this.landing == 0 ? 0:copy2DArray(this.landing);
-
+    copy.copyVars(this);
     return copy;
   }
 
