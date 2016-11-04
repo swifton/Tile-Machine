@@ -30,6 +30,7 @@ function setupExecButtons() {
   var nextButton = new button("Next", workplace[0] + pauseGameButton.buttonWid + 10, (fieldHeit + 3) * TILE_WID, 120, buttonHeit, nextFigure);
   var fastButton = new button("Fast", workplace[0], (fieldHeit + 4) * TILE_WID, 120, buttonHeit, fastGameLoop);
   var statsButton = new button("Stats", workplace[0] + fastButton.buttonWid + 10, (fieldHeit + 4) * TILE_WID, 120, buttonHeit, printStats);
+  var veryFastButton = new button("Very fast", workplace[0] + fastButton.buttonWid + statsButton.buttonWid + 30, (fieldHeit + 4) * TILE_WID, 120, buttonHeit, veryFastGameLoop);
 
-  execButtons = [stopButton, newGameButton, pauseGameButton, nextButton, fastButton, statsButton];
+  execButtons = [stopButton, newGameButton, pauseGameButton, nextButton, fastButton, statsButton, veryFastButton];
 }

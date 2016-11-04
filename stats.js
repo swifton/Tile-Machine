@@ -7,12 +7,13 @@ var totalTilesDropped = 0;
 function printStats() {
 //  print("Number of tiles dropped in this game:");
 //  print(numberOfTilesDropped);
-  print("Number of lines deleted in this game:");
-  print(numberOfLinesDeleted);
+//  print("Number of lines deleted in this game:");
+ // print(numberOfLinesDeleted);
 //  print("Average number of tiles:");
 //  print(totalTilesDropped * 1.0 / numberOfGamesPlayed);
-  print("Average number of lines:");
-  print(totalLinesDeleted * 1.0 / numberOfGamesPlayed);
+  //print("Average number of lines:");
+  //print(totalLinesDeleted * 1.0 / numberOfGamesPlayed);
+  //print(numberOfGamesPlayed);
 }
 
 function finishGameStats() {

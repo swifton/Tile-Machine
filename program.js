@@ -104,3 +104,14 @@ function fastGameLoop() {
   nextFigure();
   gLoop = setTimeout(fastGameLoop, 1000/100);
 }
+
+function veryFastGameLoop() {
+	for (i = 0; i < 50000; i++) {
+		veryFastNextFigure();
+	}
+
+	drawExec();
+	print("Average number of lines:");
+    print(totalLinesDeleted * 1.0 / numberOfGamesPlayed);
+  //gLoop = setTimeout(veryFastGameLoop, 1000/100);
+}

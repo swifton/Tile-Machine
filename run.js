@@ -25,6 +25,13 @@ function nextFigure() {
   drawExec();
 }
 
+function veryFastNextFigure() {
+  clear();
+  dropFigure();
+  updateField();
+  //drawExec();
+}
+
 // Tetris game functions
 
 function newGame(){
