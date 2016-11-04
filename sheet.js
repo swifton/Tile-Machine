@@ -63,9 +63,9 @@ function sheet(patternWid, patternHeit) {
     return copy;
   }
 
-/* TODO: This is almost done. I need to make a decent directive architecture and finish this.
+  // TODO: This is almost done. I need to make a decent directive architecture and finish this.
   // TODO: Make it possible for a column to have sheets derived from symmetry and sheets drawn specifically for this column.
-  this.makeSymmetricSheet = makeSymmetricSheet;
+  /*this.makeSymmetricSheet = makeSymmetricSheet;
   function makeSymmetricSheet() {
     this.symmetricSheet = this.copy();
 
@@ -75,7 +75,7 @@ function sheet(patternWid, patternHeit) {
       }
     }
 
-    this.symmetricSheet.directive = [this.patternWid + this.patternOffsetX -this.directive[0] - polyominoLength(N_PROG_FIGURE, this.directive[0]), this.symmetricRotation(N_PROG_FIGURE, this.directive[1])];
+    this.symmetricSheet.directive = [this.patternWid - this.patternOffsetX -this.directive[0] - polyominoLength(N_PROG_FIGURE, this.directive[0]), this.symmetricRotation(N_PROG_FIGURE, this.directive[1])];
     this.symmetricSheet.symmetry = false;
     this.symmetricSheet.calculateLanding();
   }
@@ -83,9 +83,11 @@ function sheet(patternWid, patternHeit) {
   // TODO: Create the polyomino class and put it there.
   this.symmetricRotation = symmetricRotation;
   function symmetricRotation(nOF, rotation) {
-    if ((nOF == 1) && (rotation == 1)) {return 3}
+	// T tetromino
+	if ((nOF == 1) && (rotation == 1)) {return 3}
     if ((nOF == 1) && (rotation == 3)) {return 1}
-    return rotation;
+	
+	return rotation;
   }
 */
 

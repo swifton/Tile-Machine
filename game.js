@@ -1,7 +1,16 @@
-// Global TODO list:
-// Get rid of stupid variables like shhh
-// Make walls and symmetry buttons persist when sheet is edited.
-// 
+/* 
+
+Global TODO list:
+Get rid of stupid variables like shhh
+Make walls and symmetry buttons persist when sheet is edited.
+Make a decent directive architecture.
+Make a polyomino class. 
+Get rid of drawing the field every tile to speed up simulation. 
+Make a graph of the average number of deleted lines. 
+
+
+*/
+
 
 // TODO: When there is no floor, where should the landing be?
 
