@@ -88,6 +88,9 @@ function sheet(patternWid, patternHeit) {
     return rotation;
   }
 */
+
+// TODO: visualization of polyominoes and their rotations and centers
+
   this.calculateLanding = calculateLanding;
   function calculateLanding() {
     var fig = [[0, 0], [0, 0], [0, 0], [0, 0]];

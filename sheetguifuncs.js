@@ -23,7 +23,7 @@ function toggleWalls(i, nn) {
   program[nn].sheets[i].walls = !program[nn].sheets[i].walls;
 }
 
-function swapTwoSheets(i, j, nn) {
+function swapTwoSheets(i, j, nn) { // There is a bug in this. I don't know where.
   var ns = program[nn].sheets[i];
   program[nn].sheets[i] = program[nn].sheets[j];
   program[nn].sheets[j] = ns;

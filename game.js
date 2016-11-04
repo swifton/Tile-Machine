@@ -1,3 +1,8 @@
+// Global TODO list:
+// Get rid of stupid variables like shhh
+// Make walls and symmetry buttons persist when sheet is edited.
+// 
+
 // TODO: When there is no floor, where should the landing be?
 
 // Initialization of global variables and launch of functions that prepare the game for playing

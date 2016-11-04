@@ -7,7 +7,7 @@ function resizeCanvas(){
 }
 
 function clear(){
-  CONTEXT.fillStyle = '#d0f9e7';
+  CONTEXT.fillStyle = '#222222';
   CONTEXT.clearRect(0, 0, CANVAS_WID, CANVAS_HEIT);
   CONTEXT.beginPath();
   CONTEXT.rect(0, 0, CANVAS_WID, CANVAS_HEIT);
@@ -88,7 +88,7 @@ function getMousePos(canvas, evt) {
 }
 
 function drawLabel(label, x, y) {
-  CONTEXT.fillStyle = "blue";
+  CONTEXT.fillStyle = "yellow";
   CONTEXT.font = "bold 20px Arial";
   CONTEXT.fillText(label, x, y);
 }
@@ -147,7 +147,7 @@ function copy2DArray(sourceArray) {
   return result;
 }
 
-//TODO: This is a complete bullshit. This is by no means a polyomino length. Replace this by a decent architecture for directives and make a tool to match landings.
+//TODO: This is complete bullshit. This is by no means a polyomino length. Replace this by a decent architecture for directives and make a tool to match landings.
 function polyominoLength(n, rotation) {
   if (n == 0) {
     if (rotation == 0) {
