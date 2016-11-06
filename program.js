@@ -91,6 +91,13 @@ function test(){
   if (allowedFigures.length == 0) {return;} // TODO: add some reminder for the player to toggle at least one figure
   gamePaused = false;
   mode = "executing";
+  
+  results = [];
+	
+  for (i = 0; i < nOfKeptResults; i++) {  // This can introduce errors, if the number of games is less than the length of this array.
+    results.push(0);
+  } 
+  
   newGame();
   resetStats();
   clear();
@@ -113,5 +120,11 @@ function veryFastGameLoop() {
 	drawExec();
 	print("Average number of lines:");
     print(totalLinesDeleted * 1.0 / numberOfGamesPlayed);
-  //gLoop = setTimeout(veryFastGameLoop, 1000/100);
+	
+	print("Discrepancy:");
+	print(countDiscrepancy());
+	
+	if (numberOfGamesPlayed < nOfKeptResults) {
+		print("THIS IS INACCURATE!");
+	}
 }
