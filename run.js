@@ -7,6 +7,26 @@ function newFigure() {
   findCommand();
   var offset = command.directive[0] + recognitionOffset;
   var rotation = command.directive[1];
+  
+  sequenceOfTetriminoes.push([nOfFigure, offset, rotation]);
+
+  for (var j = 0; j < 4; j++) {
+    figure[j] = figures[nOfFigure][rotation][j].slice(0);
+    figure[j][0] += offset;
+  }
+}
+
+function newFigureReplay() {
+  numberOfTilesDropped ++;
+  if (sequenceOfTetriminoes.length == 0) {return;}
+  var fig = sequenceOfTetriminoes[0];
+  sequenceOfTetriminoes.splice(0, 1);
+  
+  nOfFigure = fig[0];
+
+  findCommand();
+  var offset = fig[1];
+  var rotation = fig[2];
 
   for (var j = 0; j < 4; j++) {
     figure[j] = figures[nOfFigure][rotation][j].slice(0);
@@ -31,15 +51,23 @@ function veryFastNextFigure() {
   updateField();
 }
 
+function nextFigureReplay() {
+  clear();
+  dropFigure();
+  updateFieldReplay();
+  drawExec();
+}
+
 // Tetris game functions
 
 function newGame(){
+  finishGameStats();
   print("THE GAME IS OVER");
-  finishGameStats()
   if (numberOfGamesPlayed != 0) {printStats();}
   newGameStats();
   fill2DArray(field, 0, true, true);
   if (gamePaused) {pauseGame();}
+  sequenceOfTetriminoes = [];
   getNewFigure();
   newFigure();
 }
@@ -66,6 +94,20 @@ function updateField(){
     updatePosition(-nOfFigure - 1);
     checkField();
     newFigure();
+    checkEnd();
+    updatePosition(nOfFigure + 1);
+    return 1;
+  }
+  updatePosition(0);
+  for (var i = 0; i < 4; i++){figure[i][1]++;}	
+  updatePosition(nOfFigure + 1);
+}
+
+function updateFieldReplay(){
+  if (checkMove([0,1])){
+    updatePosition(-nOfFigure - 1);
+    checkField();
+    newFigureReplay();
     checkEnd();
     updatePosition(nOfFigure + 1);
     return 1;

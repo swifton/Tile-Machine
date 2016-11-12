@@ -1,5 +1,4 @@
 /* 
-
 Global TODO list:
 Get rid of stupid variables like shhh
 Make walls and symmetry buttons persist when sheet is edited.
@@ -7,8 +6,32 @@ Make a decent directive architecture.
 Make a polyomino class. 
 Get rid of drawing the field every tile to speed up simulation. 
 Make a graph of the average number of deleted lines. 
+Handling of 'mousewheel' input event was delayed for 2555 ms due to main thread being busy. Consider marking event handler as 'passive' to make the page more responsive.
+Make a more advanced UI. I don't want to click a lot when I add a new pattern into the very beginning of a long column. 
+Rename a sheet into a pattern. 
+Fix bugs: deleting the first pattern in a column raises an error. Moving the last pattern up raises an error. 
+Output the range of game lengths (the shortest and the longest game in terms of deleted lines).
+Make a label for stats so that I don't have to open the console.
+Count how frequently each pattern is used.
+Prevent polyominoes from spawning inside a wall.
 
+Programming ideas:
+Display the last frame of each game. 
+Let the player play the streaks with the fastest height growth.
+Equivalent patterns with random choice.
+Exclusions?
+Graph the average game lengths. 
+Play the shortest game.
+Make sheets 12 wide?
+Make sheets infinite?
 
+At the very end: 
+Make it run faster (maybe?) by counting full tiles in every line of the field and trying only when the number of full tiles is at least as in the directive. Same for empty.
+Nice pictures instead of labels for polyominoes.
+Can I ask the browser for more computing resourses?
+Make sure that the UI is monkey-proof.
+Animate buttons. 
+Use a ui library?
 */
 
 
@@ -29,7 +52,8 @@ var CANVAS_WID, CANVAS_HEIT;
 
 resizeCanvas();
 
-
+var savedGames;
+var sequenceOfTetriminoes;
 
 var defaultPatternHeit = 10, defaultPatternWid = 10;
 var fieldHeit = 19 + 1, fieldWid = 10 + 2;

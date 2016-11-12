@@ -87,10 +87,10 @@ function getMousePos(canvas, evt) {
   };
 }
 
-function drawLabel(label, x, y) {
+function drawLabel(text, x, y) {
   CONTEXT.fillStyle = "yellow";
   CONTEXT.font = "bold 20px Arial";
-  CONTEXT.fillText(label, x, y);
+  CONTEXT.fillText(text, x, y);
 }
 
 function clickReporter(e) {

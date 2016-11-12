@@ -86,6 +86,7 @@ function revertSheet() {
 }
 
 function test(){
+  savedGames = [];
   //makeSymmetricSheets();
   makeAllowedFigures();
   if (allowedFigures.length == 0) {return;} // TODO: add some reminder for the player to toggle at least one figure
@@ -113,13 +114,17 @@ function fastGameLoop() {
 }
 
 function veryFastGameLoop() {
+	savedGames = [];
+	maxNumberofLinesDeleted = 0;
+    minNumberofLinesDeleted = 100000000;
 	for (i = 0; i < 50000; i++) {
 		veryFastNextFigure();
 	}
 
 	drawExec();
+	var average = totalLinesDeleted * 1.0 / numberOfGamesPlayed;
 	print("Average number of lines:");
-    print(totalLinesDeleted * 1.0 / numberOfGamesPlayed);
+    print(average);
 	
 	print("Discrepancy:");
 	print(countDiscrepancy());
@@ -127,4 +132,21 @@ function veryFastGameLoop() {
 	if (numberOfGamesPlayed < nOfKeptResults) {
 		print("THIS IS INACCURATE!");
 	}
+	
+	drawLabel(average.toString(), 20, 20);
+	drawLabel(maxNumberofLinesDeleted.toString(), 20, 60);
+    drawLabel(minNumberofLinesDeleted.toString(), 20, 100);
+}
+
+function lamestGame() {
+	if (savedGames.length == 0) {
+		return;
+	}
+	
+	fill2DArray(field, 0, true, true);	
+	
+	sequenceOfTetriminoes = [];
+    sequenceOfTetriminoes = savedGames[0];
+	savedGames.splice(0, 1);
+	newFigureReplay();
 }
