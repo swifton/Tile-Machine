@@ -29,10 +29,10 @@ function sheetgui(sheet, funcs, params) {
   this.createButtons = createButtons;
   function createButtons() {
     var wls = this.sheet.walls;
-    var labels = ['', 'D', '^', 'v', '', ''];
-    var modes = [false, false, false, false, true, true];
+    var labels = ['', 'D', '^', 'v', '', '', 'ex', 'se', 'de'];
+    var modes = [false, false, false, false, true, true, false, false, false];
 
-    for (var i = 0; i < 6; i++) {
+    for (var i = 0; i < labels.length; i++) {
       var b = new button(labels[i], 0, 0, 20, 19, funcs[i], params, modes[i]);
       this.buttons.push(b);
     }

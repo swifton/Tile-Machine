@@ -41,6 +41,7 @@ function scroll(event) {
 function setupProgButtons() {
   var buttonHeit = 19;
   var saveSh = new button("Save sheet", workplace[0], (defaultPatternHeit + 8) * TILE_WID + 5, 115, buttonHeit, saveSheet);
+  var saveToBButton = new button("Save to B", workplace[0], (defaultPatternHeit + 9) * TILE_WID + 5, 115, buttonHeit, saveToB);
   var cancelSheet = new button("Cancel", workplace[0] + saveSh.buttonWid + 5, (defaultPatternHeit + 8) * TILE_WID + 5, 115, buttonHeit, function() {editingWindowEnabled = false;} );
  // var clearSheet = new button("Clear", workplace[0], (defaultPatternHeit + 9) * TILE_WID + 5, 115, buttonHeit, function() {} ); // TODO: write a function
   var newSheetButton = new button(" + New sheet", workplace[0] + 12 * TILE_WID, TILE_WID, 130, buttonHeit, newSheet);
@@ -55,7 +56,7 @@ function setupProgButtons() {
   var saveProgram = new button("Save", CANVAS_WID - 70, TILE_WID * 8, 60, buttonHeit, saveProg);
   var testButton = new button("Test", CANVAS_WID - 70, TILE_WID * 9, 60, buttonHeit, test);
 
-  editingWindow = [saveSh, dirLeft, rotate, dirRight, cancelSheet];
+  editingWindow = [saveSh, dirLeft, rotate, dirRight, cancelSheet, saveToBButton];
   progButtons = [newSheetButton, saveProgram, testButton];
 
   var figureLabels = ["Line", 'T', 'S', 'Z', 'Block', 'G', 'L'];

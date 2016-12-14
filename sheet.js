@@ -7,6 +7,7 @@ function sheet(patternWid, patternHeit) {
   this.landing = 0;
   this.symmetry = false;
   this.walls = false;
+  this.exceptions = [];
   //this.symmetricSheet = undefined;
 
   this.reset = reset;

@@ -43,8 +43,8 @@ function alignSheetButtons(tetr) {
     var wls = shsh.walls;
     var sym = shsh.symmetry;
 
-    var xs = [TILE_WID, TILE_WID * pWid + 5, TILE_WID * (pWid + 1) + 5, TILE_WID * (pWid + 1) + 5 + 1 * TILE_WID, TILE_WID * (pWid + 1) + 5 + 2 * TILE_WID, TILE_WID * (pWid + 1) + 5 + 3 * TILE_WID, TILE_WID * (pWid + 1) + 5 + 4 * TILE_WID];
-    var ys = [heitOffset * TILE_WID + TILE_WID * (i + 1) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 1) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 1) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 1) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 1) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 1) + programOffset];
+    var xs = [TILE_WID, TILE_WID * pWid + 5, TILE_WID * (pWid + 1) + 5, TILE_WID * (pWid + 1) + 5 + 1 * TILE_WID, TILE_WID * (pWid + 1) + 5 + 2 * TILE_WID, TILE_WID * (pWid + 1) + 5 + 3 * TILE_WID, TILE_WID * (pWid + 1) + 5 + 4 * TILE_WID, TILE_WID * (pWid + 1) + 5 + 5 * TILE_WID, TILE_WID * (pWid + 1) + 5 + 6 * TILE_WID, TILE_WID * (pWid + 1) + 5 + 7 * TILE_WID];
+    var ys = [heitOffset * TILE_WID + TILE_WID * (i + 1) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 1) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 1) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 1) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 1) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 1) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 1) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 1) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 1) + programOffset];
 
     buts = col.gui[i].buttons;
 

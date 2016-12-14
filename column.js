@@ -21,9 +21,31 @@ function column(tetrNum) {
     var down = function() {swapTwoSheets(l+1, l, t)};
     var twalls = function() {toggleWalls(l, t)};
     var tsym = function() {toggleSymmetry(l, t)};
+	var saveEx = function() {saveException(l)};
+	var showEx = function() {showException(l)};
+	var delEx = function() {deleteException(l)};
 
-    this.gui.push(new sheetgui(pattern, [editt, del, up, down, tsym, twalls]));
+    this.gui.push(new sheetgui(pattern, [editt, del, up, down, tsym, twalls, saveEx, showEx, delEx]));
     this.sheets.push(pattern);
+    alignSheetButtons(this.tetrNum);
+  }
+  
+  this.addPatternToB = addPatternToB;
+  function addPatternToB(pattern) {
+    var l = 0;
+    var t = this.tetrNum;
+    var del = function() {deleteSheet(l, t)};
+    var editt = function() {editSheet(l, t)};
+    var up = function() {swapTwoSheets(l-1, l, t)};
+    var down = function() {swapTwoSheets(l+1, l, t)};
+    var twalls = function() {toggleWalls(l, t)};
+    var tsym = function() {toggleSymmetry(l, t)};
+	var saveEx = function() {saveException(l)};
+	var showEx = function() {showException(l)};
+	var delEx = function() {deleteException(l)};
+
+    this.gui.unshift(new sheetgui(pattern, [editt, del, up, down, tsym, twalls, saveEx, showEx, delEx]));
+    this.sheets.unshift(pattern);
     alignSheetButtons(this.tetrNum);
   }
 

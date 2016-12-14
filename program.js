@@ -17,6 +17,48 @@ function changeSheet(i, j) { // TODO: Everything is empty by default. Then full,
   drawProg();
 }
 
+function saveToB() {
+  mainSheet.calculateLanding();
+  editingWindowEnabled = false;
+
+  var cshe =  mainSheet.copy();
+  cshe.cutSheet();
+
+  if (!editing) {
+    program[N_PROG_FIGURE].addPatternToB(cshe);
+    editing = true;
+    editingSheet = 0;
+  }
+  else {
+    console.log("BUG!");
+  }
+  alignSheetButtons(N_PROG_FIGURE);
+}
+
+function saveException(i) {
+	mainSheet.calculateLanding(); //TODO: get rid of the second variable (and do it for other functions too)
+
+    editingWindowEnabled = false;
+	
+	var cshe =  mainSheet.copy();
+    cshe.cutSheet();
+	
+	program[N_PROG_FIGURE].sheets[i].exceptions.push(cshe);
+	
+	editing = false;
+}
+
+function showException(i) {
+  editingWindowEnabled = true;
+  directiveWindow.reset(); // clean the directive window
+  mainSheet = program[N_PROG_FIGURE].sheets[i].exceptions[0].copyWithShift(defaultPatternWid, defaultPatternHeit);
+  showFigure();
+}
+
+function deleteException(i) {
+	program[N_PROG_FIGURE].sheets[i].exceptions = [];
+}
+
 function saveSheet(){
   mainSheet.calculateLanding(); //TODO: get rid of the second variable (and do it for other functions too)
 
