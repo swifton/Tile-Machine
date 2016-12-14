@@ -5,7 +5,7 @@ function findCommand() {
   for (var i = 0; i < program[nOfFigure].sheets.length; i++) {
     var c = advancedMatching(program[nOfFigure].sheets[i], i);
     if (c != -1) {
-      command = program[nOfFigure].sheets[c[0]];
+      command = program[nOfFigure].sheets[c[0]];	  
       recognitionOffset = c[1];
       recognitionOffsetY = c[2];
       return;
@@ -36,7 +36,7 @@ function advancedMatching(command, n) {
       }
     }
   }
-
+ 
   var rm = removeMatches(matches, checkBorders, command, []);
   removedMatches = removedMatches.concat(rm[0]);
   matches = rm[1];
@@ -46,6 +46,10 @@ function advancedMatching(command, n) {
   removedMatches = removedMatches.concat(rm[0]);
   matches = rm[1];
 
+  var rm = removeMatches(matches, checkExceptions, command, []);
+  removedMatches = removedMatches.concat(rm[0]);
+  matches = rm[1];
+  
   var minHeit = 0;
   for (var i = 0; i < matches.length; i++) {
     if (minHeit < matches[i][2]) {minHeit = matches[i][2]}
@@ -74,6 +78,12 @@ function removeMatches(matchesArray, filterFunction, command, params) {
   }
 
   return [removedMatchesArray, newMatchesArray];
+}
+
+function checkExceptions(match, command, params) {
+  var exception = command.exceptions[0];
+  if (!exception) {return true;}
+  return !comparePatterns(exception.pattern, field, match[1], match[2], exception.patternWid, exception.patternHeit, exception.patternOffsetX, exception.patternOffsetY);
 }
 
 function checkLanding(match, command, params) {
