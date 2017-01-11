@@ -1,4 +1,3 @@
-// TODO: GUI is very messy. Need to make it more abstract. Make one file for each screen.
 function drawButtons(buttons) {
   for (var i = 0; i < buttons.length; i++) {
     buttons[i].draw();

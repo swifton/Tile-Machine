@@ -36,14 +36,42 @@ function saveToB() {
 }
 
 function saveException(i) {
-	mainSheet.calculateLanding(); //TODO: get rid of the second variable (and do it for other functions too)
+	//mainSheet.calculateLanding();
 
     editingWindowEnabled = false;
 	
 	var cshe =  mainSheet.copy();
     cshe.cutSheet();
 	
-	program[N_PROG_FIGURE].sheets[i].exceptions.push(cshe);
+	// TODO: Handle the case when the pattern fits in two different places of an exception.
+	//var matchI;
+	//var matchJ;
+	
+	var parentSheet = program[N_PROG_FIGURE].sheets[i];
+	//var tmp = true;
+	
+	// This didn't work because of my crappy architecture
+	/*for (var i = 0; i < cshe.patternWid; i++) {
+		for (var j = 0; j < cshe.patternHeit; j++) {
+			if (comparePatterns(parentSheet.pattern, cshe.pattern, i, j, parentSheet.patternWid, parentSheet.patternHeit, parentSheet.patternOffsetX, parentSheet.patternOffsetY)) {
+				matchI = i;
+				matchJ = j;
+				console.log("MathcI, MatchJ");
+				console.log(matchI);
+				console.log(matchJ);
+				tmp = false;
+			}
+		}
+	}
+	
+	if (tmp) {
+		console.log("The exception doesn't match the pattern");
+	}
+	else {
+		parentSheet.exceptionOffset = [matchI, matchJ];
+	}*/
+	
+	parentSheet.exceptions.push(cshe);
 	
 	editing = false;
 }
@@ -107,7 +135,6 @@ function loadProg(fileContent) {
       program[i].addPattern(shhh);
     }
   }
-
   drawProg();
 }
 
@@ -131,13 +158,13 @@ function test(){
   savedGames = [];
   //makeSymmetricSheets();
   makeAllowedFigures();
-  if (allowedFigures.length == 0) {return;} // TODO: add some reminder for the player to toggle at least one figure
-  gamePaused = false;
+  if (allowedFigures.length == 0) {alert("Turn on at least one tetromino by checking the radiobutton next to it."); return;}
+  gamePaused = true;
   mode = "executing";
   
   results = [];
 	
-  for (i = 0; i < nOfKeptResults; i++) {  // This can introduce errors, if the number of games is less than the length of this array.
+  for (i = 0; i < nOfKeptResults; i++) {  // This can introduce errors, if the number of games is smaller than the length of this array.
     results.push(0);
   } 
   
@@ -147,26 +174,36 @@ function test(){
   newFigure();
   updateField();
   drawExec();
-  //GameLoop();
+}
+
+function launchFast() {
+	if (!gamePaused) {return;}
+	gamePaused = false;
+	fastGameLoop();
 }
 
 function fastGameLoop() {
+  if (gamePaused) {return;}
   nextFigure();
   gLoop = setTimeout(fastGameLoop, 1000/100);
 }
 
 function veryFastGameLoop() {
+	if (!gamePaused) {return;}
+	gamePaused = false;
 	savedGames = [];
 	maxNumberofLinesDeleted = 0;
-    minNumberofLinesDeleted = 100000000;
-	for (i = 0; i < 50000; i++) {
+    minNumberofLinesDeleted = 100000000; // Fix this later.
+	for (i = 0; i < sampleSize; i++) {
 		veryFastNextFigure();
 	}
 
-	drawExec();
-	var average = totalLinesDeleted * 1.0 / numberOfGamesPlayed;
+
+	averageNumberOfLinesDeleted = totalLinesDeleted * 1.0 / numberOfGamesPlayed;
 	print("Average number of lines:");
-    print(average);
+    print(averageNumberOfLinesDeleted);
+	
+	drawExec();
 	
 	print("Discrepancy:");
 	print(countDiscrepancy());
@@ -174,10 +211,7 @@ function veryFastGameLoop() {
 	if (numberOfGamesPlayed < nOfKeptResults) {
 		print("THIS IS INACCURATE!");
 	}
-	
-	drawLabel(average.toString(), 20, 20);
-	drawLabel(maxNumberofLinesDeleted.toString(), 20, 60);
-    drawLabel(minNumberofLinesDeleted.toString(), 20, 100);
+	gamePaused = true;
 }
 
 function lamestGame() {
@@ -189,6 +223,10 @@ function lamestGame() {
 	
 	sequenceOfTetriminoes = [];
     sequenceOfTetriminoes = savedGames[0];
+	console.log(sequenceOfTetriminoes);
 	savedGames.splice(0, 1);
 	newFigureReplay();
+	updateField();
+	clear();
+	drawExec();
 }

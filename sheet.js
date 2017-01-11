@@ -8,6 +8,7 @@ function sheet(patternWid, patternHeit) {
   this.symmetry = false;
   this.walls = false;
   this.exceptions = [];
+  this.exceptionOffset = [];
   //this.symmetricSheet = undefined;
 
   this.reset = reset;
@@ -35,7 +36,7 @@ function sheet(patternWid, patternHeit) {
     this.pattern = copy2DArray(source.pattern);
     this.landing = source.landing == 0 ? 0 : copy2DArray(source.landing);
 	
-	if (source.exceptions[0]) {
+	if (source.exceptions && source.exceptions[0]) {
 		var shhh = new sheet(source.exceptions[0].patternWid, source.exceptions[0].patternHeit);
         shhh.copyVars(source.exceptions[0]);
 		this.exceptions.push(shhh);

@@ -9,30 +9,34 @@ function button(label, x, y, buttonWid, buttonHeit, func, params, toggle, label2
   this.label2 = label2;
   this.func = func;
   this.params = params;
+  this.visible = true;
 
   this.draw = draw;
   function draw() {
-    rectangle([this.x, this.y], this.buttonWid, this.buttonHeit, "black");
-    drawLabel(this.label, this.x + 1, this.y + this.buttonHeit - 2)
+	if (this.visible) {
+		rectangle([this.x, this.y], this.buttonWid, this.buttonHeit, "black");
+		var labelToDraw = this.toggled?this.label2:this.label
+		drawLabel(labelToDraw, this.x + 1, this.y + this.buttonHeit - 2)
+	}
   }
 
   this.press = press;
   function press(pressX, pressY) {
-    if ((pressX > this.x) && (pressX < this.x + this.buttonWid) && (pressY > this.y) && (pressY < this.y + this.buttonHeit)) {
-      if (this.toggle) {
-        this.toggled = !this.toggled;
-        var tmp = this.label;
-        this.label = this.label2;
-        this.label2 = tmp;
-      }
+	if (this.visible) {
+		if ((pressX > this.x) && (pressX < this.x + this.buttonWid) && (pressY > this.y) && (pressY < this.y + this.buttonHeit)) {
+		  if (this.toggle) {
+			this.toggled = !this.toggled;
+			this.draw();
+		  }
 
-      if (this.params == undefined) {
-        this.func();
-      }
-      else {
-        this.func(params);
-      }
-    }
+		  if (this.params == undefined) {
+			this.func();
+		  }
+		  else {
+			this.func(params);
+		  }
+		}
+	}
   }
 }
 

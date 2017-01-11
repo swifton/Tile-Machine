@@ -23,7 +23,7 @@ function toggleWalls(i, nn) {
   program[nn].sheets[i].walls = !program[nn].sheets[i].walls;
 }
 
-function swapTwoSheets(i, j, nn) { // There is a bug in this. I don't know where.
+function swapTwoSheets(i, j, nn) { // There is a bug in this. I don't know where. Maybe not.
   var ns = program[nn].sheets[i];
   program[nn].sheets[i] = program[nn].sheets[j];
   program[nn].sheets[j] = ns;
@@ -44,22 +44,33 @@ function alignSheetButtons(tetr) {
     var sym = shsh.symmetry;
 
     var xs = [TILE_WID, TILE_WID * pWid + 5, TILE_WID * (pWid + 1) + 5, TILE_WID * (pWid + 1) + 5 + 1 * TILE_WID, TILE_WID * (pWid + 1) + 5 + 2 * TILE_WID, TILE_WID * (pWid + 1) + 5 + 3 * TILE_WID, TILE_WID * (pWid + 1) + 5 + 4 * TILE_WID, TILE_WID * (pWid + 1) + 5 + 5 * TILE_WID, TILE_WID * (pWid + 1) + 5 + 6 * TILE_WID, TILE_WID * (pWid + 1) + 5 + 7 * TILE_WID];
-    var ys = [heitOffset * TILE_WID + TILE_WID * (i + 1) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 1) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 1) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 1) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 1) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 1) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 1) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 1) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 1) + programOffset];
+    var ys = [heitOffset * TILE_WID + TILE_WID * (i + 1) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 1) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 2) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 2) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 2) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 2) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 2) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 2) + programOffset, heitOffset * TILE_WID + TILE_WID * (i + 2) + programOffset];
 
-    buts = col.gui[i].buttons;
+    var buts = col.gui[i].buttons;
 
     for (var j = 0; j < buts.length; j++) {
       buts[j].x = xs[j];
       buts[j].y = ys[j];
     }
+	
+	if (i == 0) {
+		buts[2].visible = false;
+	}
+	else {
+		buts[2].visible = true;
+	}
+	
+	if (i == col.sheets.length - 1) {
+		buts[3].visible = false;
+	}
+	else {
+		buts[3].visible = true;
+	}
 
     buts[0].buttonWid = TILE_WID * (pWid - 1);
     buts[0].buttonHeit = TILE_WID * pHeit;
-
-    buts[4].label = sym?"s":"";
-    buts[4].label2 = sym?"":"s";
-    buts[5].label = wls?"w":"";
-    buts[5].label2 = wls?"":"w";
+	
+	buts[1].buttonWid = 70;
 
     heitOffset += pHeit;
   }

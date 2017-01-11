@@ -1,29 +1,49 @@
+
+
+
+
+
+
+var sampleSize = 50000;
+var sizeOfLamestGames = 10;
+
+
+
+
+
+
+
+
+
 /* 
 Global TODO list:
-Get rid of stupid variables like shhh
-Make walls and symmetry buttons persist when sheet is edited.
+Replace stupid variable names like shhh.
 Make a decent directive architecture.
 Make a polyomino class. 
-Get rid of drawing the field every tile to speed up simulation. 
 Make a graph of the average number of deleted lines. 
+Make a graph of game length distribution in one run. 
 Handling of 'mousewheel' input event was delayed for 2555 ms due to main thread being busy. Consider marking event handler as 'passive' to make the page more responsive.
-Make a more advanced UI. I don't want to click a lot when I add a new pattern into the very beginning of a long column. 
+Make a more advanced UI. I don't want to click a lot when I add a new pattern into the middle of a long column. 
+Clean up existing UI code. 
+Move Tetromino toggles to the execution mode. 
 Rename a sheet into a pattern. 
 Fix bugs: deleting the first pattern in a column raises an error. Moving the last pattern up raises an error. 
-Output the range of game lengths (the shortest and the longest game in terms of deleted lines).
-Make a label for stats so that I don't have to open the console.
 Count how frequently each pattern is used.
 Prevent polyominoes from spawning inside a wall.
+Finish exclusions. 
+For some reason, the default pattern is only drawn at the very top. Fix this or introduce default directives. 
+When there is no floor, where should the landing be?
 
 Programming ideas:
 Display the last frame of each game. 
 Let the player play the streaks with the fastest height growth.
 Equivalent patterns with random choice.
-Exclusions?
 Graph the average game lengths. 
-Play the shortest game.
 Make sheets 12 wide?
 Make sheets infinite?
+Make the playfield of variable size. 
+Try dropping into the lowest position.
+Or some other greedy algorithm. Dropping into the place where a line will be deleted.
 
 At the very end: 
 Make it run faster (maybe?) by counting full tiles in every line of the field and trying only when the number of full tiles is at least as in the directive. Same for empty.
@@ -32,10 +52,10 @@ Can I ask the browser for more computing resourses?
 Make sure that the UI is monkey-proof.
 Animate buttons. 
 Use a ui library?
+Add some keyboard controls.
 */
 
 
-// TODO: When there is no floor, where should the landing be?
 
 // Initialization of global variables and launch of functions that prepare the game for playing
 var mode = "programming";
@@ -101,6 +121,10 @@ field[0] = new Array(fieldHeit + 1);
 var nOfFigure;
 var gamePaused = true;
 var command = new sheet(defaultPatternWid, defaultPatternHeit);
+
+var minNumberOfLinesDeleted = 0;
+var maxNumberOfLinesDeleted = 0;
+var averageNumberOfLinesDeleted = 0;
 
 // TODO: adopt a unified enumeration of all polyominoes.
 var figure1 = [[[0,0],[1,0],[2,0],[3,0]], [[2,1],[2,2],[2,3],[2,0]]], // line

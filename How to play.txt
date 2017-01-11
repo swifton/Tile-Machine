@@ -1,0 +1,16 @@
+To launch the game, open TPM.html in Google Chrome. It might work in other browsers, but I didn't test it. 
+
+In TPM you teach the computer to play Tetris. You specify a pattern together with the place and the rotation in which the tetromino should be put if this pattern is matched by the field. Each tetromino has its own set of patterns. When the program is tested, the game picks a tetromino randomly and looks at the set of patterns corresponding to that tetromino. It starts from the top and tries to find an occurence of a pattern in the field. If there are no occurences, it proceeds to the next pattern. If there are, it stops. If there is one place where the pattern matches the field, it drops the tetromino wherever you pointed when you created the pattern. If there is more than one place, it picks the lowest one. If there are several places at the same height, it picks one randomly. A pattern can contain three symbols: an empty space, a block and a question mark. The pattern matches a region of the field if all empty spaces and all blocks are matched. A question mark can be matched by anything. 
+
+Some comments about the UI:
+
+Programming screen:
+1. The "Save Program" button makes a program.txt file and sends it to your Downloads folder. You can open it later by using the "Choose File" button at the bottom of the page. 
+2. I would recommed to save the program frequently. The prototype is pretty buggy and can crash at any moment. 
+3. The empty button next to the arrow buttons and below the Delete button in the list of patterns can be toggled. If there is a 'w' inside it, blocks of the corresponding pattern can be matched by the 'walls' (the red blocks around the playing field).
+4. Before testing the program, toggle several tetrominoes on in the right side of the screen. The tetrominoes that aren't toggled will never appear in the game. 
+
+Testing screen:
+5. The "Get Stats" button runs the game without drawing it. It counts the minimal, the maximal and the average number of lines deleted in a game. It also saves the lamest games (the ones with the smallest number of deleted lines). The number of polyominoes dropped is specified by the variable sampleSize in the very beginning of game.js. It is 50000 by default. The lamest game threshold is specified by the variable sizeOfLamestGames. It is 10 by default. That is, all games in which fewer than 10 lines were deleted, will be saved as the lamest games. The simulation can run for a while, depending on your computer. It will also freeze the tab while running.
+6. To load a lamest game, press the "Lamest Games" button. To play back the game, press the "Next Tetromino" button repeatedly. There are two buttons with the name "Next Tetromino". You need the one that is next to the "Lamest Games" button. The one at the bottom generates random tetrominoes. 
+7. Matched regions are highlighted by rectangles. Red rectangles are the regions that were matched but got removed because the tetromino couldn't land at the place where you expected it to land. Yellow rectangles are the ones that were removed because they aren't the lowest ones. Gray rectangles are the optimal ones. The game picks one of those randomly. The black rectangle is the one that is picked. 

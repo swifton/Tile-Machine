@@ -1,4 +1,4 @@
-function sheetgui(sheet, funcs, params) {
+function sheetgui(sheet, funcs, wallsToggled) {
   this.sheet = sheet;
   this.x = 0;
   this.y = 0;
@@ -29,13 +29,17 @@ function sheetgui(sheet, funcs, params) {
   this.createButtons = createButtons;
   function createButtons() {
     var wls = this.sheet.walls;
-    var labels = ['', 'D', '^', 'v', '', '', 'ex', 'se', 'de'];
-    var modes = [false, false, false, false, true, true, false, false, false];
+    var labels = ['', 'Delete', '^', 'v', '']; //, '' , 'ex', 'se', 'de'];
+    var modes = [false, false, false, false]; //, false, true, false, false, false];
 
     for (var i = 0; i < labels.length; i++) {
-      var b = new button(labels[i], 0, 0, 20, 19, funcs[i], params, modes[i]);
+      var b = new button(labels[i], 0, 0, 20, 19, funcs[i], 0, modes[i]);
       this.buttons.push(b);
     }
+	this.buttons[4].label2 = 'w';
+	this.buttons[4].toggle = true;
+	this.buttons[4].toggled = wallsToggled;
+	
   }
 
   this.createButtons();

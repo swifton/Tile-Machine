@@ -26,7 +26,7 @@ function finishGameStats() {
   
   if (numberOfLinesDeleted > maxNumberofLinesDeleted) {maxNumberofLinesDeleted = numberOfLinesDeleted}
   if (numberOfLinesDeleted < minNumberofLinesDeleted) {minNumberofLinesDeleted = numberOfLinesDeleted}
-  if (numberOfLinesDeleted < 10 && sequenceOfTetriminoes != null) {savedGames.push(sequenceOfTetriminoes); console.log(sequenceOfTetriminoes); console.log(numberOfTilesDropped)} 	
+  if (numberOfLinesDeleted < sizeOfLamestGames && sequenceOfTetriminoes != null) {savedGames.push(sequenceOfTetriminoes); console.log(sequenceOfTetriminoes); console.log(numberOfTilesDropped)} 	
   
   saveResults();
 }

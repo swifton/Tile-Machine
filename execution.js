@@ -23,7 +23,7 @@ function findCommand() {
 */
   }
   command = new sheet(defaultPatternWid, defaultPatternHeit);
-  recognitionOffset = 0;
+  recognitionOffset = 1;
 }
 
 function advancedMatching(command, n) {
@@ -83,7 +83,7 @@ function removeMatches(matchesArray, filterFunction, command, params) {
 function checkExceptions(match, command, params) {
   var exception = command.exceptions[0];
   if (!exception) {return true;}
-  return !comparePatterns(exception.pattern, field, match[1], match[2], exception.patternWid, exception.patternHeit, exception.patternOffsetX, exception.patternOffsetY);
+  return !comparePatterns(exception.pattern, field, match[1] - (command.patternOffsetX - exception.patternOffsetX), match[2] - (command.patternOffsetY - exception.patternOffsetY), exception.patternWid, exception.patternHeit, exception.patternOffsetX, exception.patternOffsetY);
 }
 
 function checkLanding(match, command, params) {
@@ -115,7 +115,8 @@ function comparePatterns(pattern1, pattern2, offsetX, offsetY, patternWid, patte
   for (var i = 0; i < patternWid; i++) {
     for (var j = 0; j < patternHeit; j++) {
       if((pattern2[i + offsetX] == undefined) || (pattern2[i + offsetX][j + offsetY] == undefined)) {
-        print('undefined field invoked');
+        // print('undefined field invoked');
+		if (pattern1[i + patternLeft] == undefined || pattern1[i + patternLeft][j + patternUp] == undefined) {continue;} // This is trash, fix it.
         if (pattern1[i + patternLeft][j + patternUp] == ANYTHING) {continue;}
         else {return false;}
       }

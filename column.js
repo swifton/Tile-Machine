@@ -25,14 +25,14 @@ function column(tetrNum) {
 	var showEx = function() {showException(l)};
 	var delEx = function() {deleteException(l)};
 
-    this.gui.push(new sheetgui(pattern, [editt, del, up, down, tsym, twalls, saveEx, showEx, delEx]));
+    this.gui.push(new sheetgui(pattern, [editt, del, up, down, twalls, tsym, saveEx, showEx, delEx], pattern.walls));
     this.sheets.push(pattern);
     alignSheetButtons(this.tetrNum);
   }
   
   this.addPatternToB = addPatternToB;
   function addPatternToB(pattern) {
-    var l = 0;
+    var l = this.sheets.length; // This is exactly the same as in addPattern. Take it out when cleaning up the UI. 
     var t = this.tetrNum;
     var del = function() {deleteSheet(l, t)};
     var editt = function() {editSheet(l, t)};
@@ -44,7 +44,7 @@ function column(tetrNum) {
 	var showEx = function() {showException(l)};
 	var delEx = function() {deleteException(l)};
 
-    this.gui.unshift(new sheetgui(pattern, [editt, del, up, down, tsym, twalls, saveEx, showEx, delEx]));
+    this.gui.push(new sheetgui(pattern, [editt, del, up, down, twalls, tsym, saveEx, showEx, delEx]));
     this.sheets.unshift(pattern);
     alignSheetButtons(this.tetrNum);
   }

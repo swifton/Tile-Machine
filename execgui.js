@@ -3,6 +3,10 @@ function drawExec() {
   drawData(command.pattern, add(workplace, [fieldWid * TILE_WID, 0]), command.patternWid, command.patternHeit);
   drawFrames();
   drawButtons(execButtons);
+
+  drawLabel("Maximum: " + maxNumberofLinesDeleted.toString(), 20, 60);
+  drawLabel("Minimum: " + minNumberofLinesDeleted.toString(), 20, 100);
+  drawLabel("Average: " + averageNumberOfLinesDeleted.toString(), 20, 20);
 }
 
 function drawFrames() { // TODO: this is bulshit. Formulas shouldn't be so long. Abstract this into a new function.
@@ -25,14 +29,14 @@ function setupExecButtons() {
  var buttonHeit = 19;
 
   var newGameButton = new button("New Game", workplace[0], (fieldHeit + 2) * TILE_WID, 120, buttonHeit, newGame);
-  var stopButton = new button("Stop", workplace[0] + newGameButton.buttonWid + 10, (fieldHeit + 2) * TILE_WID, 100, buttonHeit, function() {if (!gamePaused) {pauseGame();} mode = "programming"; drawProg();});
-  var pauseGameButton = new button("Pause", workplace[0], (fieldHeit + 3) * TILE_WID, 120, buttonHeit, pauseGame);
-  var nextButton = new button("Next", workplace[0] + pauseGameButton.buttonWid + 10, (fieldHeit + 3) * TILE_WID, 120, buttonHeit, nextFigure);
-  var fastButton = new button("Fast", workplace[0], (fieldHeit + 4) * TILE_WID, 120, buttonHeit, fastGameLoop);
+  var stopButton = new button("Exit Testing", workplace[0] + newGameButton.buttonWid + 10, (fieldHeit + 2) * TILE_WID, 120, buttonHeit, function() {if (!gamePaused) {pauseGame();} mode = "programming"; drawProg();});
+  var pauseGameButton = new button("Pause", workplace[0], (fieldHeit + 5) * TILE_WID, 120, buttonHeit, pauseGame);
+  var nextButton = new button("Next Tetromino", workplace[0], (fieldHeit + 3) * TILE_WID, 150, buttonHeit, nextFigure);
+  var fastButton = new button("Run", workplace[0], (fieldHeit + 4) * TILE_WID, 120, buttonHeit, launchFast);
   var statsButton = new button("Stats", workplace[0] + fastButton.buttonWid + 10, (fieldHeit + 4) * TILE_WID, 120, buttonHeit, printStats);
-  var veryFastButton = new button("Very fast", workplace[0] + fastButton.buttonWid + statsButton.buttonWid + 30, (fieldHeit + 4) * TILE_WID, 120, buttonHeit, veryFastGameLoop);
-  var lamestGameButton = new button("Lamest Game", 20, 140, 160, buttonHeit, lamestGame);
-  var replayNextButton = new button("Next", 20, 180, 120, buttonHeit, nextFigureReplay);
+  var veryFastButton = new button("Get Stats", workplace[0] + fastButton.buttonWid + 10, (fieldHeit + 4) * TILE_WID, 120, buttonHeit, veryFastGameLoop);
+  var lamestGameButton = new button("Lamest Games", 20, 140, 160, buttonHeit, lamestGame);
+  var replayNextButton = new button("Next Tetromino", 20, 180, 160, buttonHeit, nextFigureReplay);
 
-  execButtons = [stopButton, newGameButton, pauseGameButton, nextButton, fastButton, statsButton, veryFastButton, lamestGameButton, replayNextButton];
+  execButtons = [stopButton, newGameButton, nextButton, fastButton, veryFastButton, lamestGameButton, replayNextButton, pauseGameButton];
 }

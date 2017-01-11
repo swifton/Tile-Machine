@@ -24,7 +24,7 @@ function newFigureReplay() {
   
   nOfFigure = fig[0];
 
-  findCommand();
+  findCommand(); // This is for the display of rectangles.
   var offset = fig[1];
   var rotation = fig[2];
 
@@ -62,7 +62,6 @@ function nextFigureReplay() {
 
 function newGame(){
   finishGameStats();
-  print("THE GAME IS OVER");
   if (numberOfGamesPlayed != 0) {printStats();}
   newGameStats();
   fill2DArray(field, 0, true, true);
@@ -70,6 +69,9 @@ function newGame(){
   sequenceOfTetriminoes = [];
   getNewFigure();
   newFigure();
+  updateField();
+  clear();
+  drawExec();
 }
 
 function pauseGame() {
@@ -77,8 +79,8 @@ function pauseGame() {
     gLoop = clearTimeout(gLoop);
     gamePaused = true;
   } else if (gamePaused) {
-    gLoop = setTimeout(GameLoop, 1000 / 4);
-    gamePaused = false;
+    //gLoop = setTimeout(GameLoop, 1000 / 4);
+    //gamePaused = false;
   }
 }
 
