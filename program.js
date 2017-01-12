@@ -171,7 +171,7 @@ function test(){
   newGame();
   resetStats();
   clear();
-  newFigure();
+  //newFigure(); Uncommenting this field not only spawns an extra figure, but also causes bugs with region rectangles. Find out why. 
   updateField();
   drawExec();
 }
