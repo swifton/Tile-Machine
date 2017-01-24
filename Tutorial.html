@@ -9,7 +9,7 @@ To launch the game, open TPM.html in Google Chrome. It might work in other brows
 
 <br><br>
 
-In TPM you teach the computer to play Tetris. You specify a pattern together with the place where the tetromino should be put if this pattern occurs in the field. 
+In Tile Machine you teach the computer to play a simple tile game. The essence of the simple tile game is that a random tetromino appears at the top of a rectangular stack, and the computer chooses the position and the rotation of that tetromino. After that, the tetromino falls down and lands on top of other tetrominoes that appeared earlier. If, as a result of that, one of the rows becomes full, that row is cleared. The player's task is to teach the computer to choose the rotation and the position wisely by providing patterns of blocks that can appear on the playing field and specifying, what the rotation and the position of the tetromino should be, if that pattern occurs. 
 
 <br><br>
 <img src = "images/tutorial/1.png">
@@ -38,7 +38,7 @@ Each tetromino has its own set of patterns. To switch between tetrominoes, use t
 <img src = "images/tutorial/5.png">
 <br><br>
 
-When the program is run, TPM simulates the Tetris game, which involves generating random tetrominoes sequentially. To handle each tetromino it looks at the set of patterns corresponding to that tetromino. It starts from the top and tries to find an occurence of a pattern in the field. If there are no occurences, it proceeds to the next pattern. If there are, it stops going through the list of patterns and uses the current pattern. It doesn't look at the patterns below it. 
+When the program is run, TPM simulates the simple tile game, which involves generating random tetrominoes sequentially. To handle each tetromino it looks at the set of patterns corresponding to that tetromino. It starts from the top and tries to find an occurence of a pattern in the field. If there are no occurences, it proceeds to the next pattern. If there are, it stops going through the list of patterns and uses the current pattern. It doesn't look at the patterns below it. 
 
 <br><br>
 There are some subtleties about how a pattern is handled. First, it can match several regions of the field. In that case the game picks the lowest region. If there are several places at the same height, it picks one randomly. Second, it is possible that a region matches the pattern, but if the tetromino is dropped according to that pattern, it won't land in the place where it is expected to land. Such regions are dropped from consideration. 

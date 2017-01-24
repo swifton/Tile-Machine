@@ -58,13 +58,13 @@ function nextFigureReplay() {
   drawExec();
 }
 
-// Tetris game functions
+// Functions that simulate the simple tile game
 
 function newGame(){
   finishGameStats();
   if (numberOfGamesPlayed != 0) {printStats();}
   newGameStats();
-  fill2DArray(field, 0, true, true);
+  fill2DArray(field, 0, true, true, true);
   if (gamePaused) {pauseGame();}
   sequenceOfTetriminoes = [];
   getNewFigure();

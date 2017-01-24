@@ -115,7 +115,7 @@ function print(output) {
   console.log(output);
 }
 
-function fill2DArray(data, value, ground, walls) {
+function fill2DArray(data, value, ground, walls, logo) {
   value = value || 0;
   var dataWid = data.length;
   var dataHeit = data[0].length;
@@ -132,6 +132,63 @@ function fill2DArray(data, value, ground, walls) {
       data[j][dataHeit - 1] = -1;
     }
   }
+  
+  if (logo) {
+	makeLogo(data);
+  }
+}
+
+function makeLogo(data) {
+	data[2][11] = 2;
+	data[3][11] = 2;
+	data[4][11] = 2;
+	data[5][11] = 2;
+	data[6][11] = 2;
+	
+	data[4][11] = 2;
+	data[4][12] = 2;
+	data[4][13] = 2;
+	data[4][14] = 2;
+	data[4][15] = 2;
+//	data[4][16] = 2;
+	
+	//a = -2;
+	//b = 2;
+	
+	a = 0;
+	b = 0;
+	
+	data[a + 8][b + 11] = 1;
+	data[a + 9][b + 11] = 1;
+	data[a + 10][b + 11] = 1;
+	data[a + 10][b + 12] = 1;
+	data[a + 10][b + 13] = 1;
+	data[a + 9][b + 13] = 1;
+	data[a + 8][b + 14] = 1;
+	data[a + 8][b + 12] = 1;
+	data[a + 8][b + 13] = 1;
+	data[a + 8][b + 15] = 1;
+//	data[a + 8][b + 16] = 1;
+	
+	//a = -4;
+	//b = 6;
+	
+	data[a + 12][b + 11] = 3;
+	data[a + 12][b + 12] = 3;
+	data[a + 12][b + 13] = 3;
+	data[a + 12][b + 14] = 3;
+	data[a + 12][b + 15] = 3;
+//	data[a + 12][b + 16] = 3;
+	data[a + 16][b + 11] = 3;
+	data[a + 16][b + 12] = 3;
+	data[a + 16][b + 13] = 3;
+	data[a + 16][b + 14] = 3;
+	data[a + 16][b + 15] = 3;
+//	data[a + 16][b + 16] = 3;
+	data[a + 13][b + 12] = 3;
+	data[a + 14][b + 13] = 3;
+	data[a + 15][b + 12] = 3;
+	
 }
 
 function copy2DArray(sourceArray) {
