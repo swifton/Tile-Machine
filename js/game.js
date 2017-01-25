@@ -76,7 +76,7 @@ var savedGames;
 var sequenceOfTetriminoes;
 
 var defaultPatternHeit = 10, defaultPatternWid = 10;
-var fieldHeit = 29 + 1, fieldWid = 30 + 2;
+var fieldHeit = 19 + 1, fieldWid = 10 + 2;
 var workplace = [Math.floor((CANVAS_WID - defaultPatternWid * TILE_WID)/2), 0];
 
 // button setup

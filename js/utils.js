@@ -134,7 +134,7 @@ function fill2DArray(data, value, ground, walls, logo) {
   }
   
   if (logo) {
-	makeLogo(data);
+	//makeLogo(data);
   }
 }
 
