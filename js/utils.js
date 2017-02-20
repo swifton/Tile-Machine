@@ -87,8 +87,9 @@ function getMousePos(canvas, evt) {
   };
 }
 
-function drawLabel(text, x, y) {
-  CONTEXT.fillStyle = "yellow";
+function drawLabel(text, x, y, color) {
+  color = color || "yellow";
+  CONTEXT.fillStyle = color;
   CONTEXT.font = "bold 20px Arial";
   CONTEXT.fillText(text, x, y);
 }

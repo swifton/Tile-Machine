@@ -51,6 +51,11 @@ function veryFastNextFigure() {
   updateField();
 }
 
+function challengeNextFigure() {
+  dropFigure();
+  updateField();
+}
+
 function nextFigureReplay() {
   clear();
   dropFigure();

@@ -188,22 +188,27 @@ function fastGameLoop() {
   gLoop = setTimeout(fastGameLoop, 1000/100);
 }
 
-function veryFastGameLoop() {
+function veryFastGameLoop(chal) {
 	if (!gamePaused) {return;}
 	gamePaused = false;
 	savedGames = [];
 	maxNumberofLinesDeleted = 0;
     minNumberofLinesDeleted = 100000000; // Fix this later.
 	for (i = 0; i < sampleSize; i++) {
-		veryFastNextFigure();
+		if (chal) {
+			challengeNextFigure();
+		} else {
+			veryFastNextFigure();
+		}
 	}
-
+	
+	finishGameStats();
 
 	averageNumberOfLinesDeleted = totalLinesDeleted * 1.0 / numberOfGamesPlayed;
 	print("Average number of lines:");
     print(averageNumberOfLinesDeleted);
 	
-	drawExec();
+	if (!chal) {drawExec();}
 	
 	print("Discrepancy:");
 	print(countDiscrepancy());
@@ -229,4 +234,8 @@ function lamestGame() {
 	updateField();
 	clear();
 	drawExec();
+}
+
+function runChallenges() {
+	mode = "challenges";
 }

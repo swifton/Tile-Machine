@@ -1,7 +1,7 @@
 var numberOfTilesDropped = 0;
 var numberOfLinesDeleted = 0;
 var maxNumberofLinesDeleted = 0;
-var minNumberofLinesDeleted = 100000000; // Dirty hack
+var minNumberofLinesDeleted = 100000000; // TODO: Fix this later.
 var numberOfGamesPlayed = 0;
 var totalLinesDeleted = 0;
 var totalTilesDropped = 0;
@@ -26,7 +26,7 @@ function finishGameStats() {
   
   if (numberOfLinesDeleted > maxNumberofLinesDeleted) {maxNumberofLinesDeleted = numberOfLinesDeleted}
   if (numberOfLinesDeleted < minNumberofLinesDeleted) {minNumberofLinesDeleted = numberOfLinesDeleted}
-  if (numberOfLinesDeleted < sizeOfLamestGames && sequenceOfTetriminoes != null) {savedGames.push(sequenceOfTetriminoes); console.log(sequenceOfTetriminoes); console.log(numberOfTilesDropped)} 	
+  if (numberOfLinesDeleted < sizeOfLamestGames && sequenceOfTetriminoes != null) {savedGames.push(sequenceOfTetriminoes); }//console.log(sequenceOfTetriminoes); console.log(numberOfTilesDropped)} 	
   
   saveResults();
 }

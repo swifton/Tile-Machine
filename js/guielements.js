@@ -10,13 +10,14 @@ function button(label, x, y, buttonWid, buttonHeit, func, params, toggle, label2
   this.func = func;
   this.params = params;
   this.visible = true;
+  this.color = "yellow"
 
   this.draw = draw;
   function draw() {
 	if (this.visible) {
 		rectangle([this.x, this.y], this.buttonWid, this.buttonHeit, "black");
-		var labelToDraw = this.toggled?this.label2:this.label
-		drawLabel(labelToDraw, this.x + 1, this.y + this.buttonHeit - 2)
+		var labelToDraw = this.toggled?this.label2:this.label;
+		drawLabel(labelToDraw, this.x + 1, this.y + this.buttonHeit - 2, this.color);
 	}
   }
 

@@ -3,8 +3,7 @@
 
 
 
-
-var sampleSize = 50000;
+var defaultSampleSize = 50000;
 var sizeOfLamestGames = 10;
 
 
@@ -18,6 +17,7 @@ var sizeOfLamestGames = 10;
 /* 
 Global TODO list:
 Replace stupid variable names like shhh.
+Generally, get the terms straight. 
 Make a decent directive architecture.
 Make a polyomino class. 
 Make a graph of the average number of deleted lines. 
@@ -33,6 +33,7 @@ Prevent polyominoes from spawning inside a wall.
 Finish exclusions. 
 For some reason, the default pattern is only drawn at the very top. Fix this or introduce default directives. 
 When there is no floor, where should the landing be?
+Maybe var mode should become var screen, now that there is a challenges screen. 
 
 Programming ideas:
 Display the last frame of each game. 
@@ -63,6 +64,8 @@ var mode = "programming";
 
 var gLoop;
 
+var sampleSize = defaultSampleSize;
+
 // global variables for drawing
 var CANVAS = document.getElementById('canvas');
 var CONTEXT = CANVAS.getContext('2d');
@@ -80,6 +83,7 @@ var fieldHeit = 19 + 1, fieldWid = 10 + 2;
 var workplace = [Math.floor((CANVAS_WID - defaultPatternWid * TILE_WID)/2), 0];
 
 // button setup
+var figureLabels = ["Line", 'T', 'S', 'Z', 'Block', 'Gamma', 'L'];
 var progButtons;
 var execButtons;
 var editingWindow;
