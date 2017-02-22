@@ -53,12 +53,13 @@ function setupProgButtons() {
   var rotate = new button("Rotate", workplace[0] + dirLeft.buttonWid + TILE_WID/2, 5 * TILE_WID + 3, 3 * TILE_WID, buttonHeit, rotateDirectiveFigure);
   var dirRight = new button("--------->", workplace[0] + 7 * TILE_WID, 5 * TILE_WID + 3, 3 * TILE_WID, buttonHeit, moveDirectiveFigure, 1);
 
-  var saveProgram = new button("Save Program", CANVAS_WID - 170, TILE_WID * 8, 160, buttonHeit, saveProg);
-  var testButton = new button("Test", CANVAS_WID - 70, TILE_WID * 9, 60, buttonHeit, test);
+  var saveProgram = new button("Download Program", CANVAS_WID - 200, CANVAS_HEIT - 30, 190, buttonHeit, saveProg);
+  var resetProgramButton = new button("Reset Program", CANVAS_WID - 200, CANVAS_HEIT - 60, 190, buttonHeit, resetProgram);
+  var testButton = new button("Test Program", CANVAS_WID - 150, TILE_WID * 9, 140, buttonHeit, test);
   var challengesButton = new button("Challenges", CANVAS_WID - 130, TILE_WID * 10, 120, buttonHeit, runChallenges);
 
   editingWindow = [saveSh, dirLeft, rotate, dirRight, cancelSheet, saveToBButton];
-  progButtons = [newSheetButton, saveProgram, testButton, challengesButton];
+  progButtons = [newSheetButton, saveProgram, testButton, challengesButton, resetProgramButton];
 
     for (var i = 0; i < 7; i++) {
       var figureButton = new button(figureLabels[i], CANVAS_WID - 90, TILE_WID * (i + 1), 80, buttonHeit, changeFigure, i);

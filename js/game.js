@@ -141,6 +141,8 @@ var figure1 = [[[0,0],[1,0],[2,0],[3,0]], [[2,1],[2,2],[2,3],[2,0]]], // line
     figures = [figure1, figure2, figure3, figure4, figure5, figure6, figure7];
 var allowedFigures = [];
 
+loadProgramLocal();
+
 //newSheet();
 
 document.getElementById('file-input').addEventListener('change', readSingleFile, false);

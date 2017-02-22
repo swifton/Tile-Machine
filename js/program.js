@@ -120,6 +120,27 @@ function saveProg() {
   saveAs(blob, "program");
 }
 
+function resetProgram() {
+  if (confirm("Any undownloaded progress will be lost. Continue?")) {
+    for (var j = 0; j < 7; j++) {
+      program[j] = new column(j);
+    }
+  }
+  localStorage.removeItem("program");
+}
+
+function saveProgramLocal() {
+	var pr = JSON.stringify(program);
+	localStorage.setItem("program", pr);
+}
+
+function loadProgramLocal() {
+	pr = localStorage.getItem("program");
+	if (pr) {
+		loadProg(pr);
+	}
+}
+
 // TODO: After loading, open the first nonempty column.
 function loadProg(fileContent) {
   for (var j = 0; j < 7; j++) {

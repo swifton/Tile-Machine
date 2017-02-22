@@ -36,6 +36,7 @@ function button(label, x, y, buttonWid, buttonHeit, func, params, toggle, label2
 		  else {
 			this.func(params);
 		  }
+		  saveProgramLocal(); // This can make the app less responsive, if the program is large.
 		}
 	}
   }
