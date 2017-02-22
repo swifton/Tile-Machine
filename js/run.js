@@ -46,7 +46,6 @@ function nextFigure() {
 }
 
 function veryFastNextFigure() {
-  clear();
   dropFigure();
   updateField();
 }

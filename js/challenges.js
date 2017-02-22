@@ -18,11 +18,20 @@ function setupChallengeButtons() {
 	var paramsOfChallenges = [
 		new challengeParams([0], 50000, 1000, 0),
 		new challengeParams([4], 50000, 1000, 0),
-		new challengeParams([1], 50000, 1000, 0),
 		new challengeParams([0, 4], 50000, 100, 0),
-		new challengeParams([0, 4], 50000, 1000, 0),
+		new challengeParams([5 ,6], 50000, 10, 0),
 		new challengeParams([2, 3], 50000, 1, 1),
-		new challengeParams([5, 6], 50000, 10, 1)
+		new challengeParams([5, 6], 50000, 1, 1),
+		new challengeParams([0, 1, 2, 3, 4, 5, 6], 50000, 10, 2),
+		new challengeParams([1], 50000, 10, 2),
+		new challengeParams([0, 1, 2, 3, 4, 5, 6], 50000, 10, 0),
+		new challengeParams([0, 1, 2, 3, 4, 5, 6], 50000, 30, 0),
+		new challengeParams([0, 1, 2, 3, 4, 5, 6], 50000, 70, 0),
+		new challengeParams([2, 3], 50000, 15, 0),
+		new challengeParams([5, 6], 50000, 15, 0),
+		new challengeParams([0, 1, 2, 3, 4, 5, 6], 50000, 100, 0),
+		new challengeParams([0, 1, 2, 3, 4, 5, 6], 50000, 150, 0),
+		new challengeParams([0, 1, 2, 3, 4, 5, 6], 50000, 1000, 0)
 	];
 	
 	var backButton = new button("Back", CANVAS_WID - 80, 13 , 65, 19, function () {mode = 'programming'; challengePassed = 0;})
@@ -46,6 +55,7 @@ function setupChallengeButtons() {
 		var tetrominoLabel = '';
 		for (var j = 0; j < paramsOfChallenges[i].tetrominoes.length; j++) {tetrominoLabel += figureLabels[paramsOfChallenges[i].tetrominoes[j]] + ", ";}
 		tetrominoLabel = tetrominoLabel.slice(0, tetrominoLabel.length - 2);
+		if (paramsOfChallenges[i].tetrominoes.length == 7) {tetrominoLabel = 'all';}
 		var currentLabel = "Make a program that runs for at least " +  paramsOfChallenges[i].targetGameLent.toString() + " rows" + partOfLabel + "with " + tetrominoLabel + " tetromino";
 		currentLabel += paramsOfChallenges[i].tetrominoes.length > 1? "es." : ".";
 		challengeLabelButtons.push(new button(currentLabel, 10, 10 + 30 * (i + 1), CANVAS_WID - 20, 25, null));
@@ -80,17 +90,17 @@ function runChallenge(params) {
 	
 	switch (params.challengeMode) {
 		case 0: 
-			if (averageNumberOfLinesDeleted > params.targetGameLent) {markChallengeSolved(params.nOfChallenge)}
+			if (averageNumberOfLinesDeleted >= params.targetGameLent) {markChallengeSolved(params.nOfChallenge)}
 			else {challengePassed = -1;}
 			break;
 			
 		case 1: 
-			if (minNumberofLinesDeleted > params.targetGameLent) {markChallengeSolved(params.nOfChallenge)}
+			if (minNumberofLinesDeleted >= params.targetGameLent) {markChallengeSolved(params.nOfChallenge)}
 			else {challengePassed = -1;}
 			break;
 			
 		case 2: 
-			if (maxNumberofLinesDeleted > params.targetGameLent) {markChallengeSolved(params.nOfChallenge)}
+			if (maxNumberofLinesDeleted >= params.targetGameLent) {markChallengeSolved(params.nOfChallenge)}
 			else {challengePassed = -1;}
 			break;
 	}

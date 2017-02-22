@@ -73,5 +73,7 @@ function alignSheetButtons(tetr) {
 	buts[1].buttonWid = 70;
 
     heitOffset += pHeit;
+	
+	buts[4].toggled = wls;
   }
 }

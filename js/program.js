@@ -121,7 +121,7 @@ function saveProg() {
 }
 
 function resetProgram() {
-  if (confirm("Any undownloaded progress will be lost. Continue?")) {
+  if (confirm("This will delete both the program that you see and its copy in the local memory of the browser. You will only keep programs that you have downloaded.")) {
     for (var j = 0; j < 7; j++) {
       program[j] = new column(j);
     }
@@ -223,13 +223,13 @@ function veryFastGameLoop(chal) {
 		}
 	}
 	
-	finishGameStats();
+	if (numberOfGamesPlayed == 0) {finishGameStats();}
 
 	averageNumberOfLinesDeleted = totalLinesDeleted * 1.0 / numberOfGamesPlayed;
 	print("Average number of lines:");
     print(averageNumberOfLinesDeleted);
 	
-	if (!chal) {drawExec();}
+	if (!chal) {clear(); drawExec();}
 	
 	print("Discrepancy:");
 	print(countDiscrepancy());
