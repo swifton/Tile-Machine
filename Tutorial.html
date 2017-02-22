@@ -1,15 +1,36 @@
 <html>
 <head>
-	<title>TPM Tutorial</title>   
+	<title>Tutorial</title>   
 	<link rel="shortcut icon" type="image/x-icon" href="images/1.png" />
+	<style>
+	body {
+   width:700px;
+   margin:0 auto;
+}
+</style>	
 </head>
 
 <body>
+<h1>
+Tile Machine Tutorial
+</h1>
+
 To launch the game, open TPM.html in Google Chrome. It might work in other browsers, but I didn't test it. 
+
+<h2>
+Game rules
+</h2>
+In Tile Machine you teach the computer to play the Game of Falling Tetrominoes. 
+
+<br><br>
+<img src = "images/tutorial/8.png">
+<br><br>
+
+The essence of this simple tile game is that a random tetromino (a figure that consists of four square tiles) appears at the top of a rectangular stack, and the computer chooses the position and the rotation of that tetromino. After that, the tetromino falls down and lands on top of other tetrominoes that appeared earlier. If, as a result of that, one of the rows becomes full, that row is cleared. 
 
 <br><br>
 
-In Tile Machine you teach the computer to play a simple tile game. The essence of the simple tile game is that a random tetromino appears at the top of a rectangular stack, and the computer chooses the position and the rotation of that tetromino. After that, the tetromino falls down and lands on top of other tetrominoes that appeared earlier. If, as a result of that, one of the rows becomes full, that row is cleared. The player's task is to teach the computer to choose the rotation and the position wisely by providing patterns of blocks that can appear on the playing field and specifying, what the rotation and the position of the tetromino should be, if that pattern occurs. 
+Your task is to teach the computer to choose the rotation and the position wisely by providing patterns that can appear on the playing field. Together with each pattern you say where to put the tetromino, if that pattern occurs. 
 
 <br><br>
 <img src = "images/tutorial/1.png">
@@ -17,6 +38,11 @@ In Tile Machine you teach the computer to play a simple tile game. The essence o
 
 Gray tiles in this image are the pattern. Green tiles show the proper place for the tetromino. 
 <br><br>
+
+<h2>
+Program execution
+</h2>
+
 When the program is run, the game recognizes the pattern if it occurs in some region of the field
 <br><br>
 <img src = "images/tutorial/2.png">
@@ -38,26 +64,26 @@ Each tetromino has its own set of patterns. To switch between tetrominoes, use t
 <img src = "images/tutorial/5.png">
 <br><br>
 
-When the program is run, TPM simulates the simple tile game, which involves generating random tetrominoes sequentially. To handle each tetromino it looks at the set of patterns corresponding to that tetromino. It starts from the top and tries to find an occurence of a pattern in the field. If there are no occurences, it proceeds to the next pattern. If there are, it stops going through the list of patterns and uses the current pattern. It doesn't look at the patterns below it. 
+When the program is run, Tile Machine simulates the Game of Falling Tetrominoes, which involves generating random tetrominoes sequentially. To handle each tetromino it looks at the set of patterns corresponding to that tetromino. It starts from the top and tries to find an occurence of a pattern in the field. If there are no occurences, it proceeds to the next pattern. If there are, it stops going through the list of patterns and uses the current pattern. It doesn't look at the patterns below it. 
 
 <br><br>
 There are some subtleties about how a pattern is handled. First, it can match several regions of the field. In that case the game picks the lowest region. If there are several places at the same height, it picks one randomly. Second, it is possible that a region matches the pattern, but if the tetromino is dropped according to that pattern, it won't land in the place where it is expected to land. Such regions are dropped from consideration. 
 
 <br><br>
 
-Some comments about the UI:
+<h2>
+Interface
+</h2>
 
-<br><br>
+<h3>
+Programming screen
+</h3>
 
-Programming screen:
+1. The "Download Program" button creates a program.txt file and sends it to your Downloads folder. You can open it later by using the "Choose File" button at the bottom of the page. 
 <br><br>
-1. The "Save Program" button creates a program.txt file and sends it to your Downloads folder. You can open it later by using the "Choose File" button at the bottom of the page. 
+2. If there are too many patterns, they will go out of canvas. You can scroll the list with the wheel of your mouse. 
 <br><br>
-2. I would recommend to save your program frequently. The prototype is pretty buggy and can crash at any moment. 
-<br><br>
-3. If there are too many patterns, they will go out of canvas. You can scroll the list with the wheel of your mouse. 
-<br><br>
-4. The empty button next to the arrow buttons and below the Delete button in the list of patterns can be toggled.
+3. The empty button next to the arrow buttons and below the Delete button in the list of patterns can be toggled.
 <br><br>
 <img src = "images/tutorial/6.png">
 <br><br>
@@ -66,18 +92,34 @@ Programming screen:
 <img src = "images/tutorial/3.png">
 <br><br>
 
-5. Before testing the program, turn on several tetrominoes. The tetrominoes that are off will never appear in the game. 
+4. Before testing the program, turn on several tetrominoes. The tetrominoes that are off will never appear in the game. 
 <br><br>
 <img src = "images/tutorial/7.png">
 <br><br>
 
-Testing screen:
-<br><br>
+<h3>
+Testing screen
+</h3>
+
 5. The "Get Stats" button runs the game without drawing it. It counts the minimal, the maximal and the average number of lines deleted in a game. It also saves the lamest games (the ones with the smallest number of deleted lines). The number of polyominoes dropped in such run is specified by the variable sampleSize in the very beginning of game.js. It is 50000 by default. The lamest game threshold is specified by the variable sizeOfLamestGames. It is 10 by default. That is, all games in which fewer than 10 lines were deleted, will be saved as the lamest games. The simulation can run for a while, depending on your computer. It will also freeze the tab while running.
 <br><br>
 6. To load a lamest game, press the "Lamest Games" button. To play back the game, press the "Next Tetromino" button repeatedly. There are two buttons with the name "Next Tetromino". You need the one that is next to the "Lamest Games" button. The one at the bottom generates random tetrominoes. 
 <br><br>
 7. Matched regions are highlighted by rectangles. Red rectangles are the regions that were matched but got removed because the tetromino couldn't land at the place where you expected it to land. Yellow rectangles are the ones that were removed because they aren't the lowest ones. Gray rectangles are the optimal ones. The game picks one of those randomly. The black rectangle is the one that is picked. 
+
+<h2>
+Challenges
+</h2>
+To get started, try to beat a couple of challenges. These usually involve fewer than the full set of 7 tetrominoes, and only require the program to run for some time, not forever. 
+<br><br>
+<img src = "images/tutorial/9.png">
+
+<h2>
+Program storage
+</h2>
+The program is saved automatically after each change. It is stored locally in the browser and will persist when the tab is closed or refreshed. If you would like to start over with an empty program, you can reset the program. The copy that is stored in the browser's memory will be deleted. If you would like to keep that program, you can download it as a text file. Use the buttons in the lower right corner of the programming screen. 
+<br><br>
+<img src = "images/tutorial/10.png">
 
 </body>
 </html>
