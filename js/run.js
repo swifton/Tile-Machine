@@ -1,10 +1,13 @@
 // Initialization functions
+var matchingTime = 0;
 function newFigure() {
   numberOfTilesDropped ++;
   nOfFigure = newNOfFigure;
   getNewFigure();
-
+  var s0 = performance.now();
   findCommand();
+  var s1 = performance.now();
+  matchingTime += s1 - s0;
   var offset = command.directive[0] + recognitionOffset;
   var rotation = command.directive[1];
   
@@ -45,9 +48,146 @@ function nextFigure() {
   drawExec();
 }
 
-function veryFastNextFigure() {
+function dropLowestNextFigure() {
+  clear();
   dropFigure();
+  dropLowestUpdateField();
+  drawExec();
+}
+
+function dropLowestUpdateField(){
+  if (checkMove([0,1])){
+	    var p0 = performance.now();
+    updatePosition(-nOfFigure - 1);
+	  var p1 = performance.now();
+    checkField();
+	  var p2 = performance.now();
+    dropLowestNewFigure();
+	  var p3 = performance.now();
+    checkEnd();
+	  var p4 = performance.now();
+    updatePosition(nOfFigure + 1);
+	  var p5 = performance.now();
+	  
+	  totalUpdatePositionTime += p1 - p0;
+	  totalCheckFieldTime += p2 - p1;
+	  totalNewFigureTime += p3 - p2;
+	  totalCheckEndTime += p4 - p3;
+	  totalUpdatePositionTime += p5 - p4;
+	  
+    return 1;
+  }
+  updatePosition(0);
+  for (var i = 0; i < 4; i++){figure[i][1]++;}	
+  updatePosition(nOfFigure + 1);
+}
+
+function dropLowestNewFigure() {
+  numberOfTilesDropped ++;
+  nOfFigure = newNOfFigure;
+  getNewFigure();
+  lowestPosition = findLowestPosition(figures[nOfFigure]);
+  
+  var offset = lowestPosition[2];
+  var rotation = lowestPosition[1];
+  
+  sequenceOfTetriminoes.push([nOfFigure, offset, rotation]);
+  
+  for (var j = 0; j < 4; j++) {
+    figure[j][0] = figures[nOfFigure][rotation][j][0] + offset;
+	figure[j][1] = figures[nOfFigure][rotation][j][1];
+  }
+  
+}
+
+function findLowestPosition(figureWithRotations) {
+	var depthsOfDrop = [];
+	var figure;
+
+	for (var rotation = 0; rotation < figureWithRotations.length; rotation ++) {
+		figure = figureWithRotations[rotation];
+
+		for (shift = -14; shift < fieldWid + 14; shift++) {
+			tmp = false;
+			
+			for (tile = 0; tile < 4; tile++) {
+				
+				if (figure[tile][0] + shift < 1 || figure[tile][0] + shift >= fieldWid - 1) {tmp = true;}
+			}
+			if (tmp) {continue;}
+			
+			var currentDepth = dropLowestCheckLanding([rotation, shift, 0], figure);
+			
+			depthsOfDrop.push([currentDepth, rotation, shift]);
+		}
+	}
+
+	var result = depthsOfDrop[0];
+	
+	for (var i = 0; i < depthsOfDrop.length; i++) {
+		if (depthsOfDrop[i][0] > result[0]) {result = depthsOfDrop[i];}
+	}
+	
+	var acceptableDrops = [];
+	
+	for (var i = 0; i < depthsOfDrop.length; i++) {
+		if (depthsOfDrop[i][0] == result[0]) {acceptableDrops.push(depthsOfDrop[i]);}
+	}
+	
+	var indexOfAnswer = Math.floor(Math.random()*acceptableDrops.length);
+	
+	return acceptableDrops[indexOfAnswer];
+}
+
+function dropLowestCheckLanding(match, figure) {
+  var maxDepth = [0,0,0,0];
+  var depth = 0;
+  var brk = [0,0,0,0];
+  for (var i = 0; i < 4; i++) {
+    brk[i] = [figure[i][0] + match[1], figure[i][1]];
+  }
+  var tmp = false;
+  for (var j = 0; j < fieldHeit; j++) {
+	for (var i = 0; i < 4; i++) {
+	  if (field[figure[i][0] + match[1]][j + figure[i][1]] != 0) {
+		depth = j;
+		tmp = true;
+	  }
+	}
+	if (tmp) {break;}
+  }
+  
+  for (var i = 0; i < 4; i++) {
+	maxDepth[i] = j + figure[i][1];
+  }
+  
+  //var result = maxDepth[0];
+  //for (var i = 0; i < maxDepth.length; i++) {
+//		if (maxDepth[i] > result) {result = maxDepth[i];}
+  //}
+  
+  var result = 0;
+  for (var i = 0; i < maxDepth.length; i++) {
+		result += maxDepth[i];
+  }
+
+  return result;
+}
+
+var totalDropTime = 0;
+var totalUpdateTime = 0;
+
+function veryFastNextFigure() {
+  var t0 = performance.now();
+  dropFigure();
+  var t1 = performance.now();
   updateField();
+  //dropLowestUpdateField();
+  var t2 = performance.now();
+  totalDropTime += t1 - t0;
+  totalUpdateTime += t2 - t1;
+  
+//console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.");
 }
 
 function challengeNextFigure() {
@@ -95,13 +235,32 @@ var updatePosition = function(num){
   }
 }
 
+var totalUpdatePositionTime = 0;
+var totalCheckFieldTime = 0;
+var totalNewFigureTime = 0;
+var totalCheckEndTime = 0;
+
+
 function updateField(){
   if (checkMove([0,1])){
+	    var p0 = performance.now();
     updatePosition(-nOfFigure - 1);
+	  var p1 = performance.now();
     checkField();
+	  var p2 = performance.now();
     newFigure();
+	  var p3 = performance.now();
     checkEnd();
+	  var p4 = performance.now();
     updatePosition(nOfFigure + 1);
+	  var p5 = performance.now();
+	  
+	  totalUpdatePositionTime += p1 - p0;
+	  totalCheckFieldTime += p2 - p1;
+	  totalNewFigureTime += p3 - p2;
+	  totalCheckEndTime += p4 - p3;
+	  totalUpdatePositionTime += p5 - p4;
+	  
     return 1;
   }
   updatePosition(0);

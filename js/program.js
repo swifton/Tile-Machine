@@ -215,6 +215,9 @@ function veryFastGameLoop(chal) {
 	savedGames = [];
 	maxNumberofLinesDeleted = 0;
     minNumberofLinesDeleted = 100000000; // Fix this later.
+	
+	var tt0 = performance.now();
+	
 	for (i = 0; i < sampleSize; i++) {
 		if (chal) {
 			challengeNextFigure();
@@ -222,6 +225,36 @@ function veryFastGameLoop(chal) {
 			veryFastNextFigure();
 		}
 	}
+	
+	var tt1 = performance.now();
+	
+	console.log("totalTime");
+	console.log(tt1 - tt0);
+	
+	console.log("totalDropTime");
+	console.log(totalDropTime);
+	console.log("totalUpdateTime");
+	console.log(totalUpdateTime);
+	/*
+		console.log("totalUpdatePositionTime");
+	console.log(totalUpdatePositionTime);
+		console.log("totalCheckFieldTime");
+	console.log(totalCheckFieldTime);*/
+		console.log("totalNewFigureTime");
+	console.log(totalNewFigureTime);
+	console.log("matchingTime");
+	console.log(matchingTime);
+		console.log("matchSearchingTime");
+	console.log(matchSearchingTime);
+		console.log("matchRemovingTime");
+	console.log(matchRemovingTime);
+	console.log("comparePatternsTime");
+	console.log(comparePatternsTime);
+		/*console.log("totalCheckEndTime");
+	console.log(totalCheckEndTime);
+		console.log("totalUpdateTime");
+	console.log(totalUpdatePositionTime + totalCheckFieldTime + totalNewFigureTime + totalCheckEndTime);
+	*/
 	
 	if (numberOfGamesPlayed == 0) {finishGameStats();}
 

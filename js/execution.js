@@ -10,6 +10,8 @@ function findCommand() {
       recognitionOffsetY = c[2];
       return;
     }
+	
+	
 /*
     if (program[nOfFigure].sheets[i].symmetry) {
       c = advancedMatching(program[nOfFigure].sheets[i].symmetricSheet, i);
@@ -26,16 +28,35 @@ function findCommand() {
   recognitionOffset = 1;
 }
 
+var matchSearchingTime = 0;
+var matchRemovingTime = 0;
+var comparePatternsTime = 0;
+//	var r0 = performance.now();
+//  var r1 = performance.now();
+  //comparePatternsTime += r1 - r0;
+
 function advancedMatching(command, n) {
   matches = [];
-  for (var i = command.walls?0:1; i < fieldWid - command.patternWid + command.walls?1:0; i++) {
-    for (var j = 0; j < fieldHeit + 1 -command.patternHeit + 1; j++) {  // fieldHeit + 1 because need to consider the floor
+  
+  var q0 = performance.now();
+  var r0;
+  var r1;
+  
+  var upperLimitI = fieldWid - command.patternWid + command.walls?1:0;
+  var upperLimitJ = fieldHeit + 1 -command.patternHeit + 1;
+  
+  for (var i = command.walls?0:1; i < upperLimitI; i++) {
+    for (var j = 0; j < upperLimitJ; j++) {  // fieldHeit + 1 because need to consider the floor
+	 //r0 = performance.now();
       if (comparePatterns(command.pattern, field, i, j, command.patternWid, command.patternHeit, command.patternOffsetX, command.patternOffsetY)) {
         var topush = [n, i, j, command.patternWid, command.patternHeit];
         var a = matches.push(topush);
       }
     }
+	//r1 = performance.now();
+	//comparePatternsTime += r1 - r0;
   }
+  var q1 = performance.now();
  
   var rm = removeMatches(matches, checkBorders, command, []);
   removedMatches = removedMatches.concat(rm[0]);
@@ -61,6 +82,12 @@ function advancedMatching(command, n) {
 
   //var a = matches[matches.length - 1] || -1;
   var a = matches[Math.floor(Math.random()*matches.length)] || -1;
+  
+  
+  var q2 = performance.now();
+  matchSearchingTime += q1 - q0;
+  matchRemovingTime += q2 - q1;
+  
   return a;
 }
 
@@ -111,6 +138,8 @@ function checkHeit(match, command, params) {
   return match[2] == params[0];
 }
 
+
+
 function comparePatterns(pattern1, pattern2, offsetX, offsetY, patternWid, patternHeit, patternLeft, patternUp) {
   for (var i = 0; i < patternWid; i++) {
     for (var j = 0; j < patternHeit; j++) {
@@ -123,6 +152,7 @@ function comparePatterns(pattern1, pattern2, offsetX, offsetY, patternWid, patte
       if (!compare(pattern1[i][j], pattern2[i + offsetX][j + offsetY])) {return false;}
     }
   }
+
   return true;
 }
 

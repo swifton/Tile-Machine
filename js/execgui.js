@@ -32,6 +32,7 @@ function setupExecButtons() {
   var stopButton = new button("Exit Testing", workplace[0] + newGameButton.buttonWid + 10, (fieldHeit + 2) * TILE_WID, 120, buttonHeit, function() {if (!gamePaused) {pauseGame();} mode = "programming"; drawProg();});
   var pauseGameButton = new button("Pause", workplace[0], (fieldHeit + 5) * TILE_WID, 120, buttonHeit, pauseGame);
   var nextButton = new button("Next Tetromino", workplace[0], (fieldHeit + 3) * TILE_WID, 150, buttonHeit, nextFigure);
+  //var nextButton = new button("Next Tetromino", workplace[0], (fieldHeit + 3) * TILE_WID, 150, buttonHeit, dropLowestNextFigure);
   var fastButton = new button("Run", workplace[0], (fieldHeit + 4) * TILE_WID, 120, buttonHeit, launchFast);
   var statsButton = new button("Stats", workplace[0] + fastButton.buttonWid + 10, (fieldHeit + 4) * TILE_WID, 120, buttonHeit, printStats);
   var veryFastButton = new button("Get Stats", workplace[0] + fastButton.buttonWid + 10, (fieldHeit + 4) * TILE_WID, 120, buttonHeit, veryFastGameLoop);
