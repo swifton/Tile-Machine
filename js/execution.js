@@ -42,7 +42,7 @@ function advancedMatching(command, n) {
   var r0;
   var r1;
   
-  var upperLimitI = fieldWid - command.patternWid + command.walls?1:0;
+  var upperLimitI = fieldWid - command.patternWid + (command.walls?1:0);
   var upperLimitJ = fieldHeit + 1 -command.patternHeit + 1;
   
   for (var i = command.walls?0:1; i < upperLimitI; i++) {
