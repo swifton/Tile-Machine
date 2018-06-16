@@ -2,7 +2,9 @@
 var matchingTime = 0;
 function newFigure() {
   numberOfTilesDropped ++;
-  nOfFigure = newNOfFigure;
+  if (!DETERMINISTIC) {
+	nOfFigure = newNOfFigure;
+  }
   getNewFigure();
   var s0 = performance.now();
   findCommand();
@@ -38,7 +40,14 @@ function newFigureReplay() {
 }
 
 function getNewFigure() {
-  newNOfFigure = allowedFigures[Math.floor(Math.random()*allowedFigures.length)];
+  if (DETERMINISTIC) {
+	  // You can't test a program deterministically if numbers in your file aren't a subset of allowed figures. this prototype is slowly drifting into complete crap
+	  nOfFigure = deterministic_sequence_tetr[deterministic_tetr_index]; 
+	  deterministic_tetr_index += 1;	  
+  }
+  else {
+    newNOfFigure = allowedFigures[Math.floor(Math.random()*allowedFigures.length)];
+  }
 }
 
 function nextFigure() {
@@ -202,6 +211,30 @@ function nextFigureReplay() {
   drawExec();
 }
 
+function makeFieldWeird() {
+	field[7][19] = 2;
+	field[5][19] = 3;
+	field[4][19] = 3;
+	field[2][19] = 3;
+	field[1][19] = 3;
+	field[9][18] = 2;
+	field[10][18] = 2;
+	field[10][17] = 2;
+	field[6][18] = 3;
+	field[5][18] = 3;
+	field[4][18] = 4;
+	field[3][18] = 4;
+	field[1][18] = 3;
+	field[9][17] = 1;
+	field[9][16] = 1;
+	field[9][15] = 1;
+	field[9][13] = 7;
+	field[10][13] = 7;
+	field[10][14] = 7;
+	field[10][15] = 7;
+	field[10][16] = 5;
+}
+
 // Functions that simulate the simple tile game
 
 function newGame(){
@@ -209,13 +242,21 @@ function newGame(){
   if (numberOfGamesPlayed != 0) {printStats();}
   newGameStats();
   fill2DArray(field, 0, true, true, true);
+  //makeFieldWeird();
   if (gamePaused) {pauseGame();}
   sequenceOfTetriminoes = [];
-  getNewFigure();
-  newFigure();
-  updateField();
+  if (!DETERMINISTIC) {
+	getNewFigure();
+	newFigure();
+  }
+  //updateField();
   clear();
   drawExec();
+  
+  if (DETERMINISTIC) {
+	  debug_lents_of_games.push(deterministic_tetr_index - old_game_end);
+	  old_game_end = deterministic_tetr_index;
+  }
 }
 
 function pauseGame() {
@@ -245,12 +286,21 @@ function updateField(){
   if (checkMove([0,1])){
 	    var p0 = performance.now();
     updatePosition(-nOfFigure - 1);
+	field[0][0] = -1;
 	  var p1 = performance.now();
     checkField();
 	  var p2 = performance.now();
-    newFigure();
+    
 	  var p3 = performance.now();
-    checkEnd();
+	  console.log("xyu1");
+	  console.log(field);
+    if (checkEnd()) {
+		
+	}
+	newFigure();
+	console.log("xyu2");
+	console.log(field);
+	  
 	  var p4 = performance.now();
     updatePosition(nOfFigure + 1);
 	  var p5 = performance.now();
@@ -289,7 +339,8 @@ var checkEnd = function(){
   for (var j = 1; j < fieldWid - 1; j++){ // one block on each side doesn't get checked, since these are walls
     if (field[j][0] < 0) {b = 1}
   }
-  if (b == 1) {newGame();}
+  if (b == 1) {newGame(); return true;}
+  return false;
 }
 
 var checkField = function(){

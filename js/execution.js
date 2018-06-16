@@ -1,13 +1,15 @@
 function findCommand() {
   removedMatches = [];
   inefficientMatches = [];
-
   for (var i = 0; i < program[nOfFigure].sheets.length; i++) {
     var c = advancedMatching(program[nOfFigure].sheets[i], i);
     if (c != -1) {
       command = program[nOfFigure].sheets[c[0]];	  
       recognitionOffset = c[1];
       recognitionOffsetY = c[2];
+	  
+	  debug_rotations.push(command.directive[1]);
+	  
       return;
     }
 	
@@ -26,6 +28,7 @@ function findCommand() {
   }
   command = new sheet(defaultPatternWid, defaultPatternHeit);
   recognitionOffset = 1;
+  debug_rotations.push(0);
 }
 
 var matchSearchingTime = 0;
@@ -43,7 +46,7 @@ function advancedMatching(command, n) {
   var r1;
   
   var upperLimitI = fieldWid - command.patternWid + (command.walls?1:0);
-  var upperLimitJ = fieldHeit + 1 -command.patternHeit + 1;
+  var upperLimitJ = fieldHeit + 1 -command.patternHeit + 1 - (command.walls ? 0 : 1);
   
   for (var i = command.walls?0:1; i < upperLimitI; i++) {
     for (var j = 0; j < upperLimitJ; j++) {  // fieldHeit + 1 because need to consider the floor
@@ -81,7 +84,16 @@ function advancedMatching(command, n) {
   matches = rm[1];
 
   //var a = matches[matches.length - 1] || -1;
-  var a = matches[Math.floor(Math.random()*matches.length)] || -1;
+  var a;
+  if (DETERMINISTIC) {
+	a = matches[deterministic_match_index % matches.length] || -1;
+	if (a != -1) {
+		deterministic_match_index += 1;
+	}
+  }
+  else {
+	a = matches[Math.floor(Math.random()*matches.length)] || -1;
+  }
   
   
   var q2 = performance.now();

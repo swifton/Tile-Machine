@@ -1,6 +1,6 @@
 function drawExec() {
   drawData(field, workplace);
-  drawData(command.pattern, add(workplace, [fieldWid * TILE_WID, 0]), command.patternWid, command.patternHeit);
+  drawData(command.pattern, add(workplace, [(fieldWid + 1) * TILE_WID, 0]), command.patternWid, command.patternHeit);
   drawFrames();
   drawButtons(execButtons);
 

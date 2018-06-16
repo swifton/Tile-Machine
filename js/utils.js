@@ -112,6 +112,18 @@ function readSingleFile(e) {
   reader.readAsText(file);
 }
 
+function readFile(e) {
+  var file = e.target.files[0];
+  if (!file) {
+    return;
+  }
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    loadSequenceOfTetrominoes(e.target.result);
+  };
+  reader.readAsText(file);
+}
+
 function print(output) {
   console.log(output);
 }
@@ -121,9 +133,9 @@ function fill2DArray(data, value, ground, walls, logo) {
   var dataWid = data.length;
   var dataHeit = data[0].length;
 
-  for (var i = 0; i < dataWid; i++){
+  for (var i = 0; i < dataWid; i++) {
     data[i] = new Array(dataHeit);
-    for (var j = 0; j < dataHeit; j++){
+    for (var j = 0; j < dataHeit; j++) {
       data[i][j] = (walls && (i == 0 || i == dataWid - 1))?(-1):value;
     }
   }

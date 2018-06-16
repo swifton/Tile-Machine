@@ -141,6 +141,13 @@ function loadProgramLocal() {
 	}
 }
 
+function loadSequenceOfTetrominoes(fileContent) {
+	for (var i = 0; i < defaultSampleSize; i++) {
+		deterministic_sequence_tetr.push(parseInt(fileContent[i]));
+	}
+	console.log(deterministic_sequence_tetr);
+}
+
 // TODO: After loading, open the first nonempty column.
 function loadProg(fileContent) {
   for (var j = 0; j < 7; j++) {
@@ -218,13 +225,22 @@ function veryFastGameLoop(chal) {
 	
 	var tt0 = performance.now();
 	
-	for (i = 0; i < sampleSize; i++) {
+	for (i = 1; i < defaultSampleSize; i++) {
 		if (chal) {
 			challengeNextFigure();
 		} else {
 			veryFastNextFigure();
 		}
 	}
+	
+	var pr = JSON.stringify(debug_rotations);
+    var blob = new Blob([pr], {type: "text/plain;charset=utf-8"});
+    //saveAs(blob, "rotations");
+	
+	console.log("debug_lents_of_games");
+	console.log(debug_lents_of_games);
+	console.log("debug_rotations");
+	console.log(debug_rotations);
 	
 	var tt1 = performance.now();
 	

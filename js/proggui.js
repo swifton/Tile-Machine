@@ -14,6 +14,33 @@ function drawProg() {
   }
 
   drawButtons(progButtons);
+  
+  //drawStuff();
+}
+
+function drawStuff() {
+	/*drawData([[8], [8], [0], [0], [0], [8], [0], [8], [0], [0], [8]], [10,10]);
+	drawLabel("1", 15, 60, "white");
+	drawLabel("1", 40, 60, "white");
+	drawLabel("0", 65, 60, "white");
+	drawLabel("0", 90, 60, "white");
+	drawLabel("0", 115, 60, "white");
+	drawLabel("1", 140, 60, "white");
+	drawLabel("0", 165, 60, "white");
+	drawLabel("1", 190, 60, "white");
+	drawLabel("0", 215, 60, "white");
+	drawLabel("0", 240, 60, "white");
+	drawLabel("1", 265, 60, "white");*/
+	
+	drawLabel("0", 15, 60, "white");
+	drawLabel("0", 40, 60, "white");
+	drawLabel("0", 65, 60, "white");
+	drawLabel("1", 15, 85, "white");
+	drawLabel("0", 40, 85, "white");
+	drawLabel("1", 65, 85, "white");
+	drawLabel("0", 15, 110, "white");
+	drawLabel("1", 40, 110, "white");
+	drawLabel("0", 65, 110, "white");
 }
 
 function drawLanding() { // TODO: Write code for drawing something starting at a given point. Or abstract this mess somehow.

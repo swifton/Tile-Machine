@@ -3,7 +3,7 @@
 
 
 
-var defaultSampleSize = 10000;
+var defaultSampleSize = 1000000;
 var sizeOfLamestGames = 10;
 
 
@@ -65,6 +65,13 @@ var mode = "programming";
 var gLoop;
 
 var sampleSize = defaultSampleSize;
+var DETERMINISTIC = false;
+var deterministic_match_index = 0;
+var deterministic_sequence_tetr = [];
+var deterministic_tetr_index = 0;
+var debug_lents_of_games = [];
+var debug_rotations = [];
+var old_game_end = 0;
 
 // global variables for drawing
 var CANVAS = document.getElementById('canvas');
@@ -146,6 +153,7 @@ loadProgramLocal();
 //newSheet();
 
 document.getElementById('file-input').addEventListener('change', readSingleFile, false);
+document.getElementById('sequence-input').addEventListener('change', readFile, false);
 
 CANVAS.addEventListener('mousedown', clickReporter, false);
 CANVAS.addEventListener('mousewheel',function(event){scroll(event); return false;}, false);
